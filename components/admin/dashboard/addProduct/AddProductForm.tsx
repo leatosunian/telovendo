@@ -25,6 +25,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -55,6 +56,7 @@ import React from "react";
 import { IBranch } from "@/app/models/branch";
 import { useToast } from "@/hooks/use-toast";
 import { v4 as uuidv4 } from "uuid";
+import { Switch } from "@/components/ui/switch";
 
 const AddProductForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,14 +75,23 @@ const AddProductForm = () => {
       doors: "",
       gas: "",
       description: "",
-      branchID: "",
+      generalCondition: "",
+      lastestService: "",
+      VTVExpDate: "",
+      hasVTV: true,
+      ownerNumber: "",
+      timingBelt: "",
+      tireCondition: "",
+      drive: "",
+      battery: "",
+      paintDetails: "",
+      show: true
     },
   });
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [createdVehicle, setCreatedVehicle] = useState<ICar>();
-  const modalButtonRef = useRef<HTMLButtonElement>(null);
   const [branches, setBranches] = useState<IBranch[]>();
   const [openCreated, setOpenCreated] = useState(false);
   const { toast } = useToast();
@@ -99,6 +110,7 @@ const AddProductForm = () => {
   async function onSubmit(values: any) {
     setLoading(true);
     values.uuid = uuidv4();
+    console.log(values);
     try {
       const vehicle = await fetch("/api/cars", {
         method: "POST",
@@ -123,7 +135,7 @@ const AddProductForm = () => {
         cache: "no-cache",
       }).then((response) => response.json());
       setBranches(branchesFetch.branches);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   useEffect(() => {
@@ -146,10 +158,15 @@ const AddProductForm = () => {
       {!loading && (
         <>
           <Form {...form}>
-            <span className="text-xl font-semibold">Información general</span>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <span className="mt-2 text-xl font-semibold">Información general</span>
+            <form onSubmit={form.handleSubmit(
+              onSubmit,
+              (errors) => {
+                console.table(errors);   // verás cada input con problemas
+              }
+            )}>
+              {/* INFORMACIÓN GENERAL */}
               <div className="grid grid-cols-1 gap-4 mt-6 md:gap-10 md:grid-cols-2">
-                {/* product name */}
                 <div className="flex flex-col gap-4 md:gap-8">
                   <FormField
                     control={form.control}
@@ -168,59 +185,59 @@ const AddProductForm = () => {
                       </FormItem>
                     )}
                   />
-                  <div className="flex col-span-2 gap-2">
-                    <FormField
-                      control={form.control}
-                      name="currency"
-                      render={({ field }) => (
-                        <FormItem className="w-fit">
-                          <FormLabel>Precio</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
+                  <div className="flex flex-col col-span-2 gap-4 md:flex-row">
+                    <div className="flex col-span-2 gap-2">
+                      <FormField
+                        control={form.control}
+                        name="currency"
+                        render={({ field }) => (
+                          <FormItem className="w-fit">
+                            <FormLabel>Precio</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="ARS">ARS</SelectItem>
+                                <SelectItem value="USD">USD</SelectItem>
+                              </SelectContent>
+                            </Select>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="price"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel className="opacity-0">-</FormLabel>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="" />
-                              </SelectTrigger>
+                              <Input
+                                placeholder="Ingresa un precio"
+                                type="number"
+                                {...field}
+                              />
                             </FormControl>
-                            <SelectContent>
-                              <SelectItem value="ARS">ARS</SelectItem>
-                              <SelectItem value="USD">USD</SelectItem>
-                            </SelectContent>
-                          </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="price"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel className="opacity-0">-</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Ingresa un precio"
-                              type="number"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* modelname and kilometers */}
-                  <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+                    <div className="flex col-span-2 gap-2">
                     <FormField
                       control={form.control}
                       name="kilometers"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Kilómetros</FormLabel>
+                        <FormItem className="w-full ">
+                          <FormLabel>Kilometros</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="Ingresa un kilometraje"
@@ -232,36 +249,11 @@ const AddProductForm = () => {
                         </FormItem>
                       )}
                     />
-
-                    <FormField
-                      control={form.control}
-                      name="doors"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Cantidad de puertas</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Seleccionar" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="2P">2 puertas</SelectItem>
-                              <SelectItem value="3P">3 puertas</SelectItem>
-                              <SelectItem value="4P">4 puertas</SelectItem>
-                              <SelectItem value="5P">5 puertas</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    </div>
                   </div>
+
+
                 </div>
-                {/* year and brand */}
                 <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
                   <FormField
                     control={form.control}
@@ -279,8 +271,8 @@ const AddProductForm = () => {
                               >
                                 {field.value
                                   ? carBrands.find(
-                                      (brand) => brand === field.value
-                                    )
+                                    (brand) => brand === field.value
+                                  )
                                   : "Seleccionar"}
                                 <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                               </Button>
@@ -381,25 +373,54 @@ const AddProductForm = () => {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="year"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Año de fabricación</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Ej. 2021"
-                            type="number"
+                  <div className="flex flex-col gap-4 md:flex-row ">
+                    <FormField
+                      control={form.control}
+                      name="year"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Año</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Ej. 2021"
+                              type="number"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="doors"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Puertas <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
                             {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Seleccionar" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="2P">2 puertas</SelectItem>
+                              <SelectItem value="3P">3 puertas</SelectItem>
+                              <SelectItem value="4P">4 puertas</SelectItem>
+                              <SelectItem value="5P">5 puertas</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
+                  </div>
+                  {/* <FormField
                     control={form.control}
                     name="branchID"
                     render={({ field }) => (
@@ -427,7 +448,7 @@ const AddProductForm = () => {
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
                 </div>
               </div>
               <FormField
@@ -436,7 +457,7 @@ const AddProductForm = () => {
                 render={({ field }) => (
                   <FormItem className="w-full pr-0 mt-4 md:mt-8 md:w-1/2 md:pr-5 ">
                     <FormLabel>
-                      Descripción <span className="">(opcional)</span>
+                      Descripción <span className="text-gray-500">(opcional)</span>
                     </FormLabel>
                     <Textarea
                       {...field}
@@ -446,10 +467,12 @@ const AddProductForm = () => {
                   </FormItem>
                 )}
               />
-              <Separator className="my-10" />
+
+              <Separator className="my-12" />
+
+              {/* MOTORIZACIÓN */}
               <span className="text-xl font-semibold">Motorización</span>
               <div className="grid grid-cols-1 gap-4 mt-4 md:gap-10 md:grid-cols-2">
-                {/* motor and gearbox */}
                 <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
                   <FormField
                     control={form.control}
@@ -524,8 +547,234 @@ const AddProductForm = () => {
                       </FormItem>
                     )}
                   />
+
+                  <FormField
+                    control={form.control}
+                    name="drive"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tracción <span className="text-gray-500">(opcional)</span></FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleccionar" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Delantera">Delantera</SelectItem>
+                            <SelectItem value="Trasera">Trasera</SelectItem>
+                            <SelectItem value="Integral">Integral</SelectItem>
+                            <SelectItem value="4x4">4x4</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
+
+              <Separator className="my-12" />
+
+              {/* INFORMACION ADICIONAL */}
+              <span className="text-xl font-semibold">Información adicional <span className="text-xs text-gray-500 sm:text-sm">(opcional)</span></span>
+              <div className="grid grid-cols-1 gap-4 mt-4 md:gap-10 md:grid-cols-2">
+
+                <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="generalCondition"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Condición general</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ej. Como nuevo"
+                            type="text"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="lastestService"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Último service</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ej. 20.000"
+                            type="number"
+                            {...field}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="tireCondition"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Condición de neumáticos <span className="text-gray-500">(%)</span></FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ej. 90"
+                            type="number"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="battery"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Fecha de batería</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ej. 20/10/2024"
+                            type="text"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+
+                <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="ownerNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Dueños</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="3"
+                            type="number"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="timingBelt"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Último cambio de correa <span className="text-xs text-gray-500">(km)</span></FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ej. 50.000"
+                            type="number"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="hasVTV"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row-reverse items-center justify-end gap-4 rounded-lg shadow-sm md:items-start md:gap-0 md:justify-around md:flex-col ">
+                        <span className="text-sm">VTV Vigente</span>
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="VTVExpDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Vigente hasta</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ej. Mayo 2027"
+                            type="text"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="paintDetails"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Detalles de carrocería</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Ingrese los detalles de chapa y pintura del vehículo"
+                          className="min-h-32"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <Separator className="my-12" />
+
+              <FormField
+                control={form.control}
+                name="show"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between gap-6 px-5 py-4 border rounded-lg w-fit">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">
+                        Publicar en la página
+                      </FormLabel>
+                      <FormDescription>
+                        Podés ocultar tu vehículo de tus clientes hasta que lo desees sin
+                        eliminarlo.
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
               <Button type="submit" className="w-full mt-12 mb-5 md:w-1/3">
                 Crear vehículo

@@ -96,7 +96,7 @@ const StockList = async () => {
           </Button>
         </Link>
       </div>
-      <Separator className="mt-4 mb-5 md:mt-7 md:mb-8"></Separator>
+      <Separator className="mt-4 mb-5 md:mt-4 md:mb-4"></Separator>
       <CarList cars={cars} />
     </>
   );

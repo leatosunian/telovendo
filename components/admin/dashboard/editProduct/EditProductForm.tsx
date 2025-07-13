@@ -64,14 +64,21 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
       currency: "ARS",
       price: "",
       modelName: "",
-      status: "",
       gearbox: "",
       doors: "",
       gas: "",
       description: "",
-      show: true,
-      imagePath: "",
-      branchID: "",
+      generalCondition: "",
+      lastestService: "",
+      VTVExpDate: "",
+      hasVTV: true,
+      ownerNumber: "",
+      timingBelt: "",
+      tireCondition: "",
+      drive: "",
+      battery: "",
+      paintDetails: "",
+      show: true
     },
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -93,30 +100,22 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
       }).then((response) => response.json());
       if (vehicle) {
         setVehicleData(vehicle);
+        console.log(vehicle);
         setTimeout(() => {
           setLoading(false);
         }, 500);
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
 
 
-  
 
-  async function getBranches() {
-    try {
-      const branchesFetch = await fetch("/api/branches", {
-        method: "GET",
-        cache: "no-cache",
-      }).then((response) => response.json());
-      setBranches(branchesFetch.branches);
-    } catch (error) {}
-  }
+
+
 
   useEffect(() => {
     getVehicleData();
-    getBranches();
   }, []);
 
   useEffect(() => {
@@ -124,8 +123,8 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
       const element = document.getElementById(scrollToDiv);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
-      }else {
-        
+      } else {
+
       }
     }
   }, [scrollToDiv]);
@@ -173,7 +172,22 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
       form.setValue("description", vehicleData!.description);
       form.setValue("doors", vehicleData!.doors);
       form.setValue("imagePath", vehicleData!.imagePath);
-      form.setValue("branchID", vehicleData!.branchID!);
+      form.setValue("generalCondition", vehicleData!.generalCondition);
+      form.setValue("lastestService", vehicleData!.lastestService);
+      form.setValue("VTVExpDate", vehicleData!.VTVExpDate);
+      form.setValue("hasVTV", vehicleData!.hasVTV);
+      if (vehicleData.ownerNumber !== null) {
+        form.setValue("ownerNumber", vehicleData!.ownerNumber.toString());
+      }
+      if (vehicleData.timingBelt !== null) {
+        form.setValue("timingBelt", vehicleData!.timingBelt.toString());
+      }
+      if (vehicleData.tireCondition !== null) {
+        form.setValue("tireCondition", vehicleData!.tireCondition.toString());
+      }
+      form.setValue("drive", vehicleData!.drive);
+      form.setValue("battery", vehicleData!.battery);
+      form.setValue("paintDetails", vehicleData!.paintDetails);
     }
     console.log(form.getValues());
   }, [vehicleData]);
@@ -189,23 +203,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
     fileInputRef.current?.click();
   };
 
-  const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    let image;
 
-    if (e.target.files?.length != undefined) {
-      image = e.target.files[0];
-      if (
-        image.type == "image/jpeg" ||
-        image.type == "image/png" ||
-        image.type == "image/webp" ||
-        image.type == "image/jpg"
-      ) {
-        console.log(image);
-        //updateProfileImage(image);
-      } else {
-      }
-    }
-  };
 
   async function uploadImage(file: File) {
     if (!file) return;
@@ -394,8 +392,8 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                               >
                                 {field.value
                                   ? carBrands.find(
-                                      (brand) => brand === field.value
-                                    )
+                                    (brand) => brand === field.value
+                                  )
                                   : "Seleccionar"}
                                 <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                               </Button>
@@ -548,7 +546,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                     name="doors"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel>Cantidad de puertas</FormLabel>
+                        <FormLabel>Puertas <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -578,7 +576,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                   render={({ field }) => (
                     <FormItem className="w-full ">
                       <FormLabel>
-                        Descripción <span className="">(opcional)</span>
+                        Descripción <span className="text-xs text-gray-500">(opcional)</span>
                       </FormLabel>
                       <Textarea
                         {...field}
@@ -598,10 +596,11 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
               </div>
             </div>
 
-            <Separator className="my-10" />
+            <Separator className="my-12" />
+
+            {/* MOTORIZACIÓN */}
             <span className="text-xl font-semibold">Motorización</span>
             <div className="grid grid-cols-1 gap-4 mt-4 md:gap-10 md:grid-cols-2">
-              {/* motor and gearbox */}
               <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -630,7 +629,6 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-                        {...field}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -639,7 +637,9 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="MANUAL">Manual</SelectItem>
-                          <SelectItem value="AUTOMATIC">Automática</SelectItem>
+                          <SelectItem value="AUTOMATIC">
+                            Automática
+                          </SelectItem>
                         </SelectContent>
                       </Select>
 
@@ -659,7 +659,6 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-                        {...field}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -676,9 +675,212 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                     </FormItem>
                   )}
                 />
+
+                <FormField
+                  control={form.control}
+                  name="drive"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tracción <span className="text-gray-500">(opcional)</span></FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Seleccionar" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Delantera">Delantera</SelectItem>
+                          <SelectItem value="Trasera">Trasera</SelectItem>
+                          <SelectItem value="Integral">Integral</SelectItem>
+                          <SelectItem value="4x4">4x4</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
-            <Separator className="my-10" />
+
+            <Separator className="my-12" />
+
+            {/* INFORMACION ADICIONAL */}
+            <span className="text-xl font-semibold">Información adicional <span className="text-xs text-gray-500 sm:text-sm">(opcional)</span></span>
+            <div className="grid grid-cols-1 gap-4 mt-4 md:gap-10 md:grid-cols-2">
+
+              <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="generalCondition"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Condición general</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ej. Como nuevo"
+                          type="text"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="lastestService"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Último service</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ej. 20.000"
+                          type="number"
+                          {...field}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="tireCondition"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Condición de neumáticos <span className="text-gray-500">(%)</span></FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ej. 90"
+                          type="number"
+                          maxLength={3}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="battery"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Fecha de batería</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ej. 20/10/2024"
+                          type="text"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+
+              <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="ownerNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Dueños</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="3"
+                          type="number"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="timingBelt"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Último cambio de correa <span className="text-xs text-gray-500">(km)</span></FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ej. 50.000"
+                          type="number"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="hasVTV"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row-reverse items-center justify-end gap-4 rounded-lg shadow-sm md:items-start md:gap-0 md:justify-around md:flex-col ">
+                      <span className="text-sm">VTV Vigente</span>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="VTVExpDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Vigente hasta</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ej. Mayo 2027"
+                          type="text"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="paintDetails"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Detalles de carrocería</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Ingrese los detalles de chapa y pintura del vehículo"
+                        className="min-h-32"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <Separator className="my-12" />
+
             <span className="text-xl font-semibold">
               Estado de la publicación
             </span>
@@ -688,13 +890,13 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                 control={form.control}
                 name="show"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between p-4 border rounded-lg">
+                  <FormItem className="flex flex-row items-center justify-between gap-6 px-5 py-4 border rounded-lg w-fit">
                     <div className="space-y-0.5">
                       <FormLabel className="text-base">
-                        Mostar producto
+                        Publicar en la página
                       </FormLabel>
                       <FormDescription>
-                        Podés ocultar tu producto hasta que lo desees sin
+                        Podés ocultar tu vehículo de tus clientes hasta que lo desees sin
                         eliminarlo.
                       </FormDescription>
                     </div>
@@ -714,7 +916,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                 name="status"
                 render={({ field }) => (
                   <FormItem className="col-span-1">
-                    <FormLabel>Estado</FormLabel>
+                    <FormLabel>Estado de venta</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -736,7 +938,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="branchID"
                 render={({ field }) => (
@@ -764,7 +966,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
 
             {buttonLoading && (

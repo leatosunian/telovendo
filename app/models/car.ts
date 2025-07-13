@@ -7,76 +7,76 @@ export interface ICar extends Document {
   kilometers: number;
   motor: string;
   type:
-    | "BIKE"
-    | "CAR"
-    | "QUAD"
-    | "UTV"
-    | "TRUCK"
-    | "PICKUP"
-    | "UTILITARY"
-    | "SUV"
-    | "VAN"
-    | "MINIVAN"
-    | "CONVERTIBLE"
-    | "COUPE"
-    | "HATCHBACK"
-    | "SEDAN"
-    | "MOTORHOME"
-    | "ATV"
-    | "SCOOTER";
+  | "BIKE"
+  | "CAR"
+  | "QUAD"
+  | "UTV"
+  | "TRUCK"
+  | "PICKUP"
+  | "UTILITARY"
+  | "SUV"
+  | "VAN"
+  | "MINIVAN"
+  | "CONVERTIBLE"
+  | "COUPE"
+  | "HATCHBACK"
+  | "SEDAN"
+  | "MOTORHOME"
+  | "ATV"
+  | "SCOOTER";
   price: number;
   currency: "ARS" | "USD";
   brand:
-    | "Audi"
-    | "Chevrolet"
-    | "Citroen"
-    | "Fiat"
-    | "Ford"
-    | "Volkswagen"
-    | "Nissan"
-    | "Jeep"
-    | "Mini"
-    | "Honda"
-    | "Porsche"
-    | "Peugeot"
-    | "Renault"
-    | "Mercedes-Benz"
-    | "BMW"
-    | "Dodge"
-    | "Chery"
-    | "Land Rover"
-    | "Toyota"
-    | "Suzuki"
-    | "Chrysler"
-    | "Harley Davidson"
-    | "Opel"
-    | "Hyundai"
-    | "Kia"
-    | "KTM"
-    | "Benelli"
-    | "Yamaha"
-    | "Alfa Romeo"
-    | "Aston Martin"
-    | "Bentley"
-    | "Cadillac"
-    | "Ferrari"
-    | "GMC"
-    | "Hummer"
-    | "Jaguar"
-    | "Lamborghini"
-    | "Lancia"
-    | "Lexus"
-    | "Lincoln"
-    | "Lotus"
-    | "Maserati"
-    | "Mazda"
-    | "Mitsubishi"
-    | "RAM"
-    | "Rover"
-    | "Seat"
-    | "Subaru"
-    | "Tesla"
-    | "Volvo";
+  | "Audi"
+  | "Chevrolet"
+  | "Citroen"
+  | "Fiat"
+  | "Ford"
+  | "Volkswagen"
+  | "Nissan"
+  | "Jeep"
+  | "Mini"
+  | "Honda"
+  | "Porsche"
+  | "Peugeot"
+  | "Renault"
+  | "Mercedes-Benz"
+  | "BMW"
+  | "Dodge"
+  | "Chery"
+  | "Land Rover"
+  | "Toyota"
+  | "Suzuki"
+  | "Chrysler"
+  | "Harley Davidson"
+  | "Opel"
+  | "Hyundai"
+  | "Kia"
+  | "KTM"
+  | "Benelli"
+  | "Yamaha"
+  | "Alfa Romeo"
+  | "Aston Martin"
+  | "Bentley"
+  | "Cadillac"
+  | "Ferrari"
+  | "GMC"
+  | "Hummer"
+  | "Jaguar"
+  | "Lamborghini"
+  | "Lancia"
+  | "Lexus"
+  | "Lincoln"
+  | "Lotus"
+  | "Maserati"
+  | "Mazda"
+  | "Mitsubishi"
+  | "RAM"
+  | "Rover"
+  | "Seat"
+  | "Subaru"
+  | "Tesla"
+  | "Volvo";
   modelName: string;
   status: "RESERVED" | "SOLD" | "AVAILABLE";
   gearbox: "AUTOMATIC" | "MANUAL";
@@ -90,6 +90,16 @@ export interface ICar extends Document {
   branchID?: string;
   branchAddress?: string;
   createdAt?: Date | undefined;
+  generalCondition: string;
+  lastestService: string;
+  VTVExpDate: string;
+  hasVTV: boolean;
+  ownerNumber: number;
+  timingBelt: number;
+  tireCondition: number;
+  drive: string;
+  battery: string,
+  paintDetails: string;
 }
 
 const carSchema: Schema = new Schema<ICar>(
@@ -133,7 +143,7 @@ const carSchema: Schema = new Schema<ICar>(
     },
     type: {
       type: String,
-      required: true,
+      required: false,
     },
     price: {
       type: Number,
@@ -162,7 +172,7 @@ const carSchema: Schema = new Schema<ICar>(
     },
     doors: {
       type: String,
-      required: true,
+      required: false,
     },
     gas: {
       type: String,
@@ -171,15 +181,54 @@ const carSchema: Schema = new Schema<ICar>(
     show: {
       type: Boolean,
       required: false,
-      default: true,
     },
     branchID: {
       type: String,
-      required: true,
+      required: false,
     },
     branchAddress: {
       type: String,
-      required: true,
+      required: false,
+    },
+    generalCondition: {
+      type: String,
+      required: false,
+    },
+    lastestService: {
+      type: String,
+      required: false,
+    },
+    VTVExpDate: {
+      type: String,
+      required: false,
+    },
+    hasVTV: {
+      type: Boolean,
+      required: false,
+    },
+    ownerNumber: {
+      type: Number,
+      required: false,
+    },
+    timingBelt: {
+      type: Number,
+      required: false,
+    },
+    tireCondition: {
+      type: Number,
+      required: false,
+    },
+    drive: {
+      type: String,
+      required: false,
+    },
+    battery: {
+      type: String,
+      required: false,
+    },
+    paintDetails: {
+      type: String,
+      required: false,
     },
   },
   {

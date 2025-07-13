@@ -114,7 +114,10 @@ const EmployeesChart = ({ onCreated, employeesFetch }: props) => {
 
   useEffect(() => {
     setEmployees(employeesFetch);
-    setLoading(false);
+    setTimeout(() => {
+
+      setLoading(false);
+    }, 2000);
   }, [employeesFetch]);
 
   async function onDelete() {

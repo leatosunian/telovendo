@@ -238,6 +238,7 @@ input[type=number]::-webkit-outer-spin-button {
   -o-border-radius: 5px;
   outline: none;
   border: 1px solid #27272a;
+  background-color: transparent;
 }
 
 .inputSearch::placeholder {
@@ -247,6 +248,7 @@ input[type=number]::-webkit-outer-spin-button {
 .inputSearch:focus,
 input:hover {
   outline: none;
+  background-color: #27272a9f;
   /* background-color: #1b1b1b;
   box-shadow: 0 0 0 1px rgb(139 139 139 / 73%); */
 }

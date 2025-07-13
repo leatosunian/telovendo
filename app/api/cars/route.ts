@@ -27,8 +27,9 @@ export async function POST(request: NextRequest) {
   const data = await request.json();
   console.log(data);
   
-  const branchAddress = await BranchModel.findOne({ _id: data.branchID });
-  data.branchAddress = branchAddress.address;
+  //const branchAddress = await BranchModel.findOne({ _id: data.branchID });
+  //data.branchAddress = branchAddress.address;
+  
   try {
     const vehicle = await CarModel.create(data);
     return NextResponse.json(vehicle);

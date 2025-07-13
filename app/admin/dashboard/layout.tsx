@@ -74,7 +74,7 @@ export default function DashboardLayout({
                       </li>
                     </>
                   )}
-                  {session?.user?.role && session?.user?.role  === 'ADMIN' && (
+                  {/* {session?.user?.role && session?.user?.role  === 'ADMIN' && (
                     <>
                       <li>
                         <Link
@@ -86,7 +86,7 @@ export default function DashboardLayout({
                         </Link>
                       </li>
                     </>
-                  )}
+                  )} */}
                   <li>
                     <Link
                       href={"/admin/dashboard/leads"}

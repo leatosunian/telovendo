@@ -38,7 +38,7 @@ export async function DELETE(
     // get gallery data
     const gallery = await CarImageModel.find({ carID: params.uuid });
     // delete car
-    const deletedCar = await CarModel.findOneAndDelete({ uuid: params.uuid });
+    await CarModel.findOneAndDelete({ uuid: params.uuid });
     // delete thumbnail from cloudinary
     await cloudinary.uploader.destroy(carToDelete.imagePublicID);
     // delete gallery images from cloudinary
@@ -49,8 +49,7 @@ export async function DELETE(
 
     return NextResponse.json({ msg: "CAR_DELETED" });
   } catch (error) {
-    console.log("error deleted");
-
+    console.log("error deleting car");
     return NextResponse.json({ msg: "ERROR_DELETE_CAR" });
   }
 }
@@ -63,8 +62,8 @@ export async function PUT(
   await connectDB();
   const { uuid } = params;
   const data: ICar = await request.json();
-  const branchAddress = await BranchModel.findOne({ _id: data.branchID });
-  data.branchAddress = branchAddress.address;
+  //const branchAddress = await BranchModel.findOne({ _id: data.branchID });
+  //data.branchAddress = branchAddress.address;
   try {
     const car = await CarModel.findOneAndUpdate({ uuid }, data, {
       new: true,

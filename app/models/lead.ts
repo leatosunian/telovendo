@@ -33,16 +33,16 @@ const leadSchema: Schema = new Schema<ILead>(
       required: false,
       default: "",
     },
-    address: {
-      type: String,
-      required: false,
-      default: "",
-    },
-    state: {
-      type: String,
-      required: false,
-      default: "",
-    },
+    //address: {
+    //  type: String,
+    //  required: false,
+    //  default: "",
+    //},
+    //state: {
+    //  type: String,
+    //  required: false,
+    //  default: "",
+    //},
     surname: {
       type: String,
       required: true,
@@ -63,18 +63,18 @@ const leadSchema: Schema = new Schema<ILead>(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-    },
+    //email: {
+    //  type: String,
+    //  required: true,
+    //},
     interestedIn: {
       type: String,
       required: true,
     },
-    branchID: {
-      type: String,
-      required: true,
-    },
+    //branchID: {
+    //  type: String,
+    //  required: true,
+    //},
     employeeID: {
       type: String,
       required: true,

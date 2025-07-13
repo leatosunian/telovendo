@@ -3,12 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -42,6 +40,7 @@ const LoginForm = () => {
       password: "",
     },
   });
+  const [error, setError] = useState<boolean>(false);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
@@ -56,10 +55,14 @@ const LoginForm = () => {
         router.push("/admin/dashboard/stock");
       } else {
         setLoading(false);
+        setError(true);
         toast({
           description: "Usuario o contraseña incorrectos",
           variant: "destructive",
         });
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
       }
     } catch (error) {
       setLoading(false);
@@ -69,42 +72,44 @@ const LoginForm = () => {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nombre de usuario</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Ingresa tu usuario"
-                    type="text"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 min-h-fit">
+          <div className="flex flex-col gap-3">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nombre de usuario</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Ingresa tu usuario"
+                      type="text"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Contraseña</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Ingresa tu contraseña"
-                    type="password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Contraseña</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Ingresa tu contraseña"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <Button type="submit" className="w-full ">
             Iniciar sesión
@@ -119,7 +124,10 @@ const LoginForm = () => {
           </div>
         </>
       )}
-      <Toaster />
+
+      {error && (
+        <Toaster />
+      )}
     </>
   );
 };

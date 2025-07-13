@@ -61,14 +61,12 @@ const NewLeadForm = ({
       name: "",
       surname: "",
       contactType: "",
-      businessType: "",
-      address: "",
       observations: "",
       phone: "",
       city: "",
-      state: "",
-      branchID: "",
       employeeID: "",
+      interestedInName: "",
+      leadVehicleName: ""
     },
   });
 
@@ -82,7 +80,7 @@ const NewLeadForm = ({
   const handleClick = () => {
     modalButtonRef.current?.click();
   };
-  console.log(session.user);
+  console.log(session?.user);
 
   async function getEmployees() {
     try {
@@ -92,10 +90,7 @@ const NewLeadForm = ({
       }).then((response) => response.json());
       console.log(employeesFetch);
       setEmployees(employeesFetch.employees);
-      if (session?.user?.role && session?.user?.role !== "ADMIN") {
-        form.setValue("branchID", session?.user?._id);
-      }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function getBranches() {
@@ -105,13 +100,14 @@ const NewLeadForm = ({
         cache: "no-store",
       }).then((response) => response.json());
       setBranches(branchesFetch.branches);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   // save lead vehicles function
   async function onSubmit(values: any) {
     console.log(values);
     values.interestedIn = "No especificado";
+    //values.interestedInName = "No especificado";
     values.status = "Pendiente";
     values.pendingTask = "Crear tarea";
     setLoading(true);
@@ -229,8 +225,10 @@ const NewLeadForm = ({
                       </FormItem>
                     )}
                   />
+
+
                   {/* businesstype */}
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="businessType"
                     render={({ field }) => (
@@ -264,7 +262,7 @@ const NewLeadForm = ({
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
 
                   {/* observations */}
                   <FormField
@@ -307,7 +305,7 @@ const NewLeadForm = ({
                   />
 
                   {/* email */}
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
@@ -323,9 +321,10 @@ const NewLeadForm = ({
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
+
                   {/* address */}
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="address"
                     render={({ field }) => (
@@ -346,7 +345,7 @@ const NewLeadForm = ({
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
                   {/* city */}
                   <FormField
                     control={form.control}
@@ -370,7 +369,7 @@ const NewLeadForm = ({
                   />
 
                   {/* state */}
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="state"
                     render={({ field }) => (
@@ -389,8 +388,43 @@ const NewLeadForm = ({
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
                 </div>
+              </div>
+
+              <Separator className="my-10" />
+              <span className="text-xl font-semibold">
+                Anotación rapida
+              </span>
+              <div className="flex flex-col gap-4 mt-6 md:gap-10 max-w-[500px] ">
+                {/* interesado en *anotacion rapida* */}
+                <FormField
+                  control={form.control}
+                  name="interestedInName"
+                  render={({ field }) => (
+                    <FormItem className="col-span-2 md:col-span-1">
+                      <FormLabel>Interesado en <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
+                      <FormControl>
+                        <Input placeholder="Ingrese un vehículo" type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* vehiculo del cliente *anotacion rapida* */}
+                <FormField
+                  control={form.control}
+                  name="interestedInName"
+                  render={({ field }) => (
+                    <FormItem className="col-span-2 md:col-span-1">
+                      <FormLabel>Vehiculo del cliente <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
+                      <FormControl>
+                        <Input placeholder="Ingrese un vehículo" type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div>
@@ -402,17 +436,17 @@ const NewLeadForm = ({
                     </span>
                   </>
                 )}
-                {session?.user?.role && session?.user?.role !== "ADMIN" && (
+                {/* {session?.user?.role && session?.user?.role !== "ADMIN" && (
                   <>
                     <span className="text-xl font-semibold">
                       Seleccionar sucursal
                     </span>
                   </>
-                )}
+                )} */}
                 {/* asign seller */}
                 <div className="grid grid-cols-1 gap-4 mt-6 md:gap-10 md:grid-cols-2">
                   <div className="grid grid-cols-1 gap-4 h-fit md:gap-8 md:grid-cols-2">
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="branchID"
                       render={({ field }) => (
@@ -442,7 +476,7 @@ const NewLeadForm = ({
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
+                    /> */}
                     {session?.user?.role && session?.user?.role === "ADMIN" && (
                       <>
                         <FormField
