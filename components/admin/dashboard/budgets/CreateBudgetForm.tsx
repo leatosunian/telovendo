@@ -398,21 +398,21 @@ const CreateBudgetForm = () => {
                       </span>
                       <Separator className="" />
                       <div className="flex flex-col flex-wrap gap-3 md:gap-4">
-                        <div className="flex items-center gap-2 w-fit h-fit">
+                        {/* <div className="flex items-center gap-2 w-fit h-fit">
                           <HiOutlineMail />
                           <span className="text-sm">{selectedLead?.email}</span>
-                        </div>
+                        </div> */}
                         <div className="flex items-center gap-2 w-fit h-fit">
                           <MdLocalPhone />
                           <span className="text-sm">
                             {selectedLead?.phone}{" "}
                           </span>
                         </div>
-                        <div className="flex items-center gap-2 w-fit h-fit">
+                        {/* <div className="flex items-center gap-2 w-fit h-fit">
                           <span className="text-sm">
                             <b>Tipo de negocio:</b> {selectedLead?.businessType}
                           </span>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
