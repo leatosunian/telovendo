@@ -193,6 +193,12 @@ const NewLeadForm = ({ onChangeFormStep, createdLeadData }: props) => {
     console.log(vehicleList);
   }, [vehicleList]);
 
+
+  useEffect(() => {
+    console.log('createdLeadData', createdLeadData);
+  }, [createdLeadData]);
+
+
   const handleFileInputRefClick = () => {
     fileInputRef.current?.click();
   };

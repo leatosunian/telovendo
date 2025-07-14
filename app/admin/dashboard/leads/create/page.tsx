@@ -8,7 +8,7 @@ import NewLeadEnd from "@/components/admin/dashboard/leads/NewLeadEnd";
 import { ILead } from "@/app/models/lead";
 
 const CreateLeadPage = () => {
-  const [componentToShow, setComponentToShow] = useState<number>(1);
+  const [componentToShow, setComponentToShow] = useState<number>(2);
   const [createdLeadData, setCreatedLeadData] = useState<ILead>();
   
   return (

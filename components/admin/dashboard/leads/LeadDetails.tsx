@@ -454,7 +454,7 @@ const LeadDetails = () => {
                   </Select>
                 </div>
                 <div className="flex gap-3 md:gap-5">
-                  <Link href={"/admin/dashboard/leads/edit/n13jhblmkld"}>
+                  <Link href={"/admin/dashboard/leads/edit/"+lead?._id}>
                     <Button
                       variant="outline"
                       className="flex gap-2 p-2 w-fit h-fit"
@@ -467,8 +467,8 @@ const LeadDetails = () => {
                     <Button
                       onClick={() =>
                         openDeleteModal({
-                          leadName: "Leandro Tosunian",
-                          uuid: "ausgyhbe123b4",
+                          leadName: `${lead?.name} ${lead?.surname}`,
+                          uuid: `${lead?._id}`,
                         })
                       }
                       variant={"destructive"}
@@ -491,10 +491,7 @@ const LeadDetails = () => {
                     </span>
                     <Separator className="" />
                     <div className="flex flex-col flex-wrap gap-3 md:gap-4">
-                      <div className="flex items-center gap-2 w-fit h-fit">
-                        <HiOutlineMail />
-                        <span className="text-sm">{lead?.email}</span>
-                      </div>
+
                       <div className="flex items-center gap-2 w-fit h-fit">
                         <MdLocalPhone />
                         <span className="text-sm">{lead?.phone} </span>
@@ -505,11 +502,7 @@ const LeadDetails = () => {
                           {dayjs(lead?.createdAt).format("DD-MM-YYYY")}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 w-fit h-fit">
-                        <span className="text-sm">
-                          <b>Tipo de negocio:</b> {lead?.businessType}
-                        </span>
-                      </div>
+
                       {seller && (
                         <div className="flex items-center gap-2 w-fit h-fit">
                           <span className="text-sm">
@@ -584,7 +577,7 @@ const LeadDetails = () => {
             {/* Vehiculo de interés */}
             <div className="w-full h-full md:w-fit ">
               <span className="text-xl font-semibold">Vehiculo de interés</span>
-              
+
               {intInVehicle === null && (
                 <Link
                   href={"/admin/dashboard/leads/edit/" + lead?._id}
@@ -798,7 +791,7 @@ const LeadDetails = () => {
                                         className={cn(
                                           "w-full pl-3 text-left font-normal",
                                           !field.value &&
-                                            "text-muted-foreground"
+                                          "text-muted-foreground"
                                         )}
                                       >
                                         {" "}

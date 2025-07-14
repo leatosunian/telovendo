@@ -6,28 +6,32 @@ import CarModel from "@/app/models/car";
 import TaskModel from "@/app/models/task";
 import AdminModel from "@/app/models/admin";
 
-// GET CAR BY UUID
+// GET LEAD BY UUID
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   await connectDB();
   try {
-    console.log('params', params.id);
-    
+    //console.log('params', params.id);
+
     const lead = await LeadModel.findOne({ _id: params.id });
-    console.log('lead', lead);
-    
+    let intInVehicle: any = {};
+    //console.log('lead', lead);
+
     const leadVehicles = await LeadVehiclesModel.findOne({ leadID: params.id });
-    console.log('leadVehicles', leadVehicles);
-    
-    const intInVehicle = await CarModel.findOne({
-      uuid: leadVehicles.leadPrefVehicleUUID,
-    });
-    console.log('intInVehicle', intInVehicle);
+    //console.log('leadVehicles', leadVehicles);
+    if (leadVehicles !== null) {
+
+      intInVehicle = await CarModel.findOne({
+        uuid: leadVehicles.leadPrefVehicleUUID,
+      });
+      //console.log('intInVehicle', intInVehicle);
+    }
+
 
     const seller = await AdminModel.findOne({ _id: lead.employeeID });
-    console.log('seller', seller);
+    //console.log('seller', seller);
 
     return NextResponse.json({
       msg: "LEAD_GET",
@@ -37,11 +41,12 @@ export async function GET(
       seller,
     });
   } catch (error) {
+    console.error("ERROR_GET_LEAD", error);
     return NextResponse.json({ msg: "ERROR_GET_LEAD" });
   }
 }
 
-// DELETE CAR BY UUID
+// DELETE LEAD BY UUID
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -68,7 +73,7 @@ export async function DELETE(
   }
 }
 
-// EDIT CAR
+// EDIT LEAD
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }

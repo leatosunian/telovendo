@@ -5,20 +5,22 @@ export interface ILead extends Document {
   name: string;
   city?: string;
   surname: string;
-  address?: string;
+  //address?: string;
   contactType: string;
-  state?: string;
-  businessType: string;
+  //state?: string;
+  //businessType: string;
   observations?: string;
   phone: string;
   employeeID: string;
-  branchID: string;
-  email: string;
+  //branchID: string;
+  //email: string;
   _id?: string;
   status: string;
   interestedIn?: string;
+  interestedInName?: string;
   updatedAt?: string;
   createdAt?: string;
+  leadVehicleName?: string;
   pendingTask?:string;
 }
 
@@ -51,10 +53,10 @@ const leadSchema: Schema = new Schema<ILead>(
       type: String,
       required: true,
     },
-    businessType: {
-      type: String,
-      required: true,
-    },
+    //businessType: {
+    //  type: String,
+    //  required: true,
+    //},
     observations: {
       type: String,
       required: false,
@@ -70,6 +72,14 @@ const leadSchema: Schema = new Schema<ILead>(
     interestedIn: {
       type: String,
       required: true,
+    },
+    interestedInName: {
+      type: String,
+      required: false,
+    },
+    leadVehicleName:{
+      type:String,
+      required:false
     },
     //branchID: {
     //  type: String,
@@ -91,6 +101,7 @@ const leadSchema: Schema = new Schema<ILead>(
   {
     timestamps: true,
     versionKey: false,
+    strict: false
   }
 );
 

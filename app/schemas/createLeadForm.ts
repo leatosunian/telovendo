@@ -11,9 +11,7 @@ export const formSchema = z.object({
     .min(4, {
       message: "Ingresa un año.",
     }),
-  contactType: z.string().min(1, {
-    message: "Selecciona una marca.",
-  }),
+  contactType: z.string().optional().or(z.literal("")),
   city: z.string().optional().or(z.literal("")),
   leadVehicleName: z.string().optional().or(z.literal("")),
   interestedInName: z.string().optional().or(z.literal("")),

@@ -56,7 +56,6 @@ import { useSession } from "next-auth/react";
 
 const LeadEditForm = () => {
   const params = useParams();
-  console.log(params);
 
   const editLeadForm = useForm<z.infer<typeof editFormSchema>>({
     resolver: zodResolver(editFormSchema),
@@ -64,14 +63,12 @@ const LeadEditForm = () => {
       name: "",
       surname: "",
       contactType: "",
-      businessType: "",
-      address: "",
       observations: "",
       phone: "",
       city: "",
-      state: "",
-      branchID: "",
       employeeID: "",
+      interestedInName: "",
+      leadVehicleName: ""
     },
   });
 
@@ -102,6 +99,7 @@ const LeadEditForm = () => {
   const [lead, setLead] = useState<ILead>();
   const [leadVehicles, setLeadVehicles] = useState<ILeadVehicle>();
   const [existentIntInImage, setExistentIntInImage] = useState<string>("");
+  const [hasExistingLeadVehicles, setHasExistingLeadVehicles] = useState<boolean>(false);
   const { toast } = useToast();
   const { data: session }: any = useSession();
 
@@ -112,10 +110,18 @@ const LeadEditForm = () => {
         cache: "no-store",
       });
       const lead = await leadFetch.json();
+      console.log('lead', lead);
       setLoading(false);
       setLead(lead.lead);
       setLeadVehicles(lead.leadVehicles);
-      setSelectedIntIn(lead.intInVehicle);
+      if (lead.leadVehicles !== null) {
+        setHasExistingLeadVehicles(true)
+      }
+      if (lead.intInVehicle.name) {
+        setSelectedIntIn(lead.intInVehicle);
+      } else {
+        setSelectedIntIn(undefined);
+      }
     } catch (error) {
       return;
     }
@@ -185,9 +191,13 @@ const LeadEditForm = () => {
     }
   }
 
-  // EDIT LEAD FUNCTION
+  // EDIT LEAD VEHICLES FUNCTION
   async function onSubmitLeadVehicles(values: any) {
     setLoading(true);
+    if(!hasExistingLeadVehicles){
+      createLeadVehicles(values)
+      return;
+    }
     if (!selectedIntIn) {
       setLoading(false);
       toast({
@@ -200,6 +210,7 @@ const LeadEditForm = () => {
     values.leadID = lead?._id;
     values.interestedIn = selectedIntIn?.name;
     try {
+
       await fetch("/api/leads/" + params.uuid, {
         method: "PUT",
         body: JSON.stringify(values),
@@ -225,6 +236,60 @@ const LeadEditForm = () => {
     }
   }
 
+
+   // create lead vehicles function
+  async function createLeadVehicles(values: any) {
+    setLoading(true);
+    if (!selectedIntIn) {
+      setLoading(false);
+      toast({
+        description: "Selecciona un vehiculo de interés",
+        variant: "destructive",
+      });
+      return;
+    }
+    values.leadPrefVehicleUUID = selectedIntIn?.uuid;
+    values.leadID = lead?._id;
+    values.interestedIn = selectedIntIn?.name;
+
+    let formData = new FormData();
+    formData.append("leadVehicleImage", intInImage!);
+    formData.append("leadName", values.leadName);
+    formData.append("leadYear", values.leadYear);
+    formData.append("leadKilometers", values.leadKilometers);
+    formData.append("leadMotor", values.leadMotor);
+    formData.append("leadType", values.leadType);
+    formData.append("leadCurrency", values.leadCurrency);
+    formData.append("leadPrice", values.leadPrice);
+    formData.append("interestedIn", selectedIntIn?.name!);
+    formData.append("leadID", lead?._id!);
+    formData.append("leadPrefVehicleUUID", selectedIntIn?.uuid!);
+    formData.append("leadObservations", values.leadObservations);
+
+    console.log("leadVehicleImage", intInImage);
+
+    try {
+      const vehicle = await fetch("/api/leads/vehicles", {
+        method: "POST",
+        body: formData,
+      }).then((response) => response.json());
+      console.log(vehicle);
+
+      toast({ description: "Vehículos añadidos", variant: "default" });
+      setLoading(false);
+
+      console.log(vehicle);
+    } catch (error) {
+      toast({
+        description: "Error al añadir vehículos",
+        variant: "destructive",
+      });
+      setLoading(false);
+      // error alert
+    }
+  }
+
+
   const handleSearch = useDebouncedCallback((searchValue: string) => {
     const params = new URLSearchParams(searchParams);
     if (searchValue) {
@@ -242,7 +307,7 @@ const LeadEditForm = () => {
         cache: "no-store",
       }).then((response) => response.json());
       setEmployees(employeesFetch.employees);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function getBranches() {
@@ -252,7 +317,7 @@ const LeadEditForm = () => {
         cache: "no-store",
       }).then((response) => response.json());
       setBranches(branchesFetch.branches);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const handleFileInputRefClick = () => {
@@ -275,19 +340,17 @@ const LeadEditForm = () => {
 
   useEffect(() => {
     if (lead) {
-      editLeadForm.setValue("address", lead?.address);
-      editLeadForm.setValue("branchID", lead?.branchID!);
-      editLeadForm.setValue("businessType", lead?.businessType!);
       editLeadForm.setValue("city", lead?.city);
       editLeadForm.setValue("contactType", lead?.contactType!);
-      editLeadForm.setValue("email", lead?.email!);
       editLeadForm.setValue("employeeID", lead?.employeeID!);
       editLeadForm.setValue("name", lead?.name!);
       editLeadForm.setValue("observations", lead?.observations);
       editLeadForm.setValue("phone", lead?.phone!);
-      editLeadForm.setValue("state", lead?.state);
       editLeadForm.setValue("surname", lead?.surname!);
+      editLeadForm.setValue("leadVehicleName", lead?.leadVehicleName!);
+      editLeadForm.setValue("interestedInName", lead?.interestedInName!);
     }
+
   }, [lead]);
 
   useEffect(() => {
@@ -398,42 +461,43 @@ const LeadEditForm = () => {
                         </FormItem>
                       )}
                     />
-                    {/* businesstype */}
-                    <FormField
-                      control={editLeadForm.control}
-                      name="businessType"
-                      render={({ field }) => (
-                        <FormItem className="col-span-2 md:col-span-1">
-                          <FormLabel>Tipo de negocio</FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            {...field}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Seleccionar" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="Usado por usado">
-                                Usado por usado
-                              </SelectItem>
-                              <SelectItem value="Compra de usado">
-                                Compra de usado
-                              </SelectItem>
-                              <SelectItem value="0km">0km</SelectItem>
-                              <SelectItem value="Plan de ahorro">
-                                Plan de ahorro
-                              </SelectItem>
-                              <SelectItem value="Posventa">Posventa</SelectItem>
-                              <SelectItem value="Otro">Otro</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
+                    {session?.user?.role &&
+                      session?.user?.role === "ADMIN" && (
+                        <>
+                          <FormField
+                            control={editLeadForm.control}
+                            name="employeeID"
+                            render={({ field }) => (
+                              <FormItem className="col-span-2 md:col-span-1">
+                                <FormLabel>Vendedor</FormLabel>
+                                <Select
+                                  onValueChange={field.onChange}
+                                  defaultValue={field.value}
+                                  {...field}
+                                >
+                                  <FormControl>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Seleccionar" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {employees &&
+                                      employees.map((employee) => (
+                                        <SelectItem
+                                          key={employee._id}
+                                          value={employee._id!}
+                                        >
+                                          {employee.name} {employee.surname}
+                                        </SelectItem>
+                                      ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </>
                       )}
-                    />
 
                     {/* observations */}
                     <FormField
@@ -474,24 +538,7 @@ const LeadEditForm = () => {
                         </FormItem>
                       )}
                     />
-                    {/* address */}
-                    <FormField
-                      control={editLeadForm.control}
-                      name="address"
-                      render={({ field }) => (
-                        <FormItem className="">
-                          <FormLabel>Domicilio</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Juan B. Justo 4050"
-                              type="text"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+
                     {/* city */}
                     <FormField
                       control={editLeadForm.control}
@@ -511,129 +558,47 @@ const LeadEditForm = () => {
                       )}
                     />
 
-                    {/* state */}
-                    <FormField
-                      control={editLeadForm.control}
-                      name="state"
-                      render={({ field }) => (
-                        <FormItem className="">
-                          <FormLabel>Provincia</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Buenos Aires"
-                              type="text"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    {/* email */}
-                    <FormField
-                      control={editLeadForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem className="">
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="juanperez@gmail.com"
-                              type="email"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                   </div>
                 </div>
 
-                <div>
-                  <Separator className="my-10" />
-                  <span className="text-lg font-semibold">
-                    Asignar vendedor
-                  </span>
-                  {/* asign seller */}
-                  <div className="grid grid-cols-1 gap-4 mt-6 md:gap-10 md:grid-cols-2">
-                    <div className="grid grid-cols-1 gap-4 h-fit md:gap-8 md:grid-cols-2">
-                      <FormField
-                        control={editLeadForm.control}
-                        name="branchID"
-                        render={({ field }) => (
-                          <FormItem className="col-span-2 md:col-span-1">
-                            <FormLabel>Sucursal</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                              {...field}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Seleccionar" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {branches &&
-                                  branches.map((branch) => (
-                                    <SelectItem
-                                      key={branch._id}
-                                      value={branch._id!}
-                                    >
-                                      {branch.branchName} - {branch.address}
-                                    </SelectItem>
-                                  ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
 
-                      {session?.user?.role &&
-                        session?.user?.role === "ADMIN" && (
-                          <>
-                            <FormField
-                              control={editLeadForm.control}
-                              name="employeeID"
-                              render={({ field }) => (
-                                <FormItem className="col-span-2 md:col-span-1">
-                                  <FormLabel>Vendedor</FormLabel>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                    {...field}
-                                  >
-                                    <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Seleccionar" />
-                                      </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                      {employees &&
-                                        employees.map((employee) => (
-                                          <SelectItem
-                                            key={employee._id}
-                                            value={employee._id!}
-                                          >
-                                            {employee.name} {employee.surname}
-                                          </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                  </Select>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </>
-                        )}
-                    </div>
-                  </div>
+
+                <Separator className="my-10" />
+                <span className="text-xl font-semibold">
+                  Anotación rapida
+                </span>
+                <div className="flex flex-col gap-4 mt-6 md:gap-5 max-w-[500px] ">
+                  {/* interesado en *anotacion rapida* */}
+                  <FormField
+                    control={editLeadForm.control}
+                    name="interestedInName"
+                    render={({ field }) => (
+                      <FormItem className="col-span-2 md:col-span-1">
+                        <FormLabel>Interesado en <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
+                        <FormControl>
+                          <Input placeholder="Ingrese un vehículo" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* vehiculo del cliente *anotacion rapida* */}
+                  <FormField
+                    control={editLeadForm.control}
+                    name="leadVehicleName"
+                    render={({ field }) => (
+                      <FormItem className="col-span-2 md:col-span-1">
+                        <FormLabel>Vehiculo del cliente <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
+                        <FormControl>
+                          <Input placeholder="Ingrese un vehículo" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
-                <Button type="submit" className="w-full mt-12 mb-5 md:w-1/3">
+                <Button type="submit" className="w-full mt-10 mb-5 md:w-1/3">
                   Guardar cambios
                 </Button>
               </form>
@@ -658,7 +623,7 @@ const LeadEditForm = () => {
                 </h4>
               )}
 
-              {!selectedIntIn && (
+              {selectedIntIn === undefined && (
                 <>
                   {/* search */}
                   <div className={`w-full md:w-1/3 ${styles.group}`}>
@@ -678,7 +643,7 @@ const LeadEditForm = () => {
                       className={styles.input}
                       defaultValue={searchParams.get("search")?.toString()}
                       type="search"
-                      placeholder="Search..."
+                      placeholder="Buscar..."
                       name="searchbar"
                     />
                   </div>
@@ -1070,10 +1035,16 @@ const LeadEditForm = () => {
                     />
                   </div>
                 </div>
-
+                {hasExistingLeadVehicles && 
                 <Button type="submit" className="w-full mt-10 mb-5 md:w-1/3">
                   Guardar cambios
-                </Button>
+                </Button>}
+
+                {!hasExistingLeadVehicles && 
+                <Button type="submit" className="w-full mt-10 mb-5 md:w-1/3">
+                  Agregar vehículos
+                </Button>}
+                
               </form>
             </Form>
           </Card>

@@ -271,7 +271,7 @@ const NewLeadForm = ({
                     render={({ field }) => (
                       <FormItem className="col-span-2">
                         <FormLabel>
-                          Observaciones <span className="">(opcional)</span>
+                          Observaciones <span className="text-xs text-gray-500">(opcional)</span>
                         </FormLabel>
                         <Textarea
                           {...field}
@@ -396,7 +396,7 @@ const NewLeadForm = ({
               <span className="text-xl font-semibold">
                 Anotación rapida
               </span>
-              <div className="flex flex-col gap-4 mt-6 md:gap-10 max-w-[500px] ">
+              <div className="flex flex-col gap-4 mt-6 md:gap-5 max-w-[500px] ">
                 {/* interesado en *anotacion rapida* */}
                 <FormField
                   control={form.control}
@@ -414,7 +414,7 @@ const NewLeadForm = ({
                 {/* vehiculo del cliente *anotacion rapida* */}
                 <FormField
                   control={form.control}
-                  name="interestedInName"
+                  name="leadVehicleName"
                   render={({ field }) => (
                     <FormItem className="col-span-2 md:col-span-1">
                       <FormLabel>Vehiculo del cliente <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
