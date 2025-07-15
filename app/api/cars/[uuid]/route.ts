@@ -28,11 +28,10 @@ export async function DELETE(
 
   try {
     cloudinary.config({
-      cloud_name: "duiw7lwlb",
-      api_key: "435529513686272",
+      cloud_name: 'dn48eveti',
+      api_key: '661585856545528',
       api_secret: process.env.CLOUDINARY_SECRET,
     });
-
     // get car data
     const carToDelete = await CarModel.findOne({ uuid: params.uuid });
     // get gallery data

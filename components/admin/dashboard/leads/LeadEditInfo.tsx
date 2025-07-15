@@ -100,6 +100,7 @@ const LeadEditForm = () => {
   const [leadVehicles, setLeadVehicles] = useState<ILeadVehicle>();
   const [existentIntInImage, setExistentIntInImage] = useState<string>("");
   const [hasExistingLeadVehicles, setHasExistingLeadVehicles] = useState<boolean>(false);
+  const [loadingSearch, setLoadingSearch] = useState(false);
   const { toast } = useToast();
   const { data: session }: any = useSession();
 
@@ -114,6 +115,7 @@ const LeadEditForm = () => {
       setLoading(false);
       setLead(lead.lead);
       setLeadVehicles(lead.leadVehicles);
+
       if (lead.leadVehicles !== null) {
         setHasExistingLeadVehicles(true)
       }
@@ -172,10 +174,12 @@ const LeadEditForm = () => {
     try {
       let formData = new FormData();
       formData.append("leadVehicleImage", file);
+      console.log('file', file)
       const editedLead = await fetch("/api/leads/vehicles/" + params.uuid, {
         method: "PUT",
         body: formData,
       }).then((response) => response.json());
+      console.log(editedLead);
       toast({
         description: "¡Cambios guardados correctamente!",
         variant: "default",
@@ -194,7 +198,7 @@ const LeadEditForm = () => {
   // EDIT LEAD VEHICLES FUNCTION
   async function onSubmitLeadVehicles(values: any) {
     setLoading(true);
-    if(!hasExistingLeadVehicles){
+    if (!hasExistingLeadVehicles) {
       createLeadVehicles(values)
       return;
     }
@@ -237,7 +241,7 @@ const LeadEditForm = () => {
   }
 
 
-   // create lead vehicles function
+  // create lead vehicles function
   async function createLeadVehicles(values: any) {
     setLoading(true);
     if (!selectedIntIn) {
@@ -253,7 +257,9 @@ const LeadEditForm = () => {
     values.interestedIn = selectedIntIn?.name;
 
     let formData = new FormData();
-    formData.append("leadVehicleImage", intInImage!);
+    if (intInImage !== undefined) {
+      formData.append("leadVehicleImage", intInImage!);
+    }
     formData.append("leadName", values.leadName);
     formData.append("leadYear", values.leadYear);
     formData.append("leadKilometers", values.leadKilometers);
@@ -291,13 +297,15 @@ const LeadEditForm = () => {
 
 
   const handleSearch = useDebouncedCallback((searchValue: string) => {
+    setLoadingSearch(true);
     const params = new URLSearchParams(searchParams);
     if (searchValue) {
       params.set("search", searchValue);
     } else {
       params.delete("search");
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
+    setLoadingSearch(false);
   }, 400);
 
   async function getEmployees() {
@@ -639,7 +647,7 @@ const LeadEditForm = () => {
 
                     <input
                       id="query"
-                      onChange={(e) => handleSearch(e.target.value)}
+                      onChange={(e) => { setLoadingSearch(true); handleSearch(e.target.value) }}
                       className={styles.input}
                       defaultValue={searchParams.get("search")?.toString()}
                       type="search"
@@ -648,56 +656,69 @@ const LeadEditForm = () => {
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-10 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                    {vehicleList?.map((car) => (
+                  {loadingSearch && (
+                    <>
                       <div
-                        key={car.uuid}
-                        className="col-span-1 md:h-full h-fit"
+                        className="flex items-center justify-center w-full overflow-y-hidden bg-white dark:bg-background"
+                        style={{ zIndex: "99999999", height: "20vh" }}
                       >
-                        <Card
-                          key={car.uuid}
-                          className="flex flex-col h-full shadow-lg"
-                        >
-                          <Image
-                            src={car.imagePath!}
-                            alt=""
-                            unoptimized
-                            width={500}
-                            height={500}
-                            className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
-                          />
-                          <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
-                            <CardHeader style={{ padding: "0 16px 10px 16px" }}>
-                              <CardTitle className="text-base textCut">
-                                {car.name}
-                              </CardTitle>
-                              <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
-                                <div className="flex items-center gap-2">
-                                  <FaRegCalendar /> <span>{car.year}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <IoSpeedometerOutline size={20} />
-                                  <span> {car.kilometers} km</span>
-                                </div>
-                              </CardDescription>
-                              <p className="text-lg font-semibold">
-                                {car.currency} ${car.price}
-                              </p>
-                            </CardHeader>
-                            <CardFooter className="w-full">
-                              <Button
-                                onClick={() => setSelectedIntIn(car)}
-                                variant={"default"}
-                                className="w-full mt-2 md:mt-0"
-                              >
-                                Asignar vehículo
-                              </Button>
-                            </CardFooter>
-                          </div>
-                        </Card>
+                        <div className=" loader"></div>
                       </div>
-                    ))}
-                  </div>
+                    </>
+                  )}
+                  {!loadingSearch && (
+                    <>
+                      <div className="grid grid-cols-1 gap-10 sm:gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                        {vehicleList?.map((car) => (
+                          <div
+                            key={car.uuid}
+                            className="col-span-1 md:h-full h-fit"
+                          >
+                            <Card
+                              key={car.uuid}
+                              className="flex flex-col h-full shadow-lg"
+                            >
+                              <Image
+                                src={car.imagePath!}
+                                alt=""
+                                unoptimized
+                                width={500}
+                                height={500}
+                                className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
+                              />
+                              <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
+                                <CardHeader style={{ padding: "0 16px 10px 16px" }}>
+                                  <CardTitle className="text-base textCut">
+                                    {car.name}
+                                  </CardTitle>
+                                  <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
+                                    <div className="flex items-center gap-2">
+                                      <FaRegCalendar /> <span>{car.year}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <IoSpeedometerOutline size={20} />
+                                      <span> {car.kilometers} km</span>
+                                    </div>
+                                  </CardDescription>
+                                  <p className="text-lg font-semibold">
+                                    {car.currency} ${car.price}
+                                  </p>
+                                </CardHeader>
+                                <CardFooter className="w-full">
+                                  <Button
+                                    onClick={() => setSelectedIntIn(car)}
+                                    variant={"default"}
+                                    className="w-full mt-2 md:mt-0"
+                                  >
+                                    Asignar vehículo
+                                  </Button>
+                                </CardFooter>
+                              </div>
+                            </Card>
+                          </div>
+                        ))}
+                      </div>
+                    </>)}
                 </>
               )}
 
@@ -1035,16 +1056,16 @@ const LeadEditForm = () => {
                     />
                   </div>
                 </div>
-                {hasExistingLeadVehicles && 
-                <Button type="submit" className="w-full mt-10 mb-5 md:w-1/3">
-                  Guardar cambios
-                </Button>}
+                {hasExistingLeadVehicles &&
+                  <Button type="submit" className="w-full mt-10 mb-5 md:w-1/3">
+                    Guardar cambios
+                  </Button>}
 
-                {!hasExistingLeadVehicles && 
-                <Button type="submit" className="w-full mt-10 mb-5 md:w-1/3">
-                  Agregar vehículos
-                </Button>}
-                
+                {!hasExistingLeadVehicles &&
+                  <Button type="submit" className="w-full mt-10 mb-5 md:w-1/3">
+                    Agregar vehículos
+                  </Button>}
+
               </form>
             </Form>
           </Card>

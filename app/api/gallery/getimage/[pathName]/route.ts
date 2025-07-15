@@ -13,8 +13,8 @@ export async function DELETE(
   console.log(params);
   try {
     cloudinary.config({
-      cloud_name: "duiw7lwlb",
-      api_key: "435529513686272",
+      cloud_name: 'dn48eveti',
+      api_key: '661585856545528',
       api_secret: process.env.CLOUDINARY_SECRET,
     });
     const imageData = await CarImageModel.findOne({ uuid: params.pathName });

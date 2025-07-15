@@ -145,6 +145,7 @@ const LeadDetails = () => {
   const [loading, setLoading] = useState(true);
   const [seller, setSeller] = useState<IAdmin>();
   const [loadingPendingTasks, setLoadingPendingTasks] = useState<boolean>(true);
+  const [hasExistingLeadVehicles, setHasExistingLeadVehicles] = useState<boolean>(false);
 
   async function getLead() {
     try {
@@ -160,9 +161,17 @@ const LeadDetails = () => {
       setLeadVehicles(lead.leadVehicles);
       setObservations(lead.lead.observations);
       setLead(lead.lead);
-      setIntInVehicle(lead.intInVehicle);
       setSeller(lead.seller);
       setLoading(false);
+      if (lead.leadVehicles !== null) {
+        setHasExistingLeadVehicles(true)
+      }
+      if (lead.intInVehicle.name) {
+        setIntInVehicle(lead.intInVehicle);
+      } else {
+        setIntInVehicle(undefined);
+      }
+
     } catch (error) {
       return;
     }
@@ -378,6 +387,11 @@ const LeadDetails = () => {
     editForm.setValue("dateToDo", dayjs(selectedTaskToEdit?.dateToDo).toDate());
   }, [openEditModal]);
 
+  useEffect(() => {
+    console.log(leadVehicles)
+  }, [leadVehicles])
+
+
   return (
     <>
       {loading && (
@@ -454,7 +468,7 @@ const LeadDetails = () => {
                   </Select>
                 </div>
                 <div className="flex gap-3 md:gap-5">
-                  <Link href={"/admin/dashboard/leads/edit/"+lead?._id}>
+                  <Link href={"/admin/dashboard/leads/edit/" + lead?._id}>
                     <Button
                       variant="outline"
                       className="flex gap-2 p-2 w-fit h-fit"
@@ -501,6 +515,12 @@ const LeadDetails = () => {
                           <b>Creado el:</b>{" "}
                           {dayjs(lead?.createdAt).format("DD-MM-YYYY")}
                         </span>
+                      </div>
+                      <div className="flex items-center gap-2 w-fit h-fit">
+                        <span className="text-sm">Interesado en: {lead?.interestedInName} </span>
+                      </div>
+                      <div className="flex items-center gap-2 w-fit h-fit">
+                        <span className="text-sm">Vehiculo del cliente: {lead?.leadVehicleName} </span>
                       </div>
 
                       {seller && (
@@ -578,7 +598,7 @@ const LeadDetails = () => {
             <div className="w-full h-full md:w-fit ">
               <span className="text-xl font-semibold">Vehiculo de interés</span>
 
-              {intInVehicle === null && (
+              {intInVehicle === undefined && (
                 <Link
                   href={"/admin/dashboard/leads/edit/" + lead?._id}
                   className=" opacity-50 flex flex-col items-center justify-center w-full min-h-[350px] h-full"
@@ -587,7 +607,7 @@ const LeadDetails = () => {
                   <span>Añadir vehículo</span>
                 </Link>
               )}
-              {intInVehicle !== null && (
+              {intInVehicle !== undefined && (
                 <div className="flex flex-col items-center justify-center gap-5 mt-5 sm:items-start">
                   <div className="h-full max-w-full sm:max-w-[300px] ">
                     <Card className="flex flex-col h-full shadow-lg">
@@ -659,7 +679,7 @@ const LeadDetails = () => {
                   (opcional)
                 </span>
               </span>
-              {leadVehicles?.leadName === "" && (
+              {leadVehicles?.leadName === "" || hasExistingLeadVehicles === false && (
                 <Link
                   href={"/admin/dashboard/leads/edit/" + lead?._id}
                   className=" opacity-50 flex flex-col items-center justify-center w-full min-h-[350px] h-full"
@@ -668,7 +688,7 @@ const LeadDetails = () => {
                   <span>Añadir vehículo</span>
                 </Link>
               )}
-              {leadVehicles?.leadName !== "" && (
+              {leadVehicles?.leadName !== "" && hasExistingLeadVehicles === true && (
                 <div>
                   <div className="flex flex-col items-center justify-center gap-5 mt-8 sm:items-start">
                     <div className="h-full max-w-full sm:max-w-[300px] ">

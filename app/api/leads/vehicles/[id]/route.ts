@@ -1,20 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import LeadVehiclesModel from "@/app/models/leadvehicles";
+import connectDB from "@/lib/db";
+import crypto from "crypto";
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  await connectDB();
   try {
     const data = await request.formData();
     const leadVehicleImage = data.getAll("leadVehicleImage") as File[];
+    const timestamp = Math.floor(Date.now() / 1000);
+
+    const signature = crypto
+      .createHash("sha1")
+      .update(`timestamp=${timestamp}${process.env.CLOUDINARY_SECRET}`)
+      .digest("hex");
+
 
     cloudinary.config({
-      cloud_name: "duiw7lwlb",
-      api_key: "435529513686272",
+      cloud_name: 'dn48eveti',
+      api_key: '661585856545528',
       api_secret: process.env.CLOUDINARY_SECRET,
     });
+
 
     if (leadVehicleImage.length === 0) {
       return NextResponse.json({ msg: "NO_FILES_PROVIDED" }, { status: 400 });
@@ -27,7 +38,11 @@ export async function PUT(
       try {
         const cloudinaryResponse: any = await new Promise((resolve, reject) => {
           cloudinary.uploader
-            .upload_stream({}, (error, result) => {
+            .upload_stream({
+              timestamp,
+              api_key: process.env.CLOUDINARY_API_KEY,
+              signature,
+            }, (error, result) => {
               if (error) {
                 reject(error);
               }

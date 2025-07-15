@@ -8,8 +8,8 @@ export async function POST(request: NextRequest) {
   await connectDB();
   const data = await request.formData();
   cloudinary.config({
-    cloud_name: "duiw7lwlb",
-    api_key: "435529513686272",
+    cloud_name: 'dn48eveti',
+    api_key: '661585856545528',
     api_secret: process.env.CLOUDINARY_SECRET,
   });
 
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
   console.log(leadVehicleImage);
   console.log(leadVehicleImage[0]);
 
-  let leadVehicleImagePath = "empty";
+  let leadVehicleImagePath = "";
 
   // upload lead vehicle thumbnail in cloudinary
   if (leadVehicleImage[0]) {
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       { interestedIn },
       { new: true }
     );
-    console.log(editLeadInterestedIn);
+    console.log('editLeadInterestedIn', editLeadInterestedIn);
 
     return NextResponse.json({
       msg: "LEAD_VEHICLES_CREATED",
@@ -102,7 +102,7 @@ export async function PUT(request: NextRequest) {
   await connectDB();
   const data = await request.json();
   delete data.interestedIn
-  console.log('edit ',data);
+  console.log('edit ', data);
   try {
     const editedLead = await LeadVehiclesModel.findOneAndUpdate(
       { leadID: data.leadID },
