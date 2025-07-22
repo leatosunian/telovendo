@@ -388,9 +388,12 @@ const LeadDetails = () => {
   }, [openEditModal]);
 
   useEffect(() => {
-    console.log(leadVehicles)
+    console.log('leadVehicles leadname', leadVehicles?.leadName);
   }, [leadVehicles])
 
+  useEffect(() => {
+    console.log('hasExistingLeadVehicles', hasExistingLeadVehicles);
+  }, [hasExistingLeadVehicles])
 
   return (
     <>
@@ -520,7 +523,7 @@ const LeadDetails = () => {
                         <span className="text-sm">Interesado en: {lead?.interestedInName} </span>
                       </div>
                       <div className="flex items-center gap-2 w-fit h-fit">
-                        <span className="text-sm">Vehiculo del cliente: {lead?.leadVehicleName} </span>
+                        <span className="text-sm">Vehículo del cliente: {lead?.leadVehicleName} </span>
                       </div>
 
                       {seller && (
@@ -596,7 +599,7 @@ const LeadDetails = () => {
           <div className="flex flex-col justify-center w-full gap-10 md:gap-0 md:flex-row h-fit">
             {/* Vehiculo de interés */}
             <div className="w-full h-full md:w-fit ">
-              <span className="text-xl font-semibold">Vehiculo de interés</span>
+              <span className="text-xl font-semibold">Vehículo de interés</span>
 
               {intInVehicle === undefined && (
                 <Link
@@ -674,12 +677,12 @@ const LeadDetails = () => {
             {/* Vehiculo del lead */}
             <div className="w-full h-full md:w-fit ">
               <span className="text-xl font-semibold">
-                Vehiculo del lead{" "}
+                Vehículo del lead{" "}
                 <span className="text-base font-normal text-gray-500">
                   (opcional)
                 </span>
               </span>
-              {leadVehicles?.leadName === "" || hasExistingLeadVehicles === false && (
+              {(leadVehicles?.leadName === '' || hasExistingLeadVehicles === false) && (
                 <Link
                   href={"/admin/dashboard/leads/edit/" + lead?._id}
                   className=" opacity-50 flex flex-col items-center justify-center w-full min-h-[350px] h-full"
@@ -688,7 +691,7 @@ const LeadDetails = () => {
                   <span>Añadir vehículo</span>
                 </Link>
               )}
-              {leadVehicles?.leadName !== "" && hasExistingLeadVehicles === true && (
+              {(leadVehicles?.leadName !== "" && hasExistingLeadVehicles === true) && (
                 <div>
                   <div className="flex flex-col items-center justify-center gap-5 mt-8 sm:items-start">
                     <div className="h-full max-w-full sm:max-w-[300px] ">

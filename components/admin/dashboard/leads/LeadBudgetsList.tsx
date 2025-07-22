@@ -60,7 +60,9 @@ const LeadBudgetsList = ({ budgets, leadID }: props) => {
                 //onClick={() => setOpenCreateModal(true)}
                 className="w-full mt-7 md:w-1/4"
               >
-                Crear presupuesto
+                <Link href={`/admin/dashboard/budgets/create/${leadID}`}>
+                  Crear presupuesto
+                </Link>
               </Button>
               {/* create task modal */}
             </div>

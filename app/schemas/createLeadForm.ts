@@ -2,14 +2,14 @@ import { z } from "zod";
 
 export const formSchema = z.object({
   name: z.string({ message: "Ingresá un nombre." }).min(1, {
-    message: "Ingresa un nombre.",
+    message: "Ingresá un nombre.",
   }),
   surname: z
     .string({
-      message: "Ingresa un año..",
+      message: "Ingresá un apellido..",
     })
     .min(4, {
-      message: "Ingresa un año.",
+      message: "Ingresá un apellido.",
     }),
   contactType: z.string().optional().or(z.literal("")),
   city: z.string().optional().or(z.literal("")),

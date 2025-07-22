@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Separator } from "@radix-ui/react-select";
+import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { IoMdAdd, IoMdMore } from "react-icons/io";
 import LeadsChart from "@/components/admin/dashboard/leads/LeadsChart";
@@ -23,7 +23,7 @@ const LeadsPage = () => {
           </Button>
         </Link>
       </div>
-      <Separator className="my-4" />
+      <Separator className="mt-4 mb-5 md:mt-4 md:mb-4"></Separator>
       <div>
         <div className="grid gap-0 ">
           {/* chart with branches data */}

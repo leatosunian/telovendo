@@ -103,7 +103,7 @@ const LeadEditForm = () => {
   const [loadingSearch, setLoadingSearch] = useState(false);
   const { toast } = useToast();
   const { data: session }: any = useSession();
-
+  console.log(params)
   async function getLead() {
     try {
       const leadFetch = await fetch(`/api/leads/${params.uuid}`, {
@@ -179,7 +179,7 @@ const LeadEditForm = () => {
         method: "PUT",
         body: formData,
       }).then((response) => response.json());
-      console.log(editedLead);
+      console.log('uploadfile', editedLead);
       toast({
         description: "¡Cambios guardados correctamente!",
         variant: "default",
@@ -198,6 +198,7 @@ const LeadEditForm = () => {
   // EDIT LEAD VEHICLES FUNCTION
   async function onSubmitLeadVehicles(values: any) {
     setLoading(true);
+    console.log('values', values);
     if (!hasExistingLeadVehicles) {
       createLeadVehicles(values)
       return;
@@ -213,11 +214,20 @@ const LeadEditForm = () => {
     values.leadPrefVehicleUUID = selectedIntIn?.uuid;
     values.leadID = lead?._id;
     values.interestedIn = selectedIntIn?.name;
+    values.interestedInName = selectedIntIn?.name;
+    values.leadVehicleName = values.leadName
+
+    const leadBody = {
+      leadVehicleName: values.leadVehicleName,
+      interestedIn: values.interestedIn,
+      interestedInName: values.interestedInName
+    }
+
     try {
 
       await fetch("/api/leads/" + params.uuid, {
         method: "PUT",
-        body: JSON.stringify(values),
+        body: JSON.stringify(leadBody),
       }).then((response) => response.json());
 
       await fetch("/api/leads/vehicles", {
@@ -808,13 +818,14 @@ const LeadEditForm = () => {
                           name="image_file"
                           accept="image/*"
                           onChange={(e) => {
-                            const file = e.target.files![0];
+                            const file = e.target.files?.[0];
                             console.log(file);
                             if (file) {
                               setIntInImage(file);
-                              setExistentIntInImage("");
+                              setExistentIntInImage(""); // Esto puede causar re-render
                               uploadImage(file);
                             }
+                            e.target.value = ""; // Limpia el valor del input para evitar conflictos
                           }}
                         />
                       </>

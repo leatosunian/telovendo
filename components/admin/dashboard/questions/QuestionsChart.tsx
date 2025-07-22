@@ -70,6 +70,8 @@ const QuestionsChart = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [wasContacted, setWasContacted] = useState<boolean>(false);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [asignedSortDirection, setAsignedSortDirection] = useState<"asc" | "desc">("desc");
 
   async function getEmployees() {
     try {
@@ -79,7 +81,7 @@ const QuestionsChart = () => {
       }).then((response) => response.json());
       setEmployees(employeesFetch.employees);
       setLoading(false);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   async function getQuestions() {
@@ -160,7 +162,7 @@ const QuestionsChart = () => {
       businessType: "Otro",
       observations: "",
       phone: questionToHandle?.phone!,
-      email: questionToHandle?.email!,
+      //email: questionToHandle?.email!,
       employeeID: answerBody.employeeAsignedID,
       status: "Gestionando",
       pendingTask: "-",
@@ -168,7 +170,7 @@ const QuestionsChart = () => {
       interestedIn: "No especificado",
     };
     if (message) {
-      newLeadBody.observations = `Consulta en la web: ${questionToHandle?.details}`;
+      //newLeadBody.observations = `Consulta en la web: ${questionToHandle?.details}`;
     }
 
     const newLeadVehiclesBody = {
@@ -192,7 +194,7 @@ const QuestionsChart = () => {
       dateToDo: Date.now(),
       completedDate: Date.now(),
       status: "Completada",
-      observations: `Consulta: ${questionToHandle?.details} | Respuesta: ${message}`,
+      //observations: `Consulta: ${questionToHandle?.details} | Respuesta: ${message}`,
     };
 
     try {
@@ -257,6 +259,33 @@ const QuestionsChart = () => {
     }
   }
 
+  const sortQuestions = () => {
+    const newDirection = sortDirection === "asc" ? "desc" : "asc";
+    setSortDirection(newDirection);
+
+    const sorted = [...questions].sort((a, b) => {
+      const dateA = new Date(a.updatedAt!).getTime();
+      const dateB = new Date(b.updatedAt!).getTime();
+      return newDirection === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    setQuestions(sorted);
+  };
+
+  const sortAsignedQuestions = () => {
+    const newDirection = asignedSortDirection === "asc" ? "desc" : "asc";
+    setAsignedSortDirection(newDirection);
+
+    const sorted = [...asignedQuestions].sort((a, b) => {
+      const dateA = new Date(a.updatedAt!).getTime();
+      const dateB = new Date(b.updatedAt!).getTime();
+      return newDirection === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    setAsignedQuestions(sorted);
+  };
+
+
   useEffect(() => {
     if (
       session &&
@@ -294,18 +323,18 @@ const QuestionsChart = () => {
           {session?.user?.role === "EMPLOYEE" && (
             <>
               <div className="flex items-center justify-between my-4">
-                <h2 className="text-xl font-medium ">Consultas asignadas</h2>
+                <h2 className="text-xl font-medium ">Asignadas</h2>
               </div>
               {asignedQuestions?.length === 0 && (
                 <>
                   <div className="flex flex-col items-center gap-1 justify-center w-full min-h-[300px] h-full">
                     <IoPeople size={70} strokeWidth={0} />
                     <span className="font-semibold text-center">
-                      Todavia no te han asignado consultas pendientes a
+                      Todavia no te han asignado cotizaciones pendientes a
                       responder.
                     </span>
                     <span className="mt-3 text-sm font-light text-center opacity-50">
-                      Aquí aparecerán las consultas que se hagan en la página
+                      Aquí aparecerán las cotizaciones que se hagan en la página
                       web que te hayan sido asignadas para responder.
                     </span>
                   </div>
@@ -315,21 +344,35 @@ const QuestionsChart = () => {
               {asignedQuestions?.length > 0 && (
                 <Table>
                   <TableCaption>
-                    Listado de consultas pendientes asignadas.
+                    Listado de cotizaciones pendientes asignadas.
                   </TableCaption>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="flex items-center gap-1 text-xs w-fit md:text-sm">
+                      <TableHead
+                        onClick={sortAsignedQuestions}
+                        className="flex items-center gap-1 text-xs cursor-pointer w-fit md:text-sm"
+                      >
                         Fecha <LuArrowUpDown />
                       </TableHead>
-                      <TableHead className="text-xs w-fit md:text-sm">
-                        Nombre{" "}
-                      </TableHead>
-                      <TableHead className="text-xs w-fit md:text-sm">
-                        Teléfono
-                      </TableHead>
+                      {/* {session?.user?.role === "ADMIN" && (
+                    <>
                       <TableHead className="w-10 text-xs md:text-sm">
-                        Correo
+                        Estado
+                      </TableHead>
+                    </>
+                  )} */}
+
+                      <TableHead className="text-xs w-fit md:text-sm">
+                        Nombre
+                      </TableHead>
+                      <TableHead className="text-xs w-fit md:text-sm">
+                        Vehiculo
+                      </TableHead>
+                      <TableHead className="text-xs w-fit md:text-sm">
+                        Kilometraje
+                      </TableHead>
+                      <TableHead className="text-xs min-w-10 md:text-sm">
+                        Año
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -352,14 +395,19 @@ const QuestionsChart = () => {
                             {question.name} {question.surname}
                           </TableCell>
                           <TableCell className="text-xs font-medium w-fit">
-                            {question.phone}
+                            {question.vehicleInfo}
                           </TableCell>
                           <TableCell className="text-xs font-medium w-fit">
-                            {question.email}
+                            {question.vehicleKm}
                           </TableCell>
+                          <TableCell className="text-xs font-medium w-fit">
+                            {question.vehicleYear}
+                          </TableCell>
+                          {/* <TableCell className="text-xs font-medium w-fit">
+                            {question.email}
+                          </TableCell> */}
 
-                          <TableCell className="text-right">
-                            {/* edit */}
+                          {/* <TableCell className="text-right">
                             <Button
                               variant="outline"
                               className="p-2 w-fit h-fit"
@@ -370,8 +418,7 @@ const QuestionsChart = () => {
                             >
                               <IoMdMore size={20} className="w-fit h-fit" />
                             </Button>
-                            {/* edit */}
-                          </TableCell>
+                          </TableCell> */}
                         </TableRow>
                       </>
                     ))}
@@ -382,17 +429,17 @@ const QuestionsChart = () => {
             </>
           )}
 
-          <div className="flex items-center justify-between my-4">
-            <h2 className="text-xl font-medium ">Consultas pendientes</h2>
+          <div className="flex items-center justify-between my-2">
+            <h2 className="text-xl font-medium ">Pendientes</h2>
           </div>
 
           {questions?.length === 0 && (
             <>
               <div className="flex flex-col items-center gap-1 justify-center w-full min-h-[300px] h-full">
                 <IoPeople size={70} strokeWidth={0} />
-                <span>Aún no se han hecho consultas.</span>
+                <span>Aún no se han hecho cotizaciones.</span>
                 <span className="text-sm opacity-50">
-                  Aquí aparecerán las consultas que se hagan en la página web.
+                  Aquí aparecerán las cotizaciones que se soliciten en la página web.
                 </span>
               </div>
             </>
@@ -400,27 +447,34 @@ const QuestionsChart = () => {
 
           {questions?.length > 0 && (
             <Table>
-              <TableCaption>Listado de consultas pendientes.</TableCaption>
+              <TableCaption>Listado de cotizaciones pendientes.</TableCaption>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="flex items-center gap-1 text-xs w-fit md:text-sm">
+                  <TableHead
+                    onClick={sortQuestions}
+                    className="flex items-center gap-1 text-xs cursor-pointer w-fit md:text-sm"
+                  >
                     Fecha <LuArrowUpDown />
                   </TableHead>
-                  {session?.user?.role === "ADMIN" && (
+                  {/* {session?.user?.role === "ADMIN" && (
                     <>
                       <TableHead className="w-10 text-xs md:text-sm">
                         Estado
                       </TableHead>
                     </>
-                  )}
+                  )} */}
+
                   <TableHead className="text-xs w-fit md:text-sm">
                     Nombre
                   </TableHead>
                   <TableHead className="text-xs w-fit md:text-sm">
-                    Teléfono
+                    Vehiculo
                   </TableHead>
-                  <TableHead className="w-10 text-xs md:text-sm">
-                    Correo
+                  <TableHead className="text-xs w-fit md:text-sm">
+                    Kilometraje
+                  </TableHead>
+                  <TableHead className="text-xs min-w-10 md:text-sm">
+                    Año
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -438,7 +492,7 @@ const QuestionsChart = () => {
                       <TableCell className="text-xs font-medium w-fit">
                         {dayjs(question.createdAt).format("DD-MM-YYYY")}
                       </TableCell>
-                      {session?.user?.role === "ADMIN" && (
+                      {/* {session?.user?.role === "ADMIN" && (
                         <>
                           <TableCell className="text-xs font-medium w-fit">
                             {question.employeeAsignedID !== "-" ? (
@@ -452,19 +506,21 @@ const QuestionsChart = () => {
                             )}
                           </TableCell>
                         </>
-                      )}
+                      )} */}
                       <TableCell className="text-xs font-medium">
                         {question.name} {question.surname}
                       </TableCell>
                       <TableCell className="text-xs font-medium w-fit">
-                        {question.phone}
+                        {question.vehicleInfo}
                       </TableCell>
                       <TableCell className="text-xs font-medium w-fit">
-                        {question.email}
+                        {Number(question.vehicleKm).toLocaleString()} km
                       </TableCell>
-
+                      <TableCell className="text-xs font-medium w-fit">
+                        {question.vehicleYear}
+                      </TableCell>
+                      {/* 
                       <TableCell className="text-right">
-                        {/* open asign seller / handle question modal */}
                         <Button
                           variant="outline"
                           onClick={() => {
@@ -475,8 +531,7 @@ const QuestionsChart = () => {
                         >
                           <IoMdMore size={20} className="w-fit h-fit" />
                         </Button>
-                        {/* open asign seller / handle question modal */}
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   </>
                 ))}
@@ -498,12 +553,10 @@ const QuestionsChart = () => {
           >
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Responder consulta</DialogTitle>
+                <DialogTitle>Enviar cotización</DialogTitle>
                 <DialogDescription>
-                  Podés responder la consulta mediante mensaje de WhatsApp y
-                  crear un lead automaticamente, crear un lead y gestionarlo de
-                  otra forma o asignarle un vendedor para que se encargue de
-                  responderla.
+                  Podés responder el pedido de cotización mediante mensaje de WhatsApp y
+                  crear un lead automaticamente <b>ó</b> crear un lead y gestionarlo luego.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -540,7 +593,7 @@ const QuestionsChart = () => {
 
                 <div className="flex flex-col gap-3">
                   <Label htmlFor="username" className="text-left">
-                    Responder consulta por WhatsApp
+                    Responder cotización por WhatsApp
                   </Label>
                   <Input
                     id="username"
@@ -584,17 +637,16 @@ const QuestionsChart = () => {
           >
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Responder consulta</DialogTitle>
+                <DialogTitle>Enviar cotización</DialogTitle>
                 <DialogDescription>
-                  Podés responder la consulta mediante mensaje de WhatsApp y
-                  crear un lead automaticamente o crear un lead y gestionarlo de
-                  otra forma.
+                  Podés responder el pedido de cotización mediante mensaje de WhatsApp y
+                  crear un lead automaticamente <b>ó</b> crear un lead y gestionarlo luego.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="flex flex-col gap-3">
                   <Label htmlFor="username" className="text-left ">
-                    Responder consulta por WhatsApp
+                    Responder cotización por WhatsApp
                   </Label>
                   <Input
                     id="username"
@@ -637,9 +689,9 @@ const QuestionsChart = () => {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Asignar consulta a un vendedor </AlertDialogTitle>
+            <AlertDialogTitle>Asignar cotización a un vendedor </AlertDialogTitle>
             <AlertDialogDescription>
-              ¿Estás seguro que queres asignar la consulta al vendedor{" "}
+              ¿Estás seguro que queres asignar la cotización al vendedor{" "}
               {selectedEmployee?.name} {selectedEmployee?.surname}?
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -652,7 +704,7 @@ const QuestionsChart = () => {
               Cancelar
             </AlertDialogCancel>
             <AlertDialogAction onClick={handleAsignQuestion}>
-              Asignar consulta
+              Asignar cotización
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -663,7 +715,7 @@ const QuestionsChart = () => {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="text-left">
-              Detalles de la consulta
+              Detalles de la solicitud
             </DialogTitle>
           </DialogHeader>
           <div className="grid gap-6 py-4">
@@ -671,7 +723,7 @@ const QuestionsChart = () => {
               <Label htmlFor="name" className="text-sm font-semibold text-left">
                 Nombre y apellido
               </Label>
-              <span className="text-sm ">
+              <span className="text-sm text-gray-400">
                 {questionToHandle?.name} {questionToHandle?.surname}{" "}
               </span>
             </div>
@@ -679,19 +731,19 @@ const QuestionsChart = () => {
               <Label htmlFor="name" className="text-sm font-semibold text-left">
                 Teléfono
               </Label>
-              <span className="text-sm ">{questionToHandle?.phone}</span>
+              <span className="text-sm text-gray-400 ">{questionToHandle?.phone}</span>
             </div>
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               <Label htmlFor="name" className="text-sm font-semibold text-left">
                 Email
               </Label>
               <span className="text-sm ">{questionToHandle?.email}</span>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-2">
               <Label htmlFor="name" className="text-sm font-semibold text-left">
                 Fecha
               </Label>
-              <span className="text-sm capitalize">
+              <span className="text-sm text-gray-400 capitalize">
                 {dayjs(questionToHandle?.createdAt).format(
                   "dddd D [de] MMMM [-] HH:mm [hs] "
                 )}
@@ -699,9 +751,21 @@ const QuestionsChart = () => {
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="name" className="text-sm font-semibold text-left">
-                Consulta
+                Marca, modelo y versión
               </Label>
-              <span className="text-sm ">{questionToHandle?.details}</span>
+              <span className="text-sm text-gray-400 ">{questionToHandle?.vehicleInfo}</span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="name" className="text-sm font-semibold text-left">
+                Año
+              </Label>
+              <span className="text-sm text-gray-400">{questionToHandle?.vehicleYear}</span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="name" className="text-sm font-semibold text-left">
+                Kilometraje
+              </Label>
+              <span className="text-sm text-gray-400">{questionToHandle?.vehicleKm}</span>
             </div>
           </div>
           <Button
@@ -711,7 +775,7 @@ const QuestionsChart = () => {
               setOpenHandleQuestion(true);
             }}
           >
-            Contestar consulta
+            Enviar cotización
           </Button>
         </DialogContent>
       </Dialog>

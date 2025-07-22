@@ -3,14 +3,12 @@ import { v4 as uuidv4 } from "uuid";
 
 export interface IBudget extends Document {
   budgetNumber: number;
-  businessType: string;
   dateOfIssue: Date;
   sellerName: string;
   sellerPhone: string;
   sellerEmail: string;
   clientName: string;
   clientPhone: number;
-  clientEmail: string;
   vehicleName: string;
   vehicleType: string;
   vehicleYear: number;
@@ -40,10 +38,6 @@ const budgetSchema: Schema = new Schema<IBudget>(
       type: Number,
       required: true,
     },
-    businessType: {
-      type: String,
-      required: true,
-    },
     dateOfIssue: {
       type: Date,
       required: true,
@@ -70,15 +64,11 @@ const budgetSchema: Schema = new Schema<IBudget>(
     },
     clientPhone: {
       type: Number,
-      required: true,
-    },
-    clientEmail: {
-      type: String,
-      required: true,
+      required: false,
     },
     vehicleName: {
       type: String,
-      required: true,
+      required: false,
     },
     vehicleType: {
       type: String,

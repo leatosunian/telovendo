@@ -85,7 +85,7 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
         {/* header */}
         <div className="flex items-center justify-between text-black h-28">
           <div className="h-fit w-fit">
-            <Image src={logo} width={200} alt="Distrito Automotor" />
+            <Image src={logo} width={80} alt="Te lo Vendo" />
           </div>
           <div className="flex flex-col items-start w-fit h-fit justify-self-center">
             <span className="text-lg font-medium text-black uppercase">

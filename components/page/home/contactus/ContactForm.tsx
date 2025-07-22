@@ -54,9 +54,10 @@ const ContactForm = () => {
     defaultValues: {
       name: "",
       surname: "",
-      email: "",
       phone: "",
-      details: "",
+      vehicleInfo: "",
+      vehicleKm: "",
+      vehicleYear: "",
     },
   });
 
@@ -80,8 +81,9 @@ const ContactForm = () => {
       }).then((response) => response.json());
       setLoading(false);
       setOpenCreatedLead(true);
-      form.setValue("details", "");
-      form.setValue("email", "");
+      form.setValue("vehicleInfo", "");
+      form.setValue("vehicleKm", "");
+      form.setValue("vehicleYear", "");
       form.setValue("name", "");
       form.setValue("surname", "");
       form.setValue("phone", "");
@@ -239,7 +241,7 @@ const ContactForm = () => {
                               <FormControl>
                                 <input
                                   {...field}
-                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
                                   placeholder="Ingrese su nombre"
                                   id="name"
                                   type="text"
@@ -262,7 +264,7 @@ const ContactForm = () => {
                               <FormControl>
                                 <input
                                   {...field}
-                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
                                   placeholder="Ingrese su apellido"
                                   id="surname"
                                   type="text"
@@ -287,7 +289,7 @@ const ContactForm = () => {
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
                                 placeholder="Ingrese su número de teléfono"
                                 id="phone"
                                 type="number"
@@ -302,18 +304,18 @@ const ContactForm = () => {
                     <div className="mb-4">
                       <FormField
                         control={form.control}
-                        name="email"
+                        name="vehicleInfo"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="block text-xs font-semibold xs:text-sm">
-                              Email
+                              Marca, modelo y versión del vehículo
                             </FormLabel>
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-                                placeholder="Ingrese su correo"
-                                id="email"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                placeholder="Ej. Chevrolet Cruze LTZ 1.4T"
+                                id="vehicleInfo"
                                 type="text"
                               />
                             </FormControl>
@@ -323,32 +325,82 @@ const ContactForm = () => {
                       />
                     </div>
 
-                    <div className="w-full mb-4">
-                      <FormField
-                        control={form.control}
-                        name="details"
-                        render={({ field }) => (
-                          <FormItem className="w-full ">
-                            <FormLabel className="block mb-0 text-xs font-semibold xs:text-sm">
-                              Escribinos tu consulta
-                            </FormLabel>
-                            <textarea
-                              {...field}
-                              className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg h-28 md:h-24 focus:outline-none focus:ring-2 focus:ring-red-400"
-                              rows={4}
-                              placeholder="Ingrese su consulta"
-                              name="message"
-                              id="message"
-                            ></textarea>
-                            <FormMessage className="text-xs" />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="flex flex-col gap-5 mb-4 md:flex-row">
+                      <div className="w-full md:w-1/2">
+                        <FormField
+                          control={form.control}
+                          name="vehicleYear"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="block text-xs font-semibold xs:text-sm">
+                                Año
+                              </FormLabel>
+                              <FormControl>
+                                <input
+                                  {...field}
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                  placeholder="Ej. 2024"
+                                  id="vehicleYear"
+                                  type="text"
+                                />
+                              </FormControl>
+                              <FormMessage className="text-xs" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <FormField
+                          control={form.control}
+                          name="vehicleKm"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="block text-xs font-semibold xs:text-sm">
+                                Kilometraje
+                              </FormLabel>
+                              <FormControl>
+                                <input
+                                  {...field}
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                  placeholder="Ej. 65000"
+                                  id="vehicleKm"
+                                  type="number"
+                                />
+                              </FormControl>
+                              <FormMessage className="text-xs" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
+
+                    {/* 
+                                   <div className="w-full mb-4">
+                                     <FormField
+                                       control={form.control}
+                                       name="details"
+                                       render={({ field }) => (
+                                         <FormItem className="w-full ">
+                                           <FormLabel className="block mb-0 text-xs font-semibold xs:text-sm">
+                                             Escribinos tu consulta
+                                           </FormLabel>
+                                           <textarea
+                                             {...field}
+                                             className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg h-28 md:h-24 focus:outline-none focus:ring-2 focus:ring-red-400"
+                                             rows={4}
+                                             placeholder="Ingrese su consulta"
+                                             name="message"
+                                             id="message"
+                                           ></textarea>
+                                           <FormMessage className="text-xs" />
+                                         </FormItem>
+                                       )}
+                                     />
+                                   </div> */}
 
                     {!loading && (
                       <button
-                        className="w-full px-4 py-3 mt-1 text-xs font-semibold text-white transition duration-300 bg-black rounded-md hover:bg-red-600"
+                        className="w-full px-4 py-3 mt-2 mb-2 text-xs font-semibold text-white transition duration-300 bg-black rounded-md hover:bg-red-600"
                         type="submit"
                       >
                         Enviar consulta
@@ -460,11 +512,10 @@ const ContactForm = () => {
                 <Image alt="" className="w-20" src={correct} />
                 <div className="flex flex-col items-center gap-2 my-5">
                   <span className="text-xl font-semibold">
-                    ¡Tu consulta fue enviada!
+                    ¡Tu solicitud de cotización fue enviada!
                   </span>
                   <span className="text-sm font-normal ">
-                    Lo mas pronto posible nos pondremos en contacto para
-                    contestar tu consulta
+                    Nos pondremos en contacto a la brevedad para contestar tu consulta
                   </span>
                 </div>
               </div>

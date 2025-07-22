@@ -31,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TbMailQuestion, TbUserEdit } from "react-icons/tb";
+import { TbMailQuestion, TbUserEdit, TbZoomMoney } from "react-icons/tb";
 import { BsShop } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 
@@ -321,8 +321,8 @@ export default function Navbar() {
               className="flex items-center gap-1 px-3 py-3 text-sm font-medium transition-colors duration-300 rounded-md backgroundOrangHover"
               onClick={() => setIsOpen(false)}
             >
-              <TbMailQuestion />
-              <span className="ml-3 ">Consultas</span>
+              <TbZoomMoney />
+              <span className="ml-3 ">Cotizaciones</span>
             </Link>
 
             <div

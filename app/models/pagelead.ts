@@ -3,13 +3,14 @@ import { Document, model, Schema, models } from "mongoose";
 export interface IPageLead extends Document {
   name: string;
   surname: string;
-  details?: string;
   phone: string;
-  email: string;
   _id?: string;
   status: string;
   updatedAt?: string;
   createdAt?: string;
+  vehicleYear: string;
+  vehicleInfo: string; // marca, modelo y versión del vehiculo
+  vehicleKm: string;
   employeeAsignedID: string;
 }
 
@@ -23,15 +24,19 @@ const pageLeadSchema: Schema = new Schema<IPageLead>(
       type: String,
       required: true,
     },
-    details: {
+    vehicleYear: {
       type: String,
-      required: false,
+      required: true,
+    },
+    vehicleInfo: {
+      type: String,
+      required: true,
     },
     phone: {
       type: String,
       required: true,
     },
-    email: {
+    vehicleKm: {
       type: String,
       required: true,
     },

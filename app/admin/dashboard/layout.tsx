@@ -2,7 +2,7 @@
 import { IoMdAdd } from "react-icons/io";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { TbHomeCog, TbMailQuestion, TbUserEdit } from "react-icons/tb";
+import { TbHomeCog, TbMailQuestion, TbUserEdit, TbZoomMoney } from "react-icons/tb";
 import { IoCarSportOutline } from "react-icons/io5";
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/admin/dashboard/Navbar";
@@ -101,8 +101,8 @@ export default function DashboardLayout({
                       href={"/admin/dashboard/questions"}
                       className="flex items-center p-2 text-base font-normal text-black capitalize rounded-lg hover:text-white dark:text-white dark:hover:text-black hover:bg-black dark:hover:bg-gray-100 dark:bg-background group"
                     >
-                      <TbMailQuestion  />
-                      <span className="ml-3 ">Consultas</span>
+                      <TbZoomMoney />
+                      <span className="ml-3">Cotizaciones</span>
                     </Link>
                   </li>
                 </ul>

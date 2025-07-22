@@ -10,21 +10,31 @@ export async function POST(request: NextRequest, response: NextResponse) {
   await connectDB();
   try {
     const data = await request.json();
+    console.log('data', data);
+
+    data.budgetData.clientPhone = Number(data.budgetData.clientPhone);
+    data.budgetData.transfer = Number(data.budgetData.transfer);
+    data.budgetData.clientVehiclePrice = Number(data.budgetData.clientVehiclePrice);
+    data.budgetData.clientVehicleYear = Number(data.budgetData.clientVehicleYear);
+    data.budgetData.clientVehicleKilometers = Number(data.budgetData.clientVehicleKilometers);
 
     const uploadedBudget = await BudgetModel.create(data.budgetData);
+    console.log('uploadedBudget', uploadedBudget);
     const updateLeadStatus = await LeadModel.findOneAndUpdate(
       { _id: data.budgetData.leadID },
       { status: "Negociando" },
       { new: true }
     );
+    console.log('updateLeadStatus', updateLeadStatus);
     const taskHistory = await TaskModel.create({
-      leadID: updateLeadStatus._id,
+      leadID: data.budgetData.leadID,
       title: "Presupuesto creado",
       observations: `El presupuesto N° ${data.budgetData.budgetNumber} fue creado.`,
       dateToDo: new Date(),
       completedDate: new Date(),
       status: "Completada",
     });
+    console.log('taskHistory', taskHistory);
 
     if (data.bonifs.length > 0) {
       data.bonifs.map(async (bonif: any) => {
@@ -35,7 +45,15 @@ export async function POST(request: NextRequest, response: NextResponse) {
       });
     }
     return NextResponse.json({ msg: "BUDGET_UPLOADED", uploadedBudget });
-  } catch (error) {
-    return NextResponse.json({ msg: "BUDGET_UPLOAD_ERROR" }, { status: 400 });
+  } catch (error: any) {
+    console.error("Error al crear presupuesto:", error.message, error);
+    return NextResponse.json(
+      {
+        msg: "BUDGET_UPLOAD_ERROR",
+        error: error.message,
+        detail: error.errors || error,
+      },
+      { status: 400 }
+    );
   }
 }

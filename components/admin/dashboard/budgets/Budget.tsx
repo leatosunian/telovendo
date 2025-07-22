@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/app/css-modules/budget/budget.module.css";
-import logo from "@/public/logomuestrablack.png";
+import logo from "@/public/logomuestrablackletras.png";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -46,7 +46,6 @@ const Budget = ({
   const [leadData, setLeadData] = useState<ILead>();
   const [loading, setLoading] = useState<boolean>(false);
   const { data: session }: any = useSession();
-  console.log(session);
   const { toast } = useToast();
 
   function createRandomFiveDigits() {
@@ -79,7 +78,6 @@ const Budget = ({
         const as = pdf.save(
           `Presupuesto-${budgetNumber}-${lead?.name}_${lead?.surname}.pdf`
         );
-        console.log(as);
 
         const budgetData = {
           leadID: lead?._id,
@@ -119,7 +117,7 @@ const Budget = ({
             method: "POST",
             body: JSON.stringify(dataToSave),
           }).then((response) => response.json());
-          console.log(savedBudget);
+          console.log('savedBudget', savedBudget);
           toast({ description: "¡Presupuesto creado!", variant: "default" });
           setLoading(false);
         } catch (error) {
@@ -151,7 +149,7 @@ const Budget = ({
         {/* header */}
         <div className="flex items-center justify-between text-black h-28">
           <div className="h-fit w-fit">
-            <Image src={logo} width={200} alt="Distrito Automotor" />
+            <Image src={logo} width={75} alt="Te lo Vendo" />
           </div>
           <div className="flex flex-col items-start w-fit h-fit justify-self-center">
             <span className="text-lg font-medium text-black uppercase">
@@ -225,7 +223,7 @@ const Budget = ({
               />
 
               {/* client */}
-              <div className="flex flex-col justify-between w-1/2 gap-3 p-4 text-black">
+              <div className="flex flex-col justify-start w-1/2 gap-3 p-4 text-black">
                 <span
                   style={{ lineHeight: "13px" }}
                   className="text-sm font-semibold"
@@ -241,13 +239,16 @@ const Budget = ({
                       <FaUserAlt />
                       {lead?.name} {lead?.surname}
                     </span>
-                    <span
-                      style={{ fontSize: "11px" }}
-                      className="flex items-center gap-1.5 font-light"
-                    >
-                      <FaPhoneAlt />
-                      {lead?.phone}
-                    </span>
+                    {lead?.phone !== '' && (
+
+                      <span
+                        style={{ fontSize: "11px" }}
+                        className="flex items-center gap-1.5 font-light"
+                      >
+                        <FaPhoneAlt />
+                        {lead?.phone}
+                      </span>
+                    )}
                   </div>
                   {/* <div className="w-fit h-fit">
                     <span
@@ -262,17 +263,7 @@ const Budget = ({
               </div>
               {/* client */}
             </div>
-            <Separator
-              style={{ backgroundColor: "rgb(228, 228, 231, 80%)" }}
-              className="w-full mb-2 "
-              orientation="horizontal"
-            />
-            <div className="flex gap-2 pt-1 pb-3 pl-4 font-light text-black h-fit">
-              <IoLocationSharp className="my-auto" size={16} />
-              <span style={{ fontSize: "11px" }} className="my-auto">
-                Sucursal Juan B. Justo 2040, Buenos Aires, Mar del plata.
-              </span>
-            </div>
+
           </Card>
         </div>
 
@@ -491,7 +482,7 @@ const Budget = ({
           {/* resumen de presupuesto */}
           <Card
             style={{ borderColor: "rgb(228, 228, 231)" }}
-            className="w-1/2 p-5 bg-white  h-fit"
+            className="w-1/2 p-5 bg-white h-fit"
           >
             <div className="flex flex-col gap-0 text-black bg-white">
               <span
@@ -557,18 +548,18 @@ const Budget = ({
                         </span>
                         <span className="text-xs font-semibold">
                           {Number(intInVehicleBonifsSubtotal.toLocaleString()) <
-                          0
+                            0
                             ? "-"
                             : ""}{" "}
                           {currency} $
                           {Number(intInVehicleBonifsSubtotal.toLocaleString()) <
-                          0
+                            0
                             ? Number(
-                                intInVehicleBonifsSubtotal.toLocaleString()
-                              ) * -1
+                              intInVehicleBonifsSubtotal.toLocaleString()
+                            ) * -1
                             : Number(
-                                intInVehicleBonifsSubtotal.toLocaleString()
-                              )}
+                              intInVehicleBonifsSubtotal.toLocaleString()
+                            )}
                         </span>
                       </div>
                     </div>
@@ -615,7 +606,8 @@ const Budget = ({
                     Costos de transferencia
                   </span>
                   <span className="text-xs font-semibold">
-                    {currency} ${transfer.toFixed(2).toLocaleString()}
+                    {currency} ${Number(transfer.toFixed(2)).toLocaleString()}
+                    
                   </span>
                 </div>
                 {/* costos de transferencia */}

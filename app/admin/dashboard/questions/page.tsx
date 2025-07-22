@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Separator } from "@radix-ui/react-select";
 import React from "react";
 import { IoMdAdd, IoMdMore } from "react-icons/io";
 import LeadsChart from "@/components/admin/dashboard/leads/LeadsChart";
 import Link from "next/link";
 import QuestionsChart from "@/components/admin/dashboard/questions/QuestionsChart";
 import { Metadata } from "next";
+import { Separator } from "@/components/ui/separator";
 export const metadata: Metadata = {
   title: "Consultas | Panel de administración",
   description:
@@ -16,7 +16,7 @@ const LeadsPage = () => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-medium ">Consultas</h2>
+        <h2 className="text-2xl font-medium ">Cotizaciones</h2>
         {/* <Link href={"/admin/dashboard/leads/create"}>
           <Button variant="outline" className="flex gap-2 p-2 w-fit h-fit">
             <IoMdAdd size={20} className="w-fit h-fit" />
@@ -24,7 +24,7 @@ const LeadsPage = () => {
           </Button>
         </Link> */}
       </div>
-      <Separator className="my-4" />
+      <Separator className="mt-4 mb-5 md:mt-4 md:mb-4"></Separator>
       <div>
         <div className="grid gap-0 ">
           {/* chart with branches data */}

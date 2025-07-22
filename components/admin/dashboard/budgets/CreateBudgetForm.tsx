@@ -154,19 +154,15 @@ const CreateBudgetForm = () => {
 
   // currency handlers
   function convertVehiclesPriceByCurrency(USDvalue: number) {
-    console.log(initialIntInCurrency?.currency);
-    console.log(currency);
 
     // set back values when usd is set back
     if (initialIntInCurrency?.currency === "USD" && currency === "USD") {
-      console.log("set to usd");
       if (USDValue === null) return;
       setIntInVehicle((prev) => {
         if (!prev || USDvalue === null) return;
         let newData = { ...(prev.toObject?.() || prev) };
         newData.currency = initialIntInCurrency?.currency!;
         newData.price = initialIntInCurrency?.price!;
-        console.log(newData);
 
         return newData;
       });
@@ -174,9 +170,7 @@ const CreateBudgetForm = () => {
         if (!prev || USDvalue === null) return;
         let newData = { ...(prev.toObject?.() || prev) };
         newData.leadCurrency = initialLeadVehicleCurrency?.currency!;
-        console.log(initialLeadVehicleCurrency?.price!);
         newData.leadPrice = initialLeadVehicleCurrency?.price!;
-        console.log(newData);
 
         return newData;
       });
@@ -185,7 +179,6 @@ const CreateBudgetForm = () => {
 
     // set back values when ars is set back
     if (initialIntInCurrency?.currency === "ARS" && currency === "ARS") {
-      console.log("set to ars");
 
       setIntInVehicle((prev) => {
         if (!prev || USDvalue === null) return;
@@ -314,7 +307,7 @@ const CreateBudgetForm = () => {
 
   function calcTotal() {
     let total = 0;
-    console.log(intInVehicle?.price!);
+    console.log('intInVehicle?.price', intInVehicle?.price!);
     console.log(intInVehicleBonifsSubtotal);
     console.log(Number(leadVehicles?.leadPrice));
     console.log(transfer);
@@ -436,6 +429,8 @@ const CreateBudgetForm = () => {
                       value={currency}
                       onValueChange={(value) => {
                         setCurrency(value);
+                        setTransfer(0);
+                        setTransferFixed(0);
                         //convertVehiclesPriceByCurrency(1);
                       }}
                     >
@@ -463,7 +458,6 @@ const CreateBudgetForm = () => {
                       />
                       <Input
                         onChange={(value) => {
-                          console.log(value.target.value);
                           setUSDValue(parseInt(value.target.value));
                           convertVehiclesPriceByCurrency(
                             parseInt(value.target.value)
@@ -641,6 +635,7 @@ const CreateBudgetForm = () => {
                           </span>
                           <Input
                             type="number"
+                            value={transferFixed}
                             onChange={(e) => {
                               setTransferFixed(Number(e.target.value));
                               if (
@@ -651,7 +646,7 @@ const CreateBudgetForm = () => {
                                 setTransfer(Number(e.target.value) / USDValue!);
                                 return;
                               }
-                              setTransfer(transfer);
+                              setTransfer(Number(e.target.value));
                             }}
                             id="transferPrice"
                             placeholder="Ingresá una cifra"
@@ -879,8 +874,8 @@ const CreateBudgetForm = () => {
                         {currency} $
                         {Number(intInVehicleBonifsSubtotal.toLocaleString()) < 0
                           ? Number(
-                              intInVehicleBonifsSubtotal.toLocaleString()
-                            ) * -1
+                            intInVehicleBonifsSubtotal.toLocaleString()
+                          ) * -1
                           : Number(intInVehicleBonifsSubtotal.toLocaleString())}
                       </span>
                     </div>
@@ -920,7 +915,7 @@ const CreateBudgetForm = () => {
                   Costos de transferencia
                 </span>
                 <span className="text-sm font-semibold">
-                  {currency} ${transfer.toFixed(2).toLocaleString()}
+                  {currency} ${Number(transfer.toFixed(2)).toLocaleString()}
                 </span>
               </div>
               {/* costos de transferencia */}
@@ -931,7 +926,7 @@ const CreateBudgetForm = () => {
               <div className="flex items-start justify-between w-full">
                 <span className="text-sm font-semibold">Total a pagar</span>
                 <span className="text-sm font-semibold">
-                  {currency} ${total.toFixed(2).toLocaleString()}
+                  {currency} ${Number(total.toFixed(2)).toLocaleString()}
                 </span>
               </div>
               {/* total a pagar */}

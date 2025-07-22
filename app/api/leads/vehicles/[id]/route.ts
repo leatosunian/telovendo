@@ -12,14 +12,6 @@ export async function PUT(
   try {
     const data = await request.formData();
     const leadVehicleImage = data.getAll("leadVehicleImage") as File[];
-    const timestamp = Math.floor(Date.now() / 1000);
-
-    const signature = crypto
-      .createHash("sha1")
-      .update(`timestamp=${timestamp}${process.env.CLOUDINARY_SECRET}`)
-      .digest("hex");
-
-
     cloudinary.config({
       cloud_name: 'dn48eveti',
       api_key: '661585856545528',
@@ -38,11 +30,7 @@ export async function PUT(
       try {
         const cloudinaryResponse: any = await new Promise((resolve, reject) => {
           cloudinary.uploader
-            .upload_stream({
-              timestamp,
-              api_key: process.env.CLOUDINARY_API_KEY,
-              signature,
-            }, (error, result) => {
+            .upload_stream({}, (error, result) => {
               if (error) {
                 reject(error);
               }

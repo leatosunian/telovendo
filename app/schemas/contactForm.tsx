@@ -8,17 +8,19 @@ export const formSchema = z.object({
     .string({
       message: "Ingrese un apellido..",
     })
-    .min(4, {
+    .min(3, {
       message: "Ingrese un apellido.",
     }),
-  details: z.string().min(1, {
-    message: "Ingrese una consulta.",
+  vehicleInfo: z.string().min(1, {
+    message: "Ingrese un vehículo.",
+  }),
+  vehicleYear: z.string().min(1, {
+    message: "Ingrese un año.",
+  }),
+  vehicleKm: z.string().min(1, {
+    message: "Ingrese un kilometraje.",
   }),
   phone: z.string().min(1, {
     message: "Ingrese un teléfono.",
   }),
-  email: z
-    .string()
-    .min(1, { message: "Ingrese un correo" })
-    .email("Ingrese un correo válido."),
 });
