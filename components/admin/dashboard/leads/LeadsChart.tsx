@@ -42,8 +42,9 @@ const LeadsChart = () => {
   const [leads, setLeads] = useState<ILead[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  const filteredLeads = leads.filter((lead) => {
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [asignedSortDirection, setAsignedSortDirection] = useState<"asc" | "desc">("desc");
+  let filteredLeads = leads.filter((lead) => {
     const search = searchTerm.toLowerCase();
     return (
       lead.name?.toLowerCase().includes(search) ||
@@ -67,6 +68,22 @@ const LeadsChart = () => {
       return;
     }
   }
+
+
+  const sortLeadsByDate = () => {
+    const newDirection = sortDirection === "asc" ? "desc" : "asc";
+    setSortDirection(newDirection);
+
+    const sorted = [...leads].sort((a, b) => {
+      const dateA = new Date(a.updatedAt!).getTime();
+      const dateB = new Date(b.updatedAt!).getTime();
+      return newDirection === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    setLeads(sorted); // ¡Acá está la clave!
+  };
+
+
 
   useEffect(() => {
     getLeads();
@@ -126,24 +143,24 @@ const LeadsChart = () => {
                 <TableCaption>Listado de leads.</TableCaption>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-fit">Nombre </TableHead>
-                    <TableHead className="w-fit">Estado</TableHead>
-                    <TableHead className="w-fit">Veh. de interés</TableHead>
+                    <TableHead className="text-xs w-fit 2xl:text-sm">Nombre </TableHead>
+                    <TableHead className="text-xs w-fit 2xl:text-sm">Estado</TableHead>
+                    <TableHead className="text-xs w-fit 2xl:text-sm">Veh. de interés</TableHead>
 
 
                     {searchTerm === "" && (
-                      <TableHead className="flex items-center gap-1 w-fit">Último contacto <LuArrowUpDown /></TableHead>
+                      <TableHead onClick={sortLeadsByDate} className="flex items-center gap-1 text-xs cursor-pointer w-fit 2xl:text-sm">Último contacto <LuArrowUpDown /></TableHead>
                     )}
 
 
                     {searchTerm !== "" ? (
-                      <TableHead className="flex items-center gap-1 w-fit">Veh. del lead <LuArrowUpDown /></TableHead>
+                      <TableHead className="flex items-center gap-1 text-xs w-fit 2xl:text-sm">Veh. del lead <LuArrowUpDown /></TableHead>
 
-                    ) : <TableHead className="w-fit">Próxima tarea</TableHead>}
+                    ) : <TableHead className="text-xs w-fit 2xl:text-sm">Próxima tarea</TableHead>}
 
 
                     {searchTerm !== "" && (
-                      <TableHead className=" w-fit">Último contacto </TableHead>
+                      <TableHead onClick={sortLeadsByDate} className="text-xs cursor-pointer w-fit 2xl:text-sm">Último contacto </TableHead>
                     )}
                     <TableHead className="w-10"></TableHead>
 

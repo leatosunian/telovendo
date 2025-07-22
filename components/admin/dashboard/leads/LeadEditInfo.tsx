@@ -606,7 +606,7 @@ const LeadEditForm = () => {
                     name="leadVehicleName"
                     render={({ field }) => (
                       <FormItem className="col-span-2 md:col-span-1">
-                        <FormLabel>Vehiculo del cliente <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
+                        <FormLabel>Vehículo del cliente <span className="text-xs text-gray-500">(opcional)</span></FormLabel>
                         <FormControl>
                           <Input placeholder="Ingrese un vehículo" type="text" {...field} />
                         </FormControl>
@@ -632,7 +632,7 @@ const LeadEditForm = () => {
               </span>
               {/* <Separator className="my-5" /> */}
 
-              <span className="text-lg font-semibold">Vehiculo de interés</span>
+              <span className="text-lg font-semibold">Vehículo de interés</span>
             </div>
             <div className="flex flex-col items-center justify-center gap-5 mt-8">
               {selectedIntIn === undefined && (
