@@ -1,5 +1,5 @@
 import Header from "@/components/page/Header";
-import ContactForm from "@/components/page/home/contactus/ContactForm";
+import ContactForm from "@/components/page/home/cotizar/ContactForm";
 import { Metadata } from "next";
 import React from "react";
 

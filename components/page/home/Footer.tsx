@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import logo from "@/public/logomuestrablack.png";
+import logo from "@/public/logomuestrablackletras.png";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { SiMercadopago } from "react-icons/si";
 import Link from "next/link";
@@ -31,11 +31,11 @@ const Footer = () => {
                 height={100}
                 className="hidden md:block"
               />
-              <h5 className="mt-3 mb-2 ml-2 font-semibold text-orange-400 text-md md:text-xl text-blueGray-600">
+              {/* <h5 className="mt-3 mb-2 ml-2 font-semibold text-orange-400 text-md md:text-xl text-blueGray-600">
                 TE LO VENDO | SERVICIO PERSONALIZADO
-              </h5>
+              </h5> */}
               <h5 className="mt-3 mb-2 ml-2 text-md md:text-base text-blueGray-600">
-                +12 años de trayectoria en el mercado de vehículos
+                Vendé tu vehículo de manera particular, sin complicaciones.
               </h5>
               <div className="mt-6 mb-6 lg:mb-0">
                 <Link target="_blank" href={"https://www.instagram.com/"}>

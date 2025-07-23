@@ -1,7 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useState } from "react";
-import contactImg from "@/public/contact.png";
+import contactImg from "@/public/cotizar.jpg";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { IBranch } from "@/app/models/branch";
@@ -102,35 +102,37 @@ const ContactForm = () => {
   return (
     <>
       {loadingPage && <LoaderFullscreen />}
-      <div className="flex flex-col items-start justify-center gap-8 px-8 mx-auto mb-52 md:gap-10 2xl:gap-20 md:px-32 w-fit ">
+      <div className="flex flex-col items-start justify-center gap-8 px-8 mx-auto mb-16 md:mb-52 md:gap-10 2xl:gap-48 md:px-20 w-fit ">
         <Breadcrumbs />
         <div className="flex flex-col items-center justify-center gap-8 mx-auto md:gap-24 lg:flex-row w-fit">
           <div className="flex flex-col items-start justify-start w-fit ">
-            <div className="flex flex-row items-center justify-start w-full gap-10 h-fit ">
-              <div className="w-32">
+            <div className="flex flex-row items-center justify-start w-full gap-5 md:gap-10 h-fit ">
+              <div className="md:w-32 w-28 " >
                 <Image alt="" src={contactImg} className="object-cover" />
               </div>
               <div className="flex flex-col">
-                <span className="mb-1 text-base font-bold text-orange-400 upper ">
-                  Pongámonos en contacto
+                <span className="hidden mb-1 text-base font-bold text-orange-600 md:block" >
+                  Tu vehículo vale más con nosotros
                 </span>
                 <h4 className="text-2xl font-bold md:text-3xl ">
-                  ¡No dudes en consultarnos!
+                  Cotizamos tu vehículo
                 </h4>
               </div>
             </div>
-            <span className="mt-5 text-sm font-normal text-left text-black md:text-base md:mt-8">
-              Completá el formulario con tus datos y escribinos tu consulta, lo
-              antes posible vamos a estar respondiendo tus dudas
+            <span className="mt-5 text-sm font-normal text-left text-black md:text-base md:mt-10">
+              ¿Querés vender tu vehículo o entregarlo como parte de pago? Completá el formulario con los datos de tu vehículo y nos pondremos en contacto a la brevedad para ofrecerte una cotización al mejor valor del mercado.
+            </span>
+            <span className="text-base font-bold text-orange-600 mt-7 2xl:text-lg" >
+              Aprovechá nuestra experiencia y red de compradores para conseguir la mejor oferta.
             </span>
 
-            <Separator className="hidden my-10 md:block" />
 
-            <div className="hidden w-full h-fit md:flex">
+            {/* <div className="hidden w-full h-fit md:flex">
+            <Separator className="hidden my-10 md:block" />
               <div className="flex flex-col w-full gap-6 h-fit">
                 <span className="text-xl font-semibold">Visitanos en</span>
                 <div className="flex flex-col gap-3">
-                  {/* {branches &&
+                  {branches &&
                     branches.map((branch) => (
                       <>
                         <div className="flex items-center gap-2 ">
@@ -140,7 +142,7 @@ const ContactForm = () => {
                           </span>
                         </div>
                       </>
-                    ))} */}
+                    ))}
                   <div className="flex items-center gap-2 ">
                     <FaLocationDot size={17} />
                     <span className="text-sm">
@@ -155,20 +157,20 @@ const ContactForm = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <Separator className="hidden my-10 md:block" />
 
             <div className="hidden w-full h-fit md:flex">
-              <div className="flex flex-col w-full gap-6 h-fit">
-                <span className="text-xl font-semibold">
+              <div className="flex flex-col w-full gap-4 h-fit">
+                <span className="text-lg font-semibold 2xl:text-xl">
                   Seguinos en nuestras redes
                 </span>
                 <div className="flex gap-3">
                   <div className="flex flex-wrap gap-5 lg:mb-0">
                     {/* <Link target="_blank" href={"https://wa.me/5492235423025"}>
                       <button
-                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-red-400 align-center hover:shadow-red-100 hover:outline-none"
+                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:shadow-red-100 hover:outline-none"
                         type="button"
                       >
                         <FaWhatsapp  className="m-auto" size={20} />{" "}
@@ -179,7 +181,7 @@ const ContactForm = () => {
                     </Link> */}
                     <Link target="_blank" href={"https://www.instagram.com/"}>
                       <button
-                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-red-400 align-center hover:shadow-red-100 hover:outline-none"
+                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:shadow-red-100 hover:outline-none"
                         type="button"
                       >
                         <FaInstagram className="m-auto" size={20} />{" "}
@@ -190,7 +192,7 @@ const ContactForm = () => {
                     </Link>
                     <Link target="_blank" href={"https://www.facebook.com/"}>
                       <button
-                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100duration-300 hover:ring-1 hover:ring-red-400 align-center hover:outline-none"
+                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100duration-300 hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
                         type="button"
                       >
                         <FaFacebook className="m-auto" size={20} />{" "}
@@ -204,7 +206,7 @@ const ContactForm = () => {
                       href={"https://www.mercadolibre.com.ar/"}
                     >
                       <button
-                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100 hover:ring-1 hover:ring-red-400 align-center hover:outline-none"
+                        className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100 hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
                         type="button"
                       >
                         <SiMercadopago className="m-auto" size={20} />{" "}
@@ -223,7 +225,7 @@ const ContactForm = () => {
             <div className="w-full mx-auto">
               <Card className="w-full px-5 py-4 ml-auto bg-white rounded-lg shadow-lg md:px-6">
                 <h2 className="text-lg font-semibold md:text-xl ">
-                  Envianos tu consulta
+                  Completá el formulario
                 </h2>
                 <Separator className="mt-3 mb-5" />
                 <Form {...form}>
@@ -241,7 +243,7 @@ const ContactForm = () => {
                               <FormControl>
                                 <input
                                   {...field}
-                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                   placeholder="Ingrese su nombre"
                                   id="name"
                                   type="text"
@@ -264,7 +266,7 @@ const ContactForm = () => {
                               <FormControl>
                                 <input
                                   {...field}
-                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                   placeholder="Ingrese su apellido"
                                   id="surname"
                                   type="text"
@@ -289,7 +291,7 @@ const ContactForm = () => {
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                 placeholder="Ingrese su número de teléfono"
                                 id="phone"
                                 type="number"
@@ -313,7 +315,7 @@ const ContactForm = () => {
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                 placeholder="Ej. Chevrolet Cruze LTZ 1.4T"
                                 id="vehicleInfo"
                                 type="text"
@@ -338,7 +340,7 @@ const ContactForm = () => {
                               <FormControl>
                                 <input
                                   {...field}
-                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                   placeholder="Ej. 2024"
                                   id="vehicleYear"
                                   type="text"
@@ -361,7 +363,7 @@ const ContactForm = () => {
                               <FormControl>
                                 <input
                                   {...field}
-                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                   placeholder="Ej. 65000"
                                   id="vehicleKm"
                                   type="number"
@@ -386,7 +388,7 @@ const ContactForm = () => {
                                            </FormLabel>
                                            <textarea
                                              {...field}
-                                             className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg h-28 md:h-24 focus:outline-none focus:ring-2 focus:ring-red-400"
+                                             className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg h-28 md:h-24 focus:outline-none focus:ring-2 focus:ring-orange-600"
                                              rows={4}
                                              placeholder="Ingrese su consulta"
                                              name="message"
@@ -400,10 +402,10 @@ const ContactForm = () => {
 
                     {!loading && (
                       <button
-                        className="w-full px-4 py-3 mt-2 mb-2 text-xs font-semibold text-white transition duration-300 bg-black rounded-md hover:bg-red-600"
+                        className="w-full px-4 py-3 mt-2 mb-2 text-xs font-semibold text-white transition duration-300 bg-black rounded-md hover:bg-orange-600"
                         type="submit"
                       >
-                        Enviar consulta
+                        Solicitar cotización
                       </button>
                     )}
 
@@ -423,13 +425,13 @@ const ContactForm = () => {
             </div>
           </div>
 
-          <Separator className="block mt-2 md:hidden" />
+          {/* <Separator className="block mt-2 md:hidden" />
 
           <div className="flex w-full h-fit md:hidden">
             <div className="flex flex-col w-full gap-7 h-fit">
               <span className="text-2xl font-semibold">Visitanos en</span>
               <div className="flex flex-col gap-3">
-                {/* {branches &&
+                {branches &&
                   branches.map((branch) => (
                     <>
                       <div className="flex items-center gap-2 ">
@@ -439,7 +441,7 @@ const ContactForm = () => {
                         </span>
                       </div>
                     </>
-                  ))} */}
+                  ))} 
                 <div className="flex items-center gap-2 ">
                   <FaLocationDot size={17} />
                   <span className="text-sm">
@@ -454,9 +456,9 @@ const ContactForm = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <Separator className="block my-3 md:hidden" />
+          <Separator className="block mt-3 md:hidden" />
 
           <div className="flex w-full h-fit md:hidden">
             <div className="flex flex-col w-full gap-7 h-fit">
@@ -467,7 +469,7 @@ const ContactForm = () => {
                 <div className="flex flex-wrap gap-6 md:gap-3 lg:mb-0">
                   <Link target="_blank" href={"https://www.instagram.com/"}>
                     <button
-                      className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-red-400 align-center hover:outline-none"
+                      className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
                       type="button"
                     >
                       <FaInstagram className="m-auto" size={23} />{" "}
@@ -478,7 +480,7 @@ const ContactForm = () => {
                   </Link>
                   <Link target="_blank" href={"https://www.facebook.com/"}>
                     <button
-                      className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-red-400 align-center hover:outline-none"
+                      className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
                       type="button"
                     >
                       <FaFacebook className="m-auto" size={23} />{" "}
@@ -492,7 +494,7 @@ const ContactForm = () => {
                     href={"https://www.mercadolibre.com.ar/"}
                   >
                     <button
-                      className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-red-400 align-center hover:outline-none"
+                      className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
                       type="button"
                     >
                       <SiMercadopago className="m-auto" size={23} />{" "}

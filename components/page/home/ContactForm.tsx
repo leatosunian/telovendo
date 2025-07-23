@@ -90,91 +90,82 @@ const ContactForm = () => {
     <>
       <div className="flex flex-col items-center justify-center gap-8 px-8 mx-auto my-20 md:gap-24 lg:flex-row md:my-44 md:px-32 w-fit ">
         <div className="flex flex-col items-start justify-start w-fit ">
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            className="flex flex-row items-center justify-start w-full gap-10 h-fit "
-          >
-            <div className="w-32">
+          <div className="flex flex-row items-center justify-start w-full gap-5 md:gap-10 h-fit ">
+            <div className="md:w-32 w-28 " >
               <Image alt="" src={contactImg} className="object-cover" />
             </div>
             <div className="flex flex-col">
-              <span className="mb-1 text-base font-bold text-orange-400 upper ">
-                Pongámonos en contacto
+              <span className="hidden mb-1 text-base font-bold text-orange-600 md:block" >
+                Tu vehículo vale más con nosotros
               </span>
               <h4 className="text-2xl font-bold md:text-3xl ">
-                ¡No dudes en consultarnos!
+                Cotizamos tu vehículo
               </h4>
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            className="flex flex-row items-center justify-start w-full gap-10 h-fit "
-          >
-            <span className="mt-5 text-sm font-normal text-left text-black md:text-base md:mt-8">
-              Completá el formulario con tus datos y escribinos tu consulta. ¡Te
-              contactamos lo antes posible!
-            </span>
-          </motion.div>
-
-          <Separator className="hidden my-7 md:block" />
-
-          <div className="hidden w-full h-fit md:flex">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.3 }}
-              className="flex flex-col w-full gap-5 h-fit"
-            >
-              <span className="text-xl font-semibold">Visitanos en</span>
-              <div className="flex flex-col gap-3">
-                {/* {branches &&
-                  branches.map((branch) => (
-                    <>
-                      <div className="flex items-center gap-2 ">
-                        <FaLocationDot size={17} />
-                        <span className="text-sm">
-                          {branch.address}, {branch.city}, {branch.state}.
-                        </span>
-                      </div>
-                    </>
-                  ))} */}
-                <div className="flex items-center gap-2 ">
-                  <FaLocationDot size={17} />
-                  <span className="text-sm">
-                    Av. J. M. de Pueyrredón 2550, Córdoba
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 ">
-                  <FaLocationDot size={17} />
-                  <span className="text-sm">
-                    Av. Fuerza Aerea Argentina 3020, Córdoba
-                  </span>
-                </div>
-              </div>
-            </motion.div>
           </div>
+          <span className="mt-5 text-sm font-normal text-left text-black md:text-base md:mt-10">
+            ¿Querés vender tu vehículo o entregarlo como parte de pago? Completá el formulario con los datos de tu vehículo y nos pondremos en contacto a la brevedad para ofrecerte una cotización al mejor valor del mercado.
+          </span>
+          <span className="text-base font-bold text-orange-600 mt-7 2xl:text-lg" >
+            Aprovechá nuestra experiencia y red de compradores para conseguir la mejor oferta.
+          </span>
 
-          <Separator className="hidden my-7 md:block" />
+
+          {/* <div className="hidden w-full h-fit md:flex">
+                    <Separator className="hidden my-10 md:block" />
+                      <div className="flex flex-col w-full gap-6 h-fit">
+                        <span className="text-xl font-semibold">Visitanos en</span>
+                        <div className="flex flex-col gap-3">
+                          {branches &&
+                            branches.map((branch) => (
+                              <>
+                                <div className="flex items-center gap-2 ">
+                                  <FaLocationDot size={17} />
+                                  <span className="text-sm">
+                                    {branch.address}, {branch.city}, {branch.state}.
+                                  </span>
+                                </div>
+                              </>
+                            ))}
+                          <div className="flex items-center gap-2 ">
+                            <FaLocationDot size={17} />
+                            <span className="text-sm">
+                              Av. J. M. de Pueyrredón 2550, Córdoba
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 ">
+                            <FaLocationDot size={17} />
+                            <span className="text-sm">
+                              Av. Fuerza Aerea Argentina 3020, Córdoba
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div> */}
+
+          <Separator className="hidden my-10 md:block" />
 
           <div className="hidden w-full h-fit md:flex">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.3 }}
-              className="flex flex-col w-full gap-5 h-fit"
-            >
-              <span className="text-xl font-semibold">
+            <div className="flex flex-col w-full gap-4 h-fit">
+              <span className="text-lg font-semibold 2xl:text-xl">
                 Seguinos en nuestras redes
               </span>
               <div className="flex gap-3">
-                <div className="flex flex-wrap gap-6 md:gap-3 lg:mb-0">
+                <div className="flex flex-wrap gap-5 lg:mb-0">
+                  {/* <Link target="_blank" href={"https://wa.me/5492235423025"}>
+                              <button
+                                className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:shadow-red-100 hover:outline-none"
+                                type="button"
+                              >
+                                <FaWhatsapp  className="m-auto" size={20} />{" "}
+                                <span className="text-xs font-medium">
+                                  +54 9 223 542-3025
+                                </span>
+                              </button>
+                            </Link> */}
                   <Link target="_blank" href={"https://www.instagram.com/"}>
                     <button
-                      className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-red-400 align-center hover:shadow-red-100 hover:outline-none"
+                      className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:shadow-red-100 hover:outline-none"
                       type="button"
                     >
                       <FaInstagram className="m-auto" size={20} />{" "}
@@ -185,7 +176,7 @@ const ContactForm = () => {
                   </Link>
                   <Link target="_blank" href={"https://www.facebook.com/"}>
                     <button
-                      className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100duration-300 hover:ring-1 hover:ring-red-400 align-center hover:outline-none"
+                      className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100duration-300 hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
                       type="button"
                     >
                       <FaFacebook className="m-auto" size={20} />{" "}
@@ -199,7 +190,7 @@ const ContactForm = () => {
                     href={"https://www.mercadolibre.com.ar/"}
                   >
                     <button
-                      className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100 hover:ring-1 hover:ring-red-400 align-center hover:outline-none"
+                      className="flex items-center justify-center h-10 gap-3 px-4 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:shadow-red-100 hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
                       type="button"
                     >
                       <SiMercadopago className="m-auto" size={20} />{" "}
@@ -210,7 +201,7 @@ const ContactForm = () => {
                   </Link>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -218,7 +209,7 @@ const ContactForm = () => {
           <div className="w-full mx-auto">
             <Card className="w-full px-5 py-4 ml-auto bg-white rounded-lg shadow-lg md:px-6">
               <h2 className="text-lg font-semibold md:text-xl ">
-                Envianos tu consulta
+                Completá el formulario
               </h2>
               <Separator className="mt-3 mb-5" />
               <Form {...form}>
@@ -236,7 +227,7 @@ const ContactForm = () => {
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                 placeholder="Ingrese su nombre"
                                 id="name"
                                 type="text"
@@ -259,7 +250,7 @@ const ContactForm = () => {
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                 placeholder="Ingrese su apellido"
                                 id="surname"
                                 type="text"
@@ -284,7 +275,7 @@ const ContactForm = () => {
                           <FormControl>
                             <input
                               {...field}
-                              className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                              className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                               placeholder="Ingrese su número de teléfono"
                               id="phone"
                               type="number"
@@ -308,7 +299,7 @@ const ContactForm = () => {
                           <FormControl>
                             <input
                               {...field}
-                              className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                              className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                               placeholder="Ej. Chevrolet Cruze LTZ 1.4T"
                               id="vehicleInfo"
                               type="text"
@@ -333,7 +324,7 @@ const ContactForm = () => {
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                 placeholder="Ej. 2024"
                                 id="vehicleYear"
                                 type="text"
@@ -356,7 +347,7 @@ const ContactForm = () => {
                             <FormControl>
                               <input
                                 {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-red-400"
+                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
                                 placeholder="Ej. 65000"
                                 id="vehicleKm"
                                 type="number"
@@ -370,35 +361,35 @@ const ContactForm = () => {
                   </div>
 
                   {/* 
-                  <div className="w-full mb-4">
-                    <FormField
-                      control={form.control}
-                      name="details"
-                      render={({ field }) => (
-                        <FormItem className="w-full ">
-                          <FormLabel className="block mb-0 text-xs font-semibold xs:text-sm">
-                            Escribinos tu consulta
-                          </FormLabel>
-                          <textarea
-                            {...field}
-                            className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg h-28 md:h-24 focus:outline-none focus:ring-2 focus:ring-red-400"
-                            rows={4}
-                            placeholder="Ingrese su consulta"
-                            name="message"
-                            id="message"
-                          ></textarea>
-                          <FormMessage className="text-xs" />
-                        </FormItem>
-                      )}
-                    />
-                  </div> */}
+                                           <div className="w-full mb-4">
+                                             <FormField
+                                               control={form.control}
+                                               name="details"
+                                               render={({ field }) => (
+                                                 <FormItem className="w-full ">
+                                                   <FormLabel className="block mb-0 text-xs font-semibold xs:text-sm">
+                                                     Escribinos tu consulta
+                                                   </FormLabel>
+                                                   <textarea
+                                                     {...field}
+                                                     className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg h-28 md:h-24 focus:outline-none focus:ring-2 focus:ring-orange-600"
+                                                     rows={4}
+                                                     placeholder="Ingrese su consulta"
+                                                     name="message"
+                                                     id="message"
+                                                   ></textarea>
+                                                   <FormMessage className="text-xs" />
+                                                 </FormItem>
+                                               )}
+                                             />
+                                           </div> */}
 
                   {!loading && (
                     <button
-                      className="w-full px-4 py-3 mt-2 mb-2 text-xs font-semibold text-white transition duration-300 bg-black rounded-md hover:bg-red-600"
+                      className="w-full px-4 py-3 mt-2 mb-2 text-xs font-semibold text-white transition duration-300 bg-orange-600 rounded-md hover:bg-orange-700"
                       type="submit"
                     >
-                      Enviar consulta
+                      Solicitar cotización
                     </button>
                   )}
 
@@ -418,34 +409,84 @@ const ContactForm = () => {
           </div>
         </div>
 
-        <Separator className="block mt-2 md:hidden" />
+        {/* <Separator className="block mt-2 md:hidden" />
+        
+                  <div className="flex w-full h-fit md:hidden">
+                    <div className="flex flex-col w-full gap-7 h-fit">
+                      <span className="text-2xl font-semibold">Visitanos en</span>
+                      <div className="flex flex-col gap-3">
+                        {branches &&
+                          branches.map((branch) => (
+                            <>
+                              <div className="flex items-center gap-2 ">
+                                <FaLocationDot size={17} />
+                                <span className="text-sm">
+                                  {branch.address}, {branch.city}, {branch.state}.{" "}
+                                </span>
+                              </div>
+                            </>
+                          ))} 
+                        <div className="flex items-center gap-2 ">
+                          <FaLocationDot size={17} />
+                          <span className="text-sm">
+                            Av. J. M. de Pueyrredón 2550, Córdoba
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 ">
+                          <FaLocationDot size={17} />
+                          <span className="text-sm">
+                            Av. Fuerza Aerea Argentina 3020, Córdoba
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
+
+        <Separator className="block mt-3 md:hidden" />
 
         <div className="flex w-full h-fit md:hidden">
-          <div className="flex flex-col w-full gap-5 h-fit">
-            <span className="text-xl font-semibold">Visitanos en</span>
-            <div className="flex flex-col gap-3">
-              {/* {branches &&
-                branches.map((branch) => (
-                  <>
-                    <div className="flex items-center gap-2 ">
-                      <FaLocationDot size={17} />
-                      <span className="text-sm">
-                        {branch.address}, {branch.city}, {branch.state}.{" "}
-                      </span>
-                    </div>
-                  </>
-                ))} */}
-              <div className="flex items-center gap-2 ">
-                <FaLocationDot size={17} />
-                <span className="text-sm">
-                  Av. J. M. de Pueyrredón 2550, Córdoba
-                </span>
-              </div>
-              <div className="flex items-center gap-2 ">
-                <FaLocationDot size={17} />
-                <span className="text-sm">
-                  Av. Fuerza Aerea Argentina 3020, Córdoba
-                </span>
+          <div className="flex flex-col w-full gap-7 h-fit">
+            <span className="text-2xl font-semibold">
+              Seguinos en nuestras redes
+            </span>
+            <div className="flex gap-3">
+              <div className="flex flex-wrap gap-6 md:gap-3 lg:mb-0">
+                <Link target="_blank" href={"https://www.instagram.com/"}>
+                  <button
+                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
+                    type="button"
+                  >
+                    <FaInstagram className="m-auto" size={23} />{" "}
+                    <span className="text-sm font-medium">
+                      aspenautomotores
+                    </span>
+                  </button>
+                </Link>
+                <Link target="_blank" href={"https://www.facebook.com/"}>
+                  <button
+                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
+                    type="button"
+                  >
+                    <FaFacebook className="m-auto" size={23} />{" "}
+                    <span className="text-sm font-medium">
+                      Aspen Automotores
+                    </span>
+                  </button>
+                </Link>
+                <Link
+                  target="_blank"
+                  href={"https://www.mercadolibre.com.ar/"}
+                >
+                  <button
+                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
+                    type="button"
+                  >
+                    <SiMercadopago className="m-auto" size={23} />{" "}
+                    <span className="text-sm font-medium">
+                      Aspen Automotores
+                    </span>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

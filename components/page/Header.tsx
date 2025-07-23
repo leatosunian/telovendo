@@ -127,28 +127,18 @@ export default function Header() {
                   }}
                   className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md "
                 >
-                  Nuestros vehículos
+                  vehículos disponibles
                 </Link>
 
                 <Link
-                  href="/contactus"
+                  href="/cotizar"
                   style={{ fontSize: "11px" }}
                   className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md "
                   onClick={() => {
                     setOpenDropdown("");
                   }}
                 >
-                  Sobre nosotros
-                </Link>
-                <Link
-                  href="/contactus"
-                  style={{ fontSize: "11px" }}
-                  className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md "
-                  onClick={() => {
-                    setOpenDropdown("");
-                  }}
-                >
-                  Contactanos
+                  Cotizá tu vehículo
                 </Link>
               </div>
 
@@ -160,22 +150,18 @@ export default function Header() {
                 className="max-w-lg mx-auto"
               >
                 <div className="flex">
-                  <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
-                    Your Email
-                  </label>
-
                   <div className="relative w-full">
                     <input
                       type="text"
                       onChange={(e) => setSearchValue(e.target.value)}
                       id="search-dropdown"
-                      className="z-20 block w-full px-2 py-1.5 text-xs text-gray-900 border border-gray-300 rounded-lg bg-gray-50 border-s-gray-50 border-s-2 focus:ring-orange-400 focus:border-orange-400 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-orange-400"
+                      className="z-20 block w-full px-2 py-1.5 text-xs outline-none  focus:outline-orange-600 hover:outline-orange-600 text-black hover:bg-gray-300 transition-all ease-in-out  rounded-lg bg-gray-50  "
                       placeholder="Buscar un vehículo "
                     />
                     <button
                       type="submit"
                       onClick={handleSearch}
-                      className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-orange-700 rounded-e-lg border border-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                      className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-orange-600 rounded-e-lg border border-orange-600 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:bg-orange-500 dark:hover:bg-orange-600 dark:focus:ring-orange-800"
                     >
                       <svg
                         className="w-2.5 h-2.5"
@@ -247,27 +233,20 @@ export default function Header() {
                 className="flex items-center gap-2 px-3 py-3 text-sm font-medium transition-colors duration-300 rounded-md backgroundOrangHover"
                 onClick={() => setIsOpen(false)}
               >
-                Todos los vehículos
+                vehículos disponibles
               </Link>
             </div>
 
             <div className="flex flex-col gap-2">
               <span className="ml-2 text-xs font-semibold text-gray-400">Empresa</span>
               <div className="flex flex-col ">
-              <Link
-                href="/contactus"
-                className="flex items-center gap-2 px-3 py-3 text-sm font-medium transition-colors duration-300 rounded-md backgroundOrangHover"
-                onClick={() => setIsOpen(false)}
-              >
-                Sobre nosotros
-              </Link>
-              <Link
-                href="/contactus"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors duration-300 rounded-md backgroundOrangHover"
-                onClick={() => setIsOpen(false)}
-              >
-                Contactanos
-              </Link>
+                <Link
+                  href="/cotizar"
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors duration-300 rounded-md backgroundOrangHover"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Cotizá tu vehículo
+                </Link>
               </div>
             </div>
           </div>

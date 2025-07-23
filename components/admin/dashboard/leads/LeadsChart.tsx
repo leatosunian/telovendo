@@ -37,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/selectxs";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const LeadsChart = () => {
   const [leads, setLeads] = useState<ILead[]>([]);
@@ -53,19 +54,33 @@ const LeadsChart = () => {
       lead.leadVehicleName?.toLowerCase().includes(search)
     );
   });
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalLeads, setTotalLeads] = useState<number>(0);
+  const leadsPerPage = 15;
+  const totalPages = Math.ceil(totalLeads / leadsPerPage);
 
   async function getLeads() {
     try {
-      const leadsFetch = await fetch("/api/leads", {
+      setLoading(true);
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: leadsPerPage.toString(),
+        searchTerm,
+        sortDirection,
+      });
+
+      const res = await fetch(`/api/leads?${params.toString()}`, {
         method: "GET",
         cache: "no-store",
       });
-      const leads = await leadsFetch.json();
+
+      const { leads, total } = await res.json();
+      setLeads(leads);
+      setTotalLeads(total);
       setLoading(false);
-      setLeads(leads.leads);
     } catch (error) {
       setLoading(false);
-      return;
+      console.error(error);
     }
   }
 
@@ -83,7 +98,15 @@ const LeadsChart = () => {
     setLeads(sorted); // ¡Acá está la clave!
   };
 
+  //  resetear currentPage a 1 cada vez que cambia searchTerm o sortDirection
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, sortDirection]);
 
+  // para llamar a getLeads cuando cambien filtros o página:
+  useEffect(() => {
+    getLeads();
+  }, [currentPage, searchTerm, sortDirection]);
 
   useEffect(() => {
     getLeads();
@@ -91,6 +114,25 @@ const LeadsChart = () => {
 
   return (
     <>
+      {/* search and filter bar */}
+      <div className="flex justify-between mb-3">
+        {/* search bar */}
+        <div className="text-sm text-black bg-white groupSearch dark:bg-background dark:text-white">
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="iconSearch">
+            <g>
+              <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+            </g>
+          </svg>
+          <input
+            className="text-black inputSearch dark:text-white"
+            type="search"
+            placeholder="Buscar por nombre o vehículo"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+      </div>
       {loading && (
         <>
           <div
@@ -104,27 +146,6 @@ const LeadsChart = () => {
 
       {!loading && (
         <>
-          {/* search and filter bar */}
-          <div className="flex justify-between mb-3">
-            {/* search bar */}
-            <div className="text-sm text-black bg-white groupSearch dark:bg-background dark:text-white">
-              <svg viewBox="0 0 24 24" aria-hidden="true" className="iconSearch">
-                <g>
-                  <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-                </g>
-              </svg>
-              <input
-                className="text-black inputSearch dark:text-white"
-                type="search"
-                placeholder="Buscar por nombre o vehículo"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-
-          </div>
-
-
           {filteredLeads?.length === 0 && (
             <>
               <div className="flex flex-col items-center gap-1 justify-center w-full min-h-[300px] h-full">
@@ -140,7 +161,7 @@ const LeadsChart = () => {
           {filteredLeads?.length > 0 && (
             <>
               <Table>
-                <TableCaption>Listado de leads.</TableCaption>
+                {/* <TableCaption>Listado de leads.</TableCaption> */}
                 <TableHeader>
                   <TableRow>
                     <TableHead className="text-xs w-fit 2xl:text-sm">Nombre </TableHead>
@@ -167,7 +188,7 @@ const LeadsChart = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredLeads?.map((lead) => (
+                  {leads?.map((lead) => (
                     <>
                       <TableRow key={lead._id}>
                         <TableCell className="text-xs font-medium">
@@ -239,6 +260,38 @@ const LeadsChart = () => {
                   ))}
                 </TableBody>
               </Table>
+
+              {totalPages > 1 && (
+                <Pagination className="mt-4">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                        onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+                      />
+                    </PaginationItem>
+
+                    {Array.from({ length: totalPages }, (_, i) => (
+                      <PaginationItem key={i}>
+                        <PaginationLink
+                          isActive={i + 1 === currentPage}
+                          onClick={() => setCurrentPage(i + 1)}
+                        >
+                          {i + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                        onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              )}
+
             </>
           )}
         </>

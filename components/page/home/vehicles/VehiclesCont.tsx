@@ -95,13 +95,13 @@ const VehiclesCont = () => {
     const vehiclesSorted = [...vehicleList].sort(
       (prev, next) => next.price - prev.price
     );
-    setVehicleList(vehiclesSorted); 
+    setVehicleList(vehiclesSorted);
   }
   function sortVehiclesByPriceAsc() {
     const vehiclesSorted = [...vehicleList].sort(
       (prev, next) => prev.price - next.price
     );
-    setVehicleList(vehiclesSorted); 
+    setVehicleList(vehiclesSorted);
   }
   function sortVehiclesByDateAsc() {
     const vehiclesSorted = [...vehicleList].sort((a, b) => {
@@ -372,7 +372,7 @@ const VehiclesCont = () => {
                       <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-full  p-0">
+                  <PopoverContent className="w-full p-0">
                     <Command>
                       <CommandInput
                         placeholder="Buscar marca..."
@@ -612,27 +612,20 @@ const VehiclesCont = () => {
             )}
             {vehicleList.length === 0 && (
               <>
-                <div className="flex flex-col items-center justify-center w-full gap-5 my-32 h-fit">
-                  <span className="text-2xl font-semibold">
-                    No se encontró ningún resultado.
-                  </span>
-                  <button
-                    onClick={() => {
-                      console.log(searchFilter);
-
-                      if (searchFilter === "") {
-                        setVehicleList(vehicleFetch);
-                        return;
-                      }
-                      if (searchFilter !== "") {
-                        router.replace("/vehicles");
-                        refresh();
-                      }
-                    }}
-                    className={`${buttonStyle.button}`}
-                  >
-                    Eliminar filtros
-                  </button>
+                <div className="flex flex-col items-center justify-center w-full gap-8 my-32 h-fit">
+                  <div className="flex flex-col items-center justify-center w-full gap-2 h-fit">
+                    <span className="text-2xl font-semibold">
+                      No se encontró ningún resultado,
+                    </span>
+                    <span className="text-xl font-semibold">pero podemos encontrar el vehículo que estás buscando.</span>
+                  </div>
+                  <Link href={"https://api.whatsapp.com/send/?phone=5493424216075"} target="_blank">
+                    <button
+                      className={`${buttonStyle.button}`}
+                    >
+                      Contactanos
+                    </button>
+                  </Link>
                 </div>
               </>
             )}

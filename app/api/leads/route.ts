@@ -1,6 +1,7 @@
 import LeadModel from "@/app/models/lead";
 import connectDB from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+import { SortOrder } from "mongoose";
 
 export async function POST(request: NextRequest) {
   await connectDB();
@@ -32,11 +33,44 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   await connectDB();
 
+  const { searchParams } = new URL(request.url);
+
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "15");
+  const searchTerm = searchParams.get("searchTerm") || "";
+  const sortDirection = searchParams.get("sortDirection") || "desc";
+
+  const skip = (page - 1) * limit;
+
+  // Construir filtro de búsqueda sensible a minúsculas:
+  const searchRegex = new RegExp(searchTerm, "i"); // "i" para case-insensitive
+
+  // Filtro OR en varios campos:
+  const filter = searchTerm
+    ? {
+      $or: [
+        { name: searchRegex },
+        { surname: searchRegex },
+        { interestedInName: searchRegex },
+        { leadVehicleName: searchRegex },
+      ],
+    }
+    : {};
+
+  // Orden según sortDirection (asc o desc) por updatedAt:
+  const sort: { updatedAt?: SortOrder } = {
+    updatedAt: sortDirection === "asc" ? 1 : -1,
+  };
   try {
-    const leads = await LeadModel.find().sort({updatedAt: -1});
-    return NextResponse.json({ msg: "LEAD_GET", leads });
+    const total = await LeadModel.countDocuments(filter);
+    const leads = await LeadModel.find(filter)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit);
+
+    return NextResponse.json({ msg: "LEAD_GET", leads, total });
   } catch (error) {
-    return NextResponse.json({ msg: "GET_LEAD_ERROR" });
+    return NextResponse.json({ msg: "GET_LEAD_ERROR", error }, { status: 500 });
   }
 }
 

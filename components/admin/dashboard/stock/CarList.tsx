@@ -228,8 +228,8 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
             </div>
 
             {/* filters */}
-            <div className="flex gap-4">
-              {/* <Select>
+            {/* <div className="flex gap-4">
+              <Select>
                 <SelectTrigger className="w-fit">
                   <SelectValue placeholder="Sucursal" className="mr-2" />
                 </SelectTrigger>
@@ -246,7 +246,7 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
                       ))}
                   </SelectGroup>
                 </SelectContent>
-              </Select> */}
+              </Select>
 
               <Select>
                 <SelectTrigger className="w-fit">
@@ -260,7 +260,6 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {/* filtrar por campo show */}
               <Select>
                 <SelectTrigger className="w-fit">
                   <SelectValue
@@ -275,7 +274,6 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {/* filtrar por mayor a menor precio y por mas recientes a mas antiguos y viceversa (price y createdAt) */}
               <Select>
                 <SelectTrigger className="w-fit">
                   <SelectValue placeholder="Ordenar por..." />
@@ -297,7 +295,7 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           {/* no vehicles  */}
           {currentVehicles.length === 0 && (
@@ -348,7 +346,7 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
                             </div>
                           </CardDescription>
                           <div className="flex flex-col gap-5">
-                        
+
                             {car.gearbox === "AUTOMATIC" && (
                               <p
                                 style={{ color: "#a1a1aa" }}
