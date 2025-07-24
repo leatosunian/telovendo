@@ -22,7 +22,7 @@ const Section3 = () => {
               transition={{ duration: 0.7, ease: "easeInOut", delay: 0.5 }}
             >
               <h3
-                className="text-5xl font-semibold sm:text-5xl 2xl:text-6xl "
+                className="text-3xl font-semibold sm:text-5xl 2xl:text-6xl "
                 style={{ letterSpacing: ".5px" }}
               >
                 Vendé tu unidad al mejor precio
@@ -35,15 +35,15 @@ const Section3 = () => {
               className="mt-0"
               transition={{ duration: 0.7, ease: "easeInOut", delay: 0.5 }}
             >
-              <p className="text-base md:text-sm 2xl:text-lg">
+              <p className="text-sm md:text-sm 2xl:text-lg">
                 Solicitanos una cotización gratuita de tu vehículo. Lo cotizamos
                 al instante y al mejor precio del mercado, pagamos por tu usado
                 lo que realmente vale.
               </p>
-              <p className="mt-3 text-base md:text-sm 2xl:text-lg">
+              <p className="mt-3 text-sm md:text-sm 2xl:text-lg">
                 Luego de reunirnos para hacer las fotos oficiales del auto, nos ocuparemos de encontrarle un comprador cuánto antes.
               </p>
-              <p className="mt-3 text-base md:text-sm 2xl:text-lg">
+              <p className="mt-3 text-sm md:text-sm 2xl:text-lg">
                 Una vez señado el vehículo, nos ocuparemos de que se transfiera en tiempo y forma, y que lo entregues una vez que la transferencia ya esté ingresada.
               </p>
               <p

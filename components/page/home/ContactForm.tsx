@@ -1,7 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useState } from "react";
-import contactImg from "@/public/contact.png";
+import contactImg from "@/public/cotizar.jpg";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { IBranch } from "@/app/models/branch";
@@ -449,11 +449,11 @@ const ContactForm = () => {
             <span className="text-2xl font-semibold">
               Seguinos en nuestras redes
             </span>
-            <div className="flex gap-3">
-              <div className="flex flex-wrap gap-6 md:gap-3 lg:mb-0">
+            <div className="flex gap-3 ">
+              <div className="flex flex-col gap-6 md:gap-3 lg:mb-0">
                 <Link target="_blank" href={"https://www.instagram.com/"}>
                   <button
-                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
+                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border rounded-full shadow-lg outline-none w-fit ring-1 ring-orange-600 align-center hover:outline-none"
                     type="button"
                   >
                     <FaInstagram className="m-auto" size={23} />{" "}
@@ -464,12 +464,13 @@ const ContactForm = () => {
                 </Link>
                 <Link target="_blank" href={"https://www.facebook.com/"}>
                   <button
-                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
+                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border rounded-full shadow-lg outline-none w-fit ring-1 ring-orange-600 align-center hover:outline-none"
                     type="button"
                   >
                     <FaFacebook className="m-auto" size={23} />{" "}
                     <span className="text-sm font-medium">
-Telovendo                    </span>
+                      Telovendo
+                    </span>
                   </button>
                 </Link>
                 <Link
@@ -477,7 +478,7 @@ Telovendo                    </span>
                   href={"https://www.mercadolibre.com.ar/"}
                 >
                   <button
-                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border border-gray-200 rounded-full shadow-lg outline-none w-fit hover:ring-1 hover:ring-orange-600 align-center hover:outline-none"
+                    className="flex items-center justify-center h-12 gap-3 px-5 font-normal transition duration-300 bg-white border rounded-full shadow-lg outline-none w-fit ring-1 ring-orange-600 align-center hover:outline-none"
                     type="button"
                   >
                     <SiMercadopago className="m-auto" size={23} />{" "}

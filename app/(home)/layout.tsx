@@ -27,9 +27,9 @@ export default function RootLayout({
         <Link
           className="fixed bottom-0 right-0 z-50 m-5 cursor-pointer w-fit h-fit"
           target="_blank"
-          href={"https://wa.me/542235423025"}
+          href={"https://wa.me/5493424216075"}
         >
-          <Image src={wp} alt="" width={50} height={50} />
+          <Image src={wp} alt="" width={45} height={45} />
         </Link>
         <Toaster />
       </body>

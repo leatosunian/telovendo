@@ -41,7 +41,7 @@ const Footer = () => {
                 Te lo Vendo
               </h5> */}
 
-              <Separator className="my-3 bg-orange-800 opacity-35 md:my-3"></Separator>
+              <Separator className="my-3 bg-orange-600  md:my-3"></Separator>
 
               <h5 className="mt-2 mb-2 ml-0 text-sm font-normal md:ml-2 md:text-base text-blueGray-600">
                 Vendé tu vehículo de manera particular, sin complicaciones.

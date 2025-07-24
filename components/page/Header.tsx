@@ -127,7 +127,7 @@ export default function Header() {
                   }}
                   className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md hover:text-orange-600 "
                 >
-                  vehículos disponibles
+                  Vehículos disponibles
                 </Link>
 
                 <Link
@@ -233,12 +233,12 @@ export default function Header() {
                 className="flex items-center gap-2 px-3 py-3 text-sm font-medium transition-colors duration-300 rounded-md backgroundOrangHover"
                 onClick={() => setIsOpen(false)}
               >
-                vehículos disponibles
+                Vehículos disponibles
               </Link>
             </div>
 
             <div className="flex flex-col gap-2">
-              <span className="ml-2 text-xs font-semibold text-gray-400">Empresa</span>
+              <span className="ml-2 text-xs font-semibold text-gray-400">Servicios</span>
               <div className="flex flex-col ">
                 <Link
                   href="/cotizar"

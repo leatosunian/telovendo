@@ -69,7 +69,7 @@ const NewProducts = ({ vehicles }: Props) => {
             <span className="text-base font-bold text-orange-600 ">
               Últimos ingresos
             </span>
-            <h4 className="text-2xl font-bold md:text-lg 2xl:text-2xl ">
+            <h4 className="text-xl font-bold md:text-lg 2xl:text-2xl ">
               Estas son nuestras unidades más recientes
             </h4>
           </div>
