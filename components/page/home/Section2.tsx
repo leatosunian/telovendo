@@ -35,8 +35,8 @@ const Section2 = () => {
                       delay: 0.2,
                     }}
                   >
-                    <h1 className="text-3xl font-semibold text-left text-white md:text-center sm:text-4xl">
-                      ¿Por qué comprar tu auto en Telovendo?
+                    <h1 className="text-3xl font-semibold text-left text-white 2xl:text-5xl md:text-center sm:text-4xl">
+                      ¿Por qué vender tu auto con nosotros?
                     </h1>
                   </motion.div>
                   <motion.div
@@ -50,15 +50,13 @@ const Section2 = () => {
                     }}
                   >
                     <p className="mt-8 text-base font-normal text-left text-white md:text-center sm:text-lg">
-                      Tenemos las mejores unidades seleccionadas, cotizamos tu
-                      usado al mejor precio y te ofrecemos servicio de gestoría
-                      y aseguradora para que salgas con tu nueva unidad lista
-                      para conducir lo mas rápido posible.
+                      Dejá la venta de tu auto en nuestras manos: te brindamos una experiencia completa, con cotización al mejor precio del mercado, asesoramiento profesional y gestión segura de principio a fin. Trabajamos para que consigas el mejor valor y lo entregues transferido.
                     </p>
+
                     <p className="mt-4 text-base font-normal text-left text-white md:text-center sm:text-lg">
                       12 años de experiencia en el mercado respaldan nuestra confianza.
                     </p>
-                    <p style={{borderBottom: '1px solid #ea580c'}} className="mx-0 mt-10 text-xl font-semibold text-left text-white md:mx-auto w-fit md:text-center sm:text-2xl">
+                    <p style={{ borderBottom: '1px solid #ea580c' }} className="mx-0 mt-10 text-xl font-semibold text-left text-white md:mx-auto w-fit md:text-center sm:text-2xl">
                       Tu próximo auto está acá.
                     </p>
                   </motion.div>
@@ -84,10 +82,9 @@ const Section2 = () => {
                     >
                       <SiCashapp />
                     </div>
-                    <h6 className="text-xl font-semibold">Financiación</h6>
+                    <h6 className="text-xl font-semibold">Seguridad y confianza</h6>
                     <p className="mt-2 mb-4 text-base text-black md:text-sm 2xl:text-base">
-                      Varios planes de financiación para que acceder a tu nuevo
-                      vehículo sea más fácil que nunca
+                      Más de 12 años en el mercado haciendo operaciones seguras y clientes felices.
                     </p>
                   </div>
                 </div>
@@ -111,8 +108,7 @@ const Section2 = () => {
                       Transferimos tu unidad
                     </h6>
                     <p className="mt-2 mb-4 text-base text-black md:text-sm 2xl:text-base">
-                      Nos encargamos de que salgas de la agencia con tu vehículo
-                      transferido a tu nombre
+                      Nos encargamos de tener lo antes posible tu vehículo listo para transitar.
                     </p>
                   </div>
                 </div>
@@ -129,7 +125,7 @@ const Section2 = () => {
                   <div className="flex-auto px-4 py-5">
                     <div
                       className="inline-flex items-center justify-center w-12 h-12 mb-5 text-center text-white bg-orange-600 rounded-full shadow-lg "
-                      
+
                     >
                       <IoShieldCheckmarkSharp size={21} className="m-auto" />
                     </div>

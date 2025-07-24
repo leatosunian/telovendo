@@ -619,10 +619,10 @@ const VehiclesCont = () => {
                   <div className="flex flex-col items-center justify-center w-full gap-1 h-fit">
                     <Image width={180} className="hidden mb-5 2xl:block" src={noresults} alt=""></Image>
                     <Image width={100} className="block mb-5 2xl:hidden" src={noresults} alt=""></Image>
-                    <span className="text-xl font-semibold 2xl:text-2xl">
+                    <span className="text-xl font-semibold text-center 2xl:text-2xl">
                       No se encontró ningún resultado,
                     </span>
-                    <span className="text-base font-semibold 2xl:text-xl">pero <span className="text-base font-semibold text-orange-600 2xl:text-xl">podemos encontrar el vehículo que estás buscando.</span></span>
+                    <span className="text-base font-semibold text-center 2xl:text-xl">pero <span className="text-base font-semibold text-orange-600 2xl:text-xl">podemos encontrar el vehículo que estás buscando.</span></span>
                   </div>
                   <Link href={"https://api.whatsapp.com/send/?phone=5493424216075"} target="_blank">
                     <button

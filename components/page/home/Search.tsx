@@ -95,7 +95,7 @@ const Search = () => {
               </button>
               <input
                 onChange={(e) => setSearchValue(e.target.value)}
-                className={`${styles.input}`}
+                className={`${styles.input} `}
                 placeholder="Ingresa una marca o modelo..."
                 type="text"
               />

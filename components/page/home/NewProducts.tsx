@@ -190,7 +190,7 @@ const NewProducts = ({ vehicles }: Props) => {
         </div>
         <div className="flex justify-center w-full mt-4 md:hidden h-fit">
           <Link className="w-fit h-fit" href={"/vehicles"}>
-            <button className={`${stylesSearch.button}`}>
+            <button  style={{ backgroundColor: '#ea580c' }} className={`${stylesSearch.button}`}>
               Ver todos los vehículos
             </button>
           </Link>
