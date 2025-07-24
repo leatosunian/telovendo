@@ -66,7 +66,7 @@ const NewProducts = ({ vehicles }: Props) => {
           className="flex flex-col items-start justify-center px-6 overflow-visible md:overflow-hidden md:hidden"
         >
           <div className="flex flex-col ">
-            <span className="text-base font-bold text-orange-400 ">
+            <span className="text-base font-bold text-orange-600 ">
               Últimos ingresos
             </span>
             <h4 className="text-2xl font-bold md:text-lg 2xl:text-2xl ">
@@ -82,16 +82,16 @@ const NewProducts = ({ vehicles }: Props) => {
           className="flex-row items-start justify-between hidden w-full px-6 mx-auto md:flex md:max-w-6xl "
         >
           <div className="flex flex-col ">
-            <span className="text-sm font-bold text-orange-400 upper sm:text-base">
+            <span className="text-sm font-bold text-orange-600 upper sm:text-base">
               Últimos ingresos
             </span>
             <h4 className="text-2xl font-bold md:text-2xl 2xl:text-2xl ">
-              Estas son nuestras unidades mas recientes
+              Estas son nuestras unidades más recientes
             </h4>
           </div>
           <div className="flex justify-center mt-4 w-fit h-fit">
             <Link href={"/vehicles"} className="w-fit h-fit">
-              <button className={`${stylesSearch.button}`}>
+              <button style={{ backgroundColor: '#ea580c' }} className={`${stylesSearch.button}`}>
                 Ver todos los vehículos
               </button>{" "}
             </Link>
@@ -158,6 +158,7 @@ const NewProducts = ({ vehicles }: Props) => {
                               <Button
                                 variant={"default"}
                                 className="w-full text-sm"
+                                style={{ backgroundColor: '#ea580c' }}
                               >
                                 Ver más
                               </Button>

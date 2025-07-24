@@ -38,7 +38,7 @@ const Search = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ amount: "some", once: true }}
             transition={{ duration: 0.7, ease: "easeInOut", delay: 0.3 }}
-            className="z-50  hidden sm:flex flex-col gap-2 px-2 my-auto overflow-hidden w-fit h-hit"
+            className="z-50 flex-col hidden gap-2 px-2 my-auto overflow-hidden sm:flex w-fit h-hit"
           >
             <Image src={searchimg} alt="" className="hidden sm:block" />
           </motion.div>
@@ -49,7 +49,7 @@ const Search = () => {
             transition={{ duration: 0.7, ease: "easeInOut", delay: 0.3 }}
             className="z-50 flex flex-col gap-2 px-2 my-auto overflow-hidden w-fit h-hit"
           >
-            <span className="text-base font-semibold text-orange-400 ">
+            <span className="text-base font-semibold text-orange-600 ">
               Buscar unidad
             </span>
             <h4 className="mb-2 text-2xl font-bold leading-6 lg:text-3xl 2xl:text-4xl ">
@@ -128,7 +128,7 @@ const Search = () => {
             transition={{ duration: 0.7, ease: "easeInOut", delay: 0.8 }}
             className="mt-3 overflow-hidden w-fit h-hit"
           >
-            <button onClick={handleSearch} className={styles.button}>
+            <button onClick={handleSearch} style={{ backgroundColor: '#ea580c' }} className={styles.button}>
               Buscar
             </button>
           </motion.div>

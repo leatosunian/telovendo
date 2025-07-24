@@ -5,7 +5,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Editar lead | Panel de administración",
   description:
-    "Distrito Automotor, concesionaria de vehículos ubicada en Mar del Plata, Buenos Aires",
+    "Telovendo, concesionario de automoviles, Santa Fe, Argentina.",
 };
 
 const CreateLeadPage = () => {

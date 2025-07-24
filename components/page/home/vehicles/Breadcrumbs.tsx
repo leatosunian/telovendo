@@ -18,7 +18,7 @@ const Breadcrumbs = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Todos los vehículos</BreadcrumbPage>
+            <BreadcrumbPage className="font-semibold text-orange-600 ">Todos los vehículos</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

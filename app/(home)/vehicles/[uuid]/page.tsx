@@ -5,9 +5,9 @@ import VehicleCont from "@/components/page/home/vehicles/vehicle/VehicleCont";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Vehículos | Distrito Automotor",
+  title: "Vehículos | Telovendo",
   description:
-    "Distrito Automotor, concesionaria de vehículos ubicada en Mar del Plata, Buenos Aires",
+    "Telovendo, concesionario de automoviles, Santa Fe, Argentina.",
 };
 
 

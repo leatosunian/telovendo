@@ -53,6 +53,7 @@ import Link from "next/link";
 import { FaRegCalendar } from "react-icons/fa";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge";
+import noresults from "@/public/noresults.png"
 
 const VehiclesCont = () => {
   const [open, setOpen] = useState(false);
@@ -474,6 +475,7 @@ const VehiclesCont = () => {
               </div>
 
               <Button
+                style={{ backgroundColor: '#ea580c' }}
                 onClick={() => {
                   console.log(searchFilter);
 
@@ -559,6 +561,7 @@ const VehiclesCont = () => {
                                 >
                                   <Button
                                     variant={"default"}
+                                    style={{ backgroundColor: '#ea580c' }}
                                     className="w-full"
                                   >
                                     Ver más
@@ -612,15 +615,18 @@ const VehiclesCont = () => {
             )}
             {vehicleList.length === 0 && (
               <>
-                <div className="flex flex-col items-center justify-center w-full gap-8 my-32 h-fit">
-                  <div className="flex flex-col items-center justify-center w-full gap-2 h-fit">
-                    <span className="text-2xl font-semibold">
+                <div className="flex flex-col items-center justify-center w-full gap-6 my-12 h-fit">
+                  <div className="flex flex-col items-center justify-center w-full gap-1 h-fit">
+                    <Image width={180} className="hidden mb-5 2xl:block" src={noresults} alt=""></Image>
+                    <Image width={100} className="block mb-5 2xl:hidden" src={noresults} alt=""></Image>
+                    <span className="text-xl font-semibold 2xl:text-2xl">
                       No se encontró ningún resultado,
                     </span>
-                    <span className="text-xl font-semibold">pero podemos encontrar el vehículo que estás buscando.</span>
+                    <span className="text-base font-semibold 2xl:text-xl">pero <span className="text-base font-semibold text-orange-600 2xl:text-xl">podemos encontrar el vehículo que estás buscando.</span></span>
                   </div>
                   <Link href={"https://api.whatsapp.com/send/?phone=5493424216075"} target="_blank">
                     <button
+                    style={{ backgroundColor: '#ea580c' }}
                       className={`${buttonStyle.button}`}
                     >
                       Contactanos

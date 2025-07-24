@@ -3,9 +3,9 @@ import VehiclesCont from "@/components/page/home/vehicles/VehiclesCont";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Vehículos | Aspen Automotores",
+  title: "Vehículos | Telovendo",
   description:
-    "Distrito Automotor, concesionaria de vehículos ubicada en Mar del Plata, Buenos Aires",
+    "Telovendo, concesionario de automoviles, Santa Fe, Argentina.",
 };
 
 const Page = () => {

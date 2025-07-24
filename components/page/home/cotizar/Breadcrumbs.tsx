@@ -19,7 +19,7 @@ const Breadcrumbs = () => {
           <BreadcrumbSeparator />
           <BreadcrumbItem className="block font-medium xs:hidden">
             <BreadcrumbPage className="font-semibold text-orange-600 ">
-              Contactanos
+              Cotizá tu vehículo
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>

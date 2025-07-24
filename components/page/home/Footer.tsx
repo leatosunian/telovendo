@@ -1,9 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import logo from "@/public/logomuestrablackletras.png";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { SiMercadopago } from "react-icons/si";
 import Link from "next/link";
+import { GrInstagram } from "react-icons/gr";
+import { Separator } from "@/components/ui/separator";
+
 const Footer = () => {
   return (
     <>
@@ -20,8 +23,8 @@ const Footer = () => {
               <Image
                 src={logo}
                 alt=""
-                width={200}
-                height={200}
+                width={130}
+                height={100}
                 className="block md:hidden"
               />
               <Image
@@ -34,10 +37,16 @@ const Footer = () => {
               {/* <h5 className="mt-3 mb-2 ml-2 font-semibold text-orange-400 text-md md:text-xl text-blueGray-600">
                 TE LO VENDO | SERVICIO PERSONALIZADO
               </h5> */}
-              <h5 className="mt-3 mb-2 ml-2 text-md md:text-base text-blueGray-600">
+              {/* <h5 className="mt-3 mb-2 ml-2 font-semibold uppercase text-md md:text-xl text-blueGray-600">
+                Te lo Vendo
+              </h5> */}
+
+              <Separator className="my-3 bg-orange-800 opacity-35 md:my-3"></Separator>
+
+              <h5 className="mt-2 mb-2 ml-0 text-sm font-normal md:ml-2 md:text-base text-blueGray-600">
                 Vendé tu vehículo de manera particular, sin complicaciones.
               </h5>
-              <div className="mt-6 mb-6 lg:mb-0">
+              {/* <div className="mt-6 mb-6 lg:mb-0">
                 <Link target="_blank" href={"https://www.instagram.com/"}>
                   <button
                     className="items-center justify-center w-10 h-10 mr-2 font-normal bg-white rounded-full shadow-lg outline-none text-lightBlue-600 align-center focus:outline-none"
@@ -62,42 +71,34 @@ const Footer = () => {
                     <SiMercadopago className="m-auto" />
                   </button>
                 </Link>
-              </div>
+              </div> */}
             </div>
             <div className="w-full px-4 lg:w-7/12">
               <div className="flex flex-wrap mb-6 items-top">
-                <div className="w-full px-4 mt-5 ml-auto lg:mt-0 lg:w-4/12">
-                  <span className="block mb-2 text-sm font-semibold uppercase lg:mb-4 text-blueGray-500">
+                <div className="w-full mt-5 ml-auto lg:mt-0 lg:w-4/12">
+                  <span className="block mb-2 text-sm font-semibold text-orange-600 uppercase lg:mb-4">
                     Links rápidos
                   </span>
                   <ul className="list-unstyled">
                     <li>
                       <Link
-                        className="block pb-2 text-sm font-medium transition-all duration-200 ease-in-out text-blueGray-600 hover:text-red-600"
+                        className="block pb-2 text-sm font-medium text-black transition-all duration-200 ease-in-out hover:text-orange-600"
                         href="/vehicles"
                       >
-                        Vehículos
+                        Vehículos disponibles
                       </Link>
                     </li>
                     <li>
                       <Link
-                        className="block pb-2 text-sm font-medium transition-all duration-200 ease-in-out text-blueGray-600 hover:text-red-600"
-                        href="/aboutus"
+                        className="block pb-2 text-sm font-medium text-black transition-all duration-200 ease-in-out hover:text-orange-600"
+                        href="/cotizar"
                       >
-                        Sobre nosotros
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="block pb-2 text-sm font-medium transition-all duration-200 ease-in-out text-blueGray-600 hover:text-red-600"
-                        href="/contactus"
-                      >
-                        Contacto
+                        Cotizá tu vehículo
                       </Link>
                     </li>
                   </ul>
                 </div>
-                <div className="w-full px-4 mt-5 lg:mt-0 lg:w-4/12">
+                {/* <div className="w-full px-4 mt-5 lg:mt-0 lg:w-4/12">
                   <span className="block mb-2 text-sm font-semibold uppercase lg:mb-4 text-blueGray-500">
                     horario de atención
                   </span>
@@ -117,36 +118,31 @@ const Footer = () => {
                       </span>
                     </li>
                   </ul>
-                </div>
-                <div className="w-full px-4 mt-5 lg:mt-0 lg:w-4/12">
-                  <span className="block mb-2 text-sm font-semibold uppercase lg:mb-4 text-blueGray-500">
+                </div> */}
+                <div className="w-full mt-5 lg:mt-0 lg:w-4/12">
+                  <span className="block mb-2 text-sm font-semibold text-orange-600 uppercase lg:mb-4">
                     contactanos
                   </span>
                   <ul className="list-unstyled">
                     <li>
                       <Link
                         target="_blank"
-                        className="block pb-2 text-sm font-medium transition-all duration-200 ease-in-out text-blueGray-600 hover:text-red-600"
-                        href="https://wa.me/5492235423025"
+                        className="flex items-center gap-2 pb-2 text-sm font-medium text-black transition-all duration-200 ease-in-out hover:text-orange-600"
+                        href="https://wa.me/5493424216075"
                       >
-                        +54 9 223 542-2030
+                        <FaWhatsapp size={18} />
+                        +54 9 342 421-6075
                       </Link>
                     </li>
                     <li>
                       <Link
                         target="_blank"
-                        className="block pb-2 text-sm font-medium transition-all duration-200 ease-in-out text-blueGray-600 hover:text-red-600"
-                        href="https://wa.me/5492235423025"
+                        className="flex items-center gap-2 pb-2 text-sm font-medium text-black transition-all duration-200 ease-in-out hover:text-orange-600"
+                        href="https://www.instagram.com/telovendosantafe"
                       >
-                        +54 9 223 442-5537
+                        <GrInstagram size={18} />
+                        telovendosantafe
                       </Link>
-                    </li>
-                    <li>
-                      <span
-                        className="block pb-2 text-sm font-medium transition-all duration-200 ease-in-out text-blueGray-600 hover:text-red-600"
-                      >
-                        info@telovendo.com.ar
-                      </span>
                     </li>
                   </ul>
                 </div>
@@ -159,10 +155,10 @@ const Footer = () => {
               <div className="py-1 text-sm font-semibold text-blueGray-500">
                 Copyright © <span id="get-current-year">2025 </span>
                 <span className="text-blueGray-500 hover:text-gray-800">
-                  Te Lo Vendo by{" "}
+                  Telovendo.{" "} Desarrollado por {"   "}
                   <a
-                    href={"https://www.creative-tim.com?ref=njs-profile"}
-                    className="text-blueGray-500 hover:text-blueGray-800"
+                    href={"https://tosunian.dev"}
+                    className="text-orange-600 transition-all duration-200 ease-in-out hover:text-orange-900"
                   >
                     tosunian.dev
                   </a>

@@ -35,8 +35,8 @@ const Section2 = () => {
                       delay: 0.2,
                     }}
                   >
-                    <h1 className="text-3xl font-semibold text-left md:text-center text-white sm:text-4xl">
-                      ¿Por qué comprar tu auto en Te Lo Vendo?
+                    <h1 className="text-3xl font-semibold text-left text-white md:text-center sm:text-4xl">
+                      ¿Por qué comprar tu auto en Telovendo?
                     </h1>
                   </motion.div>
                   <motion.div
@@ -49,16 +49,16 @@ const Section2 = () => {
                       delay: 0.5,
                     }}
                   >
-                    <p className="mt-8 text-base text-left md:text-center font-normal text-white sm:text-lg">
+                    <p className="mt-8 text-base font-normal text-left text-white md:text-center sm:text-lg">
                       Tenemos las mejores unidades seleccionadas, cotizamos tu
                       usado al mejor precio y te ofrecemos servicio de gestoría
                       y aseguradora para que salgas con tu nueva unidad lista
                       para conducir lo mas rápido posible.
                     </p>
-                    <p className="mt-4 text-base text-left md:text-center font-normal text-white sm:text-lg">
+                    <p className="mt-4 text-base font-normal text-left text-white md:text-center sm:text-lg">
                       12 años de experiencia en el mercado respaldan nuestra confianza.
                     </p>
-                    <p style={{borderBottom: '1px solid rgb(251 146 60)'}} className="mt-10 text-xl mx-0 md:mx-auto  w-fit text-left md:text-center font-semibold text-white sm:text-2xl">
+                    <p style={{borderBottom: '1px solid #ea580c'}} className="mx-0 mt-10 text-xl font-semibold text-left text-white md:mx-auto w-fit md:text-center sm:text-2xl">
                       Tu próximo auto está acá.
                     </p>
                   </motion.div>
@@ -80,13 +80,12 @@ const Section2 = () => {
                 <div className="relative flex flex-col w-full min-w-0 mb-8 break-words bg-white rounded-lg shadow-lg">
                   <div className="flex-auto px-4 py-5">
                     <div
-                      className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white rounded-full shadow-lg"
-                      style={{ backgroundColor: "rgb(251 146 60)" }}
+                      className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-orange-600 rounded-full shadow-lg"
                     >
                       <SiCashapp />
                     </div>
                     <h6 className="text-xl font-semibold">Financiación</h6>
-                    <p className="mt-2 mb-4 text-base md:text-sm 2xl:text-base text-blueGray-500">
+                    <p className="mt-2 mb-4 text-base text-black md:text-sm 2xl:text-base">
                       Varios planes de financiación para que acceder a tu nuevo
                       vehículo sea más fácil que nunca
                     </p>
@@ -104,15 +103,14 @@ const Section2 = () => {
                 <div className="relative flex flex-col w-full min-w-0 mb-8 break-words bg-white rounded-lg shadow-lg">
                   <div className="flex-auto px-4 py-5">
                     <div
-                      className="inline-flex items-center justify-center w-12 h-12 mb-5 text-center text-white rounded-full shadow-lg"
-                      style={{ backgroundColor: "rgb(251 146 60)" }}
+                      className="inline-flex items-center justify-center w-12 h-12 mb-5 text-center text-white bg-orange-600 rounded-full shadow-lg"
                     >
                       <CgArrowsExchangeAltV size={30} />
                     </div>
                     <h6 className="text-xl font-semibold">
                       Transferimos tu unidad
                     </h6>
-                    <p className="mt-2 mb-4 text-base md:text-sm 2xl:text-base text-blueGray-500">
+                    <p className="mt-2 mb-4 text-base text-black md:text-sm 2xl:text-base">
                       Nos encargamos de que salgas de la agencia con tu vehículo
                       transferido a tu nombre
                     </p>
@@ -130,18 +128,18 @@ const Section2 = () => {
                 <div className="relative flex flex-col w-full min-w-0 mb-8 break-words bg-white rounded-lg shadow-lg">
                   <div className="flex-auto px-4 py-5">
                     <div
-                      className="inline-flex items-center justify-center w-12 h-12 mb-5 text-center text-white rounded-full shadow-lg "
-                      style={{ backgroundColor: "rgb(251 146 60)" }}
+                      className="inline-flex items-center justify-center w-12 h-12 mb-5 text-center text-white bg-orange-600 rounded-full shadow-lg "
+                      
                     >
                       <IoShieldCheckmarkSharp size={21} className="m-auto" />
                     </div>
                     <h6 className="text-xl font-semibold">
                       Aseguramos tu vehículo
                     </h6>
-                    {/* <p className="mt-2 mb-4 text-blueGray-500">
+                    {/* <p className="mt-2 mb-4 text-black">
                       Todas las coberturas al mejor precio para que puedas conducir tu nueva unidad
                     </p> */}
-                    <p className="mt-2 mb-4 text-base md:text-sm 2xl:text-base text-blueGray-500">
+                    <p className="mt-2 mb-4 text-base text-black md:text-sm 2xl:text-base">
                       Trabajamos con los mejores brokers de seguros. Todas las
                       coberturas al mejor precio.
                     </p>

@@ -23,12 +23,12 @@ const Breadcrumbs = ({ name }: { name: string | undefined }) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem className="block font-medium xs:hidden">
-            <BreadcrumbPage className="font-medium ">
+            <BreadcrumbPage className="font-semibold text-orange-600 ">
               {name?.substring(0, 26)}...
             </BreadcrumbPage>
           </BreadcrumbItem>
           <BreadcrumbItem className="hidden font-medium xs:block">
-            <BreadcrumbPage className="font-medium textCutOneLine">
+            <BreadcrumbPage className="font-semibold text-orange-600 textCutOneLine">
               {name}
             </BreadcrumbPage>
           </BreadcrumbItem>

@@ -102,7 +102,7 @@ const ContactForm = () => {
   return (
     <>
       {loadingPage && <LoaderFullscreen />}
-      <div className="flex flex-col items-start justify-center gap-8 px-8 mx-auto mb-16 md:mb-52 md:gap-10 2xl:gap-48 md:px-20 w-fit ">
+      <div className="flex flex-col items-start justify-center gap-8 px-8 mx-auto mb-16 md:mb-52 md:gap-10 md:px-20 w-fit ">
         <Breadcrumbs />
         <div className="flex flex-col items-center justify-center gap-8 mx-auto md:gap-24 lg:flex-row w-fit">
           <div className="flex flex-col items-start justify-start w-fit ">
@@ -197,7 +197,7 @@ const ContactForm = () => {
                       >
                         <FaFacebook className="m-auto" size={20} />{" "}
                         <span className="text-xs font-medium">
-                          Te Lo Vendo
+                          Telovendo
                         </span>
                       </button>
                     </Link>
@@ -211,7 +211,7 @@ const ContactForm = () => {
                       >
                         <SiMercadopago className="m-auto" size={20} />{" "}
                         <span className="text-xs font-medium">
-                          Te Lo Vendo
+                          Telovendo
                         </span>
                       </button>
                     </Link>
@@ -402,7 +402,7 @@ const ContactForm = () => {
 
                     {!loading && (
                       <button
-                        className="w-full px-4 py-3 mt-2 mb-2 text-xs font-semibold text-white transition duration-300 bg-black rounded-md hover:bg-orange-600"
+                        className="w-full px-4 py-3 mt-2 mb-2 text-xs font-semibold text-white transition duration-300 bg-orange-600 rounded-md hover:bg-black"
                         type="submit"
                       >
                         Solicitar cotización
@@ -474,7 +474,7 @@ const ContactForm = () => {
                     >
                       <FaInstagram className="m-auto" size={23} />{" "}
                       <span className="text-sm font-medium">
-                        aspenautomotores
+                        telovendosantafe
                       </span>
                     </button>
                   </Link>
@@ -485,7 +485,7 @@ const ContactForm = () => {
                     >
                       <FaFacebook className="m-auto" size={23} />{" "}
                       <span className="text-sm font-medium">
-                        Aspen Automotores
+                        Telovendo
                       </span>
                     </button>
                   </Link>
@@ -499,7 +499,7 @@ const ContactForm = () => {
                     >
                       <SiMercadopago className="m-auto" size={23} />{" "}
                       <span className="text-sm font-medium">
-                        Aspen Automotores
+                        Telovendo
                       </span>
                     </button>
                   </Link>

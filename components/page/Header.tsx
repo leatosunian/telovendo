@@ -125,7 +125,7 @@ export default function Header() {
                   onClick={() => {
                     setOpenDropdown("");
                   }}
-                  className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md "
+                  className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md hover:text-orange-600 "
                 >
                   vehículos disponibles
                 </Link>
@@ -133,7 +133,7 @@ export default function Header() {
                 <Link
                   href="/cotizar"
                   style={{ fontSize: "11px" }}
-                  className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md "
+                  className="px-3 py-2 text-xs font-semibold uppercase transition-colors duration-300 rounded-md hover:text-orange-600 "
                   onClick={() => {
                     setOpenDropdown("");
                   }}

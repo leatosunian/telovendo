@@ -10,8 +10,9 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Home | Te lo Vendo",
-  description: "Encontrá el auto de tus sueños al mejor precio.",
+  title: "Home | Telovendo",
+  description: "Telovendo, concesionario de automoviles, Santa Fe, Argentina.",
+
 };
 
 export default function RootLayout({

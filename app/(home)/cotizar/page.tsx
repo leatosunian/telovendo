@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Contactanos | Aspen Automotores",
+  title: "Cotizar | Telovendo",
   description:
-    "Aspen Automotores, concesionaria de vehículos ubicada en Córdoba",
+    "Telovendo, concesionario de automoviles, Santa Fe, Argentina.",
 };
 
 const ContactUs = () => {

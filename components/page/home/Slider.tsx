@@ -43,9 +43,7 @@ const Slider = () => {
             tenemos más de 700 usados seleccionados para vos.
           </p> */}
           <p className="text-base md:text-base 2xl:text-lg">
-            La asesoría personalizada que estabas buscando para comprar tu nuevo
-            vehículo. Contamos con una selección de más de 50 vehículos nuevos y
-            usados en óptimo estado para vos
+            Conectamos personas con vehículos. Encontramos la unidad ideal para vos y te acompañamos en cada paso hasta tenerlo en tu garage.
           </p>
         </motion.div>
         <Link href={'/vehicles'} className="w-fit h-fit">
@@ -54,7 +52,7 @@ const Slider = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.6 }}
           >
-            <button style={{backgroundColor:'#bb6116'}} className={styles.button}>Ver vehículos</button>
+            <button style={{ backgroundColor: '#ea580c' }} className={styles.button}>Ver vehículos</button>
           </motion.div>
         </Link>
       </div>
