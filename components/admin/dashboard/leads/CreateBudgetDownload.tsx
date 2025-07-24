@@ -96,12 +96,12 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
             </span>
           </div>
           <div className="flex gap-8">
-            <div className="flex flex-col ">
+            {/* <div className="flex flex-col ">
               <span className="text-xs font-semibold">Tipo de negocio</span>
               <span className="text-xs font-light">
                 {budget?.businessType}{" "}
               </span>
-            </div>
+            </div> */}
             <div className="flex flex-col ">
               <span className="text-xs font-semibold">Fecha </span>
               <span className="text-xs font-light">
@@ -183,13 +183,13 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                       {budget?.clientPhone}
                     </span>
                   </div>
-                  <span
+                  {/* <span
                     style={{ fontSize: "11px" }}
                     className="flex items-center gap-1.5 font-light"
                   >
                     <IoIosMail />
                     {budget?.clientEmail}
-                  </span>
+                  </span> */}
                 </div>
               </div>
               {/* client */}
