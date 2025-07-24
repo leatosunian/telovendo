@@ -137,6 +137,19 @@ const VehicleCont = () => {
                 onMouseLeave={plugin.current.reset}
               >
                 <CarouselContent className="h-full">
+                  <CarouselItem
+                      className="w-full h-full overflow-hidden rounded-md "
+                    >
+                      <Image
+                        src={vehicleData?.imagePath!}
+                        alt={`Imagen `}
+                        width={500}
+                        objectFit="cover"
+                        height={500}
+                        unoptimized
+                        className="object-cover w-full h-full my-auto rounded-lg"
+                      />
+                    </CarouselItem>
                   {gallery.map((image) => (
                     <CarouselItem
                       key={image.uuid}
