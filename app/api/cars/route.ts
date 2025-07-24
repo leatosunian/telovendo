@@ -7,14 +7,14 @@ import { v4 as uuidv4 } from "uuid";
 export async function GET(request: NextRequest, context: any) {
   await connectDB();
   const { search } = Object.fromEntries(new URL(request.url).searchParams);
+
   try {
     const searchQuery =
-      search && (search !== "null") !== null
-        ? {
-            name: { $regex: new RegExp(search.toLowerCase(), "i") },
-          }
+      search && search !== "null"
+        ? { name: { $regex: new RegExp(search.toLowerCase(), "i") } }
         : {};
-    const cars = await CarModel.find(searchQuery);
+
+    const cars = await CarModel.find(searchQuery).sort({ createdAt: -1 }); 
     return NextResponse.json(cars);
   } catch (error) {
     return NextResponse.json({ msg: "ERROR_GET_CAR" });
