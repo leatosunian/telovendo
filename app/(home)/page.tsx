@@ -60,10 +60,10 @@ const Home = () => {
             {/* <div className="w-full h-20" ></div> */}
             <Section2 />
             <Counters />
+            <div className="w-full h-20"></div> 
             {/* 
-          <div className="w-full h-20"></div> */}
 
-            <ContactForm />
+            {/* <ContactForm /> */}
 
             <Footer />
           </div>}
