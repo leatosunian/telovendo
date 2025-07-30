@@ -53,9 +53,9 @@ const Section2 = () => {
                       Dejá la venta de tu auto en nuestras manos: te brindamos una experiencia completa, con cotización al mejor precio del mercado, asesoramiento profesional y gestión segura de principio a fin. Trabajamos para que consigas el mejor valor y lo entregues transferido.
                     </p>
 
-                    <p className="mt-4 text-base font-normal text-left text-white md:text-center sm:text-lg">
-                      12 años de experiencia en el mercado respaldan nuestra confianza.
-                    </p>
+                    {/* <p className="mt-4 text-base font-normal text-left text-white md:text-center sm:text-lg">
+                      5 años de experiencia en el mercado respaldan nuestra confianza.
+                    </p> */}
                     <p style={{ borderBottom: '1px solid #ea580c' }} className="mx-0 mt-10 text-xl font-semibold text-left text-white md:mx-auto w-fit md:text-center sm:text-2xl">
                       Tu próximo auto está acá.
                     </p>
@@ -84,7 +84,7 @@ const Section2 = () => {
                     </div>
                     <h6 className="text-xl font-semibold">Seguridad y confianza</h6>
                     <p className="mt-2 mb-4 text-base text-black md:text-sm 2xl:text-base">
-                      Más de 12 años en el mercado haciendo operaciones seguras y clientes felices.
+                      Más de 5 años en el mercado haciendo operaciones seguras y clientes felices.
                     </p>
                   </div>
                 </div>

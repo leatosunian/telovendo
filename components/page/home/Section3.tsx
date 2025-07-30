@@ -36,21 +36,16 @@ const Section3 = () => {
               transition={{ duration: 0.7, ease: "easeInOut", delay: 0.5 }}
             >
               <p className="text-sm md:text-sm 2xl:text-lg">
-                Solicitanos una cotización gratuita de tu vehículo. Lo cotizamos
-                al instante y al mejor precio del mercado, pagamos por tu usado
-                lo que realmente vale.
+                Solicitanos una cotización gratuita de tu vehículo. Una vez aceptada la cotización, coordinamos un día de peritaje y sesión de fotos. Luego, al auto te lo llevas a tu casa nuevamente, mientras nos ocupamos de encontrarle un comprador.
               </p>
               <p className="mt-3 text-sm md:text-sm 2xl:text-lg">
-                Luego de reunirnos para hacer las fotos oficiales del auto, nos ocuparemos de encontrarle un comprador cuánto antes.
-              </p>
-              <p className="mt-3 text-sm md:text-sm 2xl:text-lg">
-                Una vez señado el vehículo, nos ocuparemos de que se transfiera en tiempo y forma, y que lo entregues una vez que la transferencia ya esté ingresada.
+                Por último, te citamos para mostrar el vehículo. Nos ocuparemos de que se transfiera en tiempo y forma, y que lo entregues una vez que la transferencia ya esté ingresada.
               </p>
               <p
                 style={{ borderBottom: "1px solid #ea580c" }}
                 className="block text-base font-semibold sm:hidden w-fit mt-11 md:text-lg lg:text-2xl"
               >
-                ¡La forma más fácil de vender tu auto!
+                ¡La forma más fácil y segura de vender tu auto!
               </p>
               <p
                 style={{ borderBottom: "1px solid #ea580c" }}

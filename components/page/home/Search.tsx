@@ -56,7 +56,7 @@ const Search = () => {
               Encontrá el vehículo que estás buscando
             </h4>
             <span className="text-xs text-left text-gray-500 sm:text-sm md:text-lg">
-              Tenemos unidades usadas y 0 km para todos los gustos y necesidades
+              Tenemos unidades disponibles para todos los gustos y necesidades
             </span>
           </motion.div>
         </div>

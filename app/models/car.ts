@@ -78,7 +78,7 @@ export interface ICar extends Document {
   | "Tesla"
   | "Volvo";
   modelName: string;
-  status: "RESERVED" | "SOLD" | "AVAILABLE";
+  status: "RESERVED" | "SOLD" | "AVAILABLE" | "OPORTUNIDAD";
   gearbox: "AUTOMATIC" | "MANUAL";
   doors: "2P" | "3P" | "4P" | "5P" | "6P";
   gas: "GNC" | "DIESEL" | "NAFTA";

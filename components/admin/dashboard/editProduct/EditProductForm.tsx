@@ -478,22 +478,13 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                           <SelectContent>
                             <SelectItem value="CAR">Automóvil</SelectItem>
                             <SelectItem value="BIKE">Motocicleta</SelectItem>
-                            <SelectItem value="QUAD">Cuatriciclo</SelectItem>
                             <SelectItem value="PICKUP">Pickup</SelectItem>
-                            <SelectItem value="UTILITARY">
-                              Utilitario
-                            </SelectItem>
-                            <SelectItem value="UTV">UTV</SelectItem>
-                            <SelectItem value="ATV">ATV</SelectItem>
+                            <SelectItem value="UTILITARY">Utilitario</SelectItem>
                             <SelectItem value="SUV">SUV</SelectItem>
                             <SelectItem value="VAN">Van</SelectItem>
-                            <SelectItem value="CONVERTIBLE">
-                              Convertible
-                            </SelectItem>
                             <SelectItem value="COUPE">Coupe</SelectItem>
                             <SelectItem value="HATCHBACK">Hatchback</SelectItem>
-                            <SelectItem value="MOTORHOME">Motorhome</SelectItem>
-                            <SelectItem value="SCOOTER">Scooter</SelectItem>
+                            <SelectItem value="CONVERTIBLE">Convertible</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -931,6 +922,8 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                         <SelectItem value="AVAILABLE">Disponible</SelectItem>
                         <SelectItem value="RESERVED">Reservado</SelectItem>
                         <SelectItem value="SOLD">Vendido</SelectItem>
+                        <SelectItem value="OPORTUNIDAD">Oportunidad</SelectItem>
+
                       </SelectContent>
                     </Select>
 

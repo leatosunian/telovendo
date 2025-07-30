@@ -340,18 +340,13 @@ const VehiclesCont = () => {
                     <SelectGroup>
                       <SelectItem value="CAR">Automóvil</SelectItem>
                       <SelectItem value="BIKE">Motocicleta</SelectItem>
-                      <SelectItem value="QUAD">Cuatriciclo</SelectItem>
                       <SelectItem value="PICKUP">Pickup</SelectItem>
                       <SelectItem value="UTILITARY">Utilitario</SelectItem>
                       <SelectItem value="SUV">SUV</SelectItem>
                       <SelectItem value="VAN">Van</SelectItem>
-                      <SelectItem value="CONVERTIBLE">Convertible</SelectItem>
                       <SelectItem value="COUPE">Coupe</SelectItem>
                       <SelectItem value="HATCHBACK">Hatchback</SelectItem>
-                      <SelectItem value="UTV">UTV</SelectItem>
-                      <SelectItem value="ATV">ATV</SelectItem>
-                      <SelectItem value="MOTORHOME">Motorhome</SelectItem>
-                      <SelectItem value="SCOOTER">Scooter</SelectItem>
+                      <SelectItem value="CONVERTIBLE">Convertible</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -510,9 +505,17 @@ const VehiclesCont = () => {
                           className="col-span-1 md:h-full h-fit"
                         >
                           <Card className="flex flex-col h-full shadow-lg">
+                            {car.status === "OPORTUNIDAD" && (
+                              <Badge
+                                className="absolute bg-orange-600 border-none shadow-lg mt-2 md:py-1 md:px-3 py-1.5 px-3.5 ml-2 text-white font-normal md:text-xs text-sm "
+                                variant="outline"
+                              >
+                                Oportunidad
+                              </Badge>
+                            )}
                             {car.status === "RESERVED" && (
                               <Badge
-                                className="absolute bg-orange-500 border-none shadow-lg mt-2 md:py-1 md:px-3 py-1.5 px-3.5 ml-2 text-white font-normal md:text-xs text-sm "
+                                className="absolute bg-orange-400 border-none shadow-lg mt-2 md:py-1 md:px-3 py-1.5 px-3.5 ml-2 text-white font-normal md:text-xs text-sm "
                                 variant="outline"
                               >
                                 Reservado

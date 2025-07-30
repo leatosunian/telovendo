@@ -232,23 +232,23 @@ const AddProductForm = () => {
                     </div>
 
                     <div className="flex col-span-2 gap-2">
-                    <FormField
-                      control={form.control}
-                      name="kilometers"
-                      render={({ field }) => (
-                        <FormItem className="w-full ">
-                          <FormLabel>Kilometros</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Ingresa un kilometraje"
-                              type="number"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                      <FormField
+                        control={form.control}
+                        name="kilometers"
+                        render={({ field }) => (
+                          <FormItem className="w-full ">
+                            <FormLabel>Kilometros</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Ingresa un kilometraje"
+                                type="number"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
                   </div>
 
@@ -351,22 +351,13 @@ const AddProductForm = () => {
                           <SelectContent>
                             <SelectItem value="CAR">Automóvil</SelectItem>
                             <SelectItem value="BIKE">Motocicleta</SelectItem>
-                            <SelectItem value="QUAD">Cuatriciclo</SelectItem>
-                            <SelectItem value="UTV">UTV</SelectItem>
                             <SelectItem value="PICKUP">Pickup</SelectItem>
-                            <SelectItem value="UTILITARY">
-                              Utilitario
-                            </SelectItem>
+                            <SelectItem value="UTILITARY">Utilitario</SelectItem>
                             <SelectItem value="SUV">SUV</SelectItem>
                             <SelectItem value="VAN">Van</SelectItem>
-                            <SelectItem value="CONVERTIBLE">
-                              Convertible
-                            </SelectItem>
                             <SelectItem value="COUPE">Coupe</SelectItem>
                             <SelectItem value="HATCHBACK">Hatchback</SelectItem>
-                            <SelectItem value="MOTORHOME">Motorhome</SelectItem>
-                            <SelectItem value="ATV">ATV</SelectItem>
-                            <SelectItem value="SCOOTER">Scooter</SelectItem>
+                            <SelectItem value="CONVERTIBLE">Convertible</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
