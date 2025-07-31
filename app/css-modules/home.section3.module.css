@@ -1,5 +1,5 @@
 .parallaxCont {
-  background-image: url(/dealership6.jpeg);
+  background-image: url(/6.jpg);
   height: fit-content;
   width: 100%;
   background-attachment: fixed;
@@ -81,7 +81,7 @@
 
 @media (max-width: 768px) {
   .parallaxCont {
-    background-image: url(/dealership.jpg);
+    background-image: url(/5.jpg);
     height: calc(100vh - 64px);
     width: 100%;
     background-attachment: fixed;
@@ -103,6 +103,26 @@
   .parallaxCont {
     height: calc(100vh - 64px);
 
+    padding: 0px 10%;
+  }
+}
+
+@media (max-width: 568px) {
+  .parallaxCont {
+    background-image: url(/1.1.jpg);
+    height: calc(100vh - 64px);
+    width: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+    overflow: hidden;
     padding: 0px 10%;
   }
 }
