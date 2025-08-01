@@ -69,8 +69,8 @@ const RelatedVehicles = ({ vehicles }: Props) => {
           className="flex flex-col items-start justify-center w-full px-6 sm:items-center"
         >
           <div className="flex flex-col ">
-            <span className="text-sm font-bold text-red-500 upper sm:text-base">
-              Vehiculos relacionados
+            <span className="text-sm font-bold text-orange-600 upper sm:text-base">
+              Vehículos relacionados
             </span>
             <h4 className="text-xl font-bold sm:text-2xl">
               Unidades que podrían interesarte
@@ -135,7 +135,11 @@ const RelatedVehicles = ({ vehicles }: Props) => {
                               href={`/vehicles/${car.uuid}`}
                               className="w-full h-fit"
                             >
-                              <Button variant={"default"} className="w-full">
+                              <Button
+                                variant={"default"}
+                                className="w-full text-sm"
+                                style={{ backgroundColor: '#ea580c' }}
+                              >
                                 Ver más
                               </Button>
                             </Link>
@@ -157,20 +161,21 @@ const RelatedVehicles = ({ vehicles }: Props) => {
             {latestVehicles.map((dot, index) => (
               <button
                 key={dot.uuid}
-                className={`w-2 h-2 rounded-full ${
-                  index === current ? "bg-black" : "bg-gray-300"
-                }`}
+                className={`w-2 h-2 rounded-full ${index === current ? "bg-orange-600" : "bg-gray-300"
+                  }`}
               />
             ))}
           </div>
         </div>
-        <div className="flex justify-center w-full mt-4 h-fit">
-          <button
+        <div className="flex justify-center w-fit mx-auto mt-4 h-fit">
+          <Button
+            variant={"default"}
+            className="w-full text-sm"
             onClick={() => router.push("/vehicles")}
-            className={`${stylesSearch.button}`}
+            style={{ backgroundColor: '#ea580c' }}
           >
             Volver a vehículos
-          </button>{" "}
+          </Button>
         </div>
       </section>
     </>

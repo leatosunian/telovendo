@@ -22,6 +22,27 @@ import RelatedVehicles from "@/components/page/home/vehicles/vehicle/RelatedVehi
 import LoaderFullscreen from "@/components/page/LoaderFullscreen";
 import { FaLocationDot } from "react-icons/fa6";
 import Link from "next/link";
+import Accordion from "./Accordion";
+
+import { AppWindowIcon, CodeIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+import AccordionDescription from "./AccordionDescription";
 
 const VehicleCont = () => {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -31,9 +52,11 @@ const VehicleCont = () => {
   const [gallery, setGallery] = useState<ICarImage[]>([]);
   const [latestVehicles, setLatestVehicles] = useState<ICar[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [activeAccordionIndex, setActiveAccordionIndex] = useState<number | null>(0);
+
   const { uuid } = useParams();
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   useEffect(() => {
     if (!api) {
@@ -138,18 +161,18 @@ const VehicleCont = () => {
               >
                 <CarouselContent className="h-full">
                   <CarouselItem
-                      className="w-full h-full overflow-hidden rounded-md "
-                    >
-                      <Image
-                        src={vehicleData?.imagePath!}
-                        alt={`Imagen `}
-                        width={500}
-                        objectFit="cover"
-                        height={500}
-                        unoptimized
-                        className="object-cover w-full h-full my-auto rounded-lg"
-                      />
-                    </CarouselItem>
+                    className="w-full h-full overflow-hidden rounded-md "
+                  >
+                    <Image
+                      src={vehicleData?.imagePath!}
+                      alt={`Imagen `}
+                      width={500}
+                      objectFit="cover"
+                      height={500}
+                      unoptimized
+                      className="object-cover w-full h-full my-auto rounded-lg"
+                    />
+                  </CarouselItem>
                   {gallery.map((image) => (
                     <CarouselItem
                       key={image.uuid}
@@ -174,9 +197,8 @@ const VehicleCont = () => {
                 {gallery.map((dot, index) => (
                   <button
                     key={dot.uuid}
-                    className={`w-2 h-2 rounded-full ${
-                      index + 1 === current ? "bg-black" : "bg-gray-300"
-                    }`}
+                    className={`w-2 h-2 rounded-full ${index + 1 === current ? "bg-black" : "bg-gray-300"
+                      }`}
                   />
                 ))}
               </div>
@@ -233,16 +255,96 @@ const VehicleCont = () => {
                   </span>
                 </div>
               </div>
-              <div className="w-full mt-4 h-fit">
+
+              <span className="my-3 text-2xl font-semibold md:mb-2">
+                {vehicleData?.currency} ${vehicleData?.price}{" "}
+              </span>
+
+              {/* <div className="w-full h-fit rounded-xl ">
+                <AccordionDescription
+                  index={0}
+                  activeIndex={activeAccordionIndex}
+                  setActiveIndex={setActiveAccordionIndex}
+                  description={vehicleData?.description ? vehicleData?.description : ""}
+                  title="Descripción"
+                />
+
+                <Accordion
+                  index={1}
+                  activeIndex={activeAccordionIndex}
+                  setActiveIndex={setActiveAccordionIndex}
+                  vehicleData={vehicleData!}
+                  title="Caracteristicas"
+                />
+              </div> */}
+
+              <div className="h-fit">
+                <Tabs defaultValue="description">
+                  <TabsList>
+                    <TabsTrigger value="description">Descripción</TabsTrigger>
+                    <TabsTrigger value="features">Caracteristicas</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="description">
+                    <Card className="px-4 py-1">
+                      {/* <CardTitle>Account</CardTitle> */}
+                      <pre
+                        style={{ font: "inherit", textWrap: "wrap", fontSize:'14px' }}
+                        className="w-full my-2 text-gray-500 h-fit md:my-2"
+                      >
+                        {vehicleData?.description}
+                      </pre>
+
+                    </Card>
+                  </TabsContent>
+                  <TabsContent value="features">
+                    <Card className="flex flex-col gap-3 px-4 py-3 md:flex-row">
+                      <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
+                        <span className="text-sm md:text-xs text-wrap"><b>Marca:</b> {vehicleData?.brand} </span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Puertas:</b> {vehicleData?.doors?.replace("P", "")}</span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Último service:</b> {vehicleData?.lastestService} km</span>
+                        {vehicleData?.hasVTV === true ? <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b> Si</span> :
+                          <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b>No</span>
+
+                        }
+                        <span className="text-sm md:text-xs text-wrap"><b>Fecha de batería:</b> {vehicleData?.battery}</span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Cantidad de dueños:</b> {vehicleData?.ownerNumber}</span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Detalles de pintura:</b> {vehicleData?.paintDetails}</span>
+
+                      </div>
+                      <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
+                        <span className="text-sm md:text-xs text-wrap"><b>Modelo:</b> {vehicleData?.modelName}</span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Condición general:</b> {vehicleData?.generalCondition}</span>
+                        {vehicleData?.gearbox === "AUTOMATIC" && (
+                          <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Automática</span>
+                        )}
+                        {vehicleData?.gearbox === "MANUAL" && (
+                          <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Manual</span>
+                        )}
+                        <span className="text-sm md:text-xs text-wrap"><b>Tracción:</b> {vehicleData?.drive}</span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Vencimiento de VTV:</b> {vehicleData?.VTVExpDate}</span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt} km</span>
+                        <span className="text-sm md:text-xs text-wrap"><b>Condición de neumáticos:</b> {vehicleData?.tireCondition}%</span>
+
+                      </div>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
+              </div>
+
+              {/* <div className="w-full mt-4 h-fit">
                 <pre
                   style={{ font: "inherit", textWrap: "wrap" }}
                   className="w-full mt-3 mb-2 text-xs text-gray-500 md:mt-0"
                 >
                   {vehicleData?.description}
                 </pre>
-              </div>
+              </div> */}
+
+
+
+
               <div className="flex flex-col gap-5">
-                <div className="flex gap-2 ">
+                {/* <div className="flex gap-2 ">
                   <FaLocationDot style={{ color: "#a1a1aa" }} size={15} />
                   <span
                     style={{ color: "#a1a1aa" }}
@@ -250,20 +352,23 @@ const VehicleCont = () => {
                   >
                     Ubicado en sucursal {vehicleData?.branchAddress}
                   </span>
-                </div>
+                </div> */}
 
-                <span className="mb-3 text-2xl font-semibold md:mb-2">
-                  {vehicleData?.currency} ${vehicleData?.price}{" "}
-                </span>
-              </div> 
-              <Link className="w-fit h-fit" href={'https://api.whatsapp.com/send/?phone=542235423025&text&type=phone_number&app_absent=0'}>
-              <button className={styles.button}>
-                Consultar por el vehículo
-              </button>
+              </div>
+              <Link className="mx-auto w-fit h-fit md:mx-0" href={'https://wa.me/5493424216075'}>
+                <Button
+                  variant={"default"}
+                  className="w-full text-sm"
+                  style={{ backgroundColor: '#ea580c' }}
+                >
+                  Consultar por la unidad
+                </Button>
               </Link>
             </div>
           </div>
         </div>
+
+
       </div>
 
       <RelatedVehicles vehicles={latestVehicles} />

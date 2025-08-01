@@ -183,7 +183,7 @@ const NewProducts = ({ vehicles }: Props) => {
             <button
               key={dot.uuid}
               className={`w-2 h-2 rounded-full ${
-                index === current ? "bg-black" : "bg-gray-300"
+                index === current ? "bg-orange-600" : "bg-gray-300"
               }`}
             />
           ))}
