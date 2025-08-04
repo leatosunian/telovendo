@@ -9,7 +9,7 @@ const Slider = () => {
       {/* black overlay for background */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.9 }}
+        animate={{ opacity: 0.7 }}
         transition={{ duration: 4, delay: 0, ease: "easeInOut" }}
         className="absolute left-0 z-10 w-full h-full bg-black"
       ></motion.div>
