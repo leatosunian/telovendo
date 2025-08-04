@@ -43,7 +43,7 @@ const Section3 = () => {
               </p>
               <p
                 style={{ borderBottom: "1px solid #ea580c" }}
-                className="block text-base font-semibold sm:hidden w-fit mt-11 md:text-lg lg:text-2xl"
+                className="block text-lg font-semibold sm:hidden w-fit mt-11 md:text-lg lg:text-2xl"
               >
                 ¡La forma más fácil y segura de vender tu auto!
               </p>

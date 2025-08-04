@@ -9,19 +9,19 @@ const Slider = () => {
       {/* black overlay for background */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
+        animate={{ opacity: 0.6 }}
         transition={{ duration: 3, delay: 0, ease: "easeInOut" }}
         className="absolute left-0 z-10 w-full h-full bg-black"
       ></motion.div>
       {/* black overlay for background */}
-      <div className="z-20 flex flex-col w-full gap-16 sm:w-3/5 ">
+      <div className="z-20 flex flex-col w-full gap-14 md:gap-12 sm:w-3/5 ">
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.9 }}
         >
           <h3
-            className="text-5xl font-semibold sm:text-5xl xl:text-7xl"
+            className="text-5xl font-semibold sm:text-4xl xl:text-6xl"
             style={{ letterSpacing: ".5px" }}
           >
             Tu próximo auto, cada vez más cerca.
