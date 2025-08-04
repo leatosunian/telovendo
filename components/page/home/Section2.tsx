@@ -84,7 +84,7 @@ const Section2 = () => {
                     </div>
                     <h6 className="text-xl font-semibold">Seguridad y confianza</h6>
                     <p className="mt-2 mb-4 text-base text-black md:text-sm 2xl:text-base">
-                      Más de 5 años en el mercado haciendo operaciones seguras y clientes felices.
+                      Más de 2 años en el mercado haciendo operaciones seguras y clientes felices.
                     </p>
                   </div>
                 </div>

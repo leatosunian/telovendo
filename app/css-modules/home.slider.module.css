@@ -1,7 +1,7 @@
 .sectionCont {
   width: 100%;
   height: 100vh ;
-  background-image: url(/4.jpg);
+  background-image: url(/1.jpg);
   position: relative;
   background-size: cover; /* Hace que la imagen cubra toda la sección sin deformarse */
   background-position: center; /* Centra la imagen en la sección */
@@ -15,7 +15,7 @@
 
 @media(max-width:768px){
   .sectionCont{
-      background-image: url(/5.1.jpg);
+      background-image: url(/8.2.jpg);
 
   }
 }

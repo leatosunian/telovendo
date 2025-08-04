@@ -17,7 +17,7 @@ const Counters = () => {
           <GiStarsStack className="text-orange-600" size={100} />
           <div className="flex flex-col items-center ">
             <span className="text-2xl font-bold">
-              +<AnimatedCounter from={0} to={5} />
+              +<AnimatedCounter from={0} to={2} />
             </span>
             <span className="text-xl font-semibold">Años en el mercado</span>
           </div>
@@ -27,7 +27,7 @@ const Counters = () => {
           <IoCarSportSharp  className="text-orange-600" size={100} />
           <div className="flex flex-col items-center ">
             <span className="text-2xl font-bold">
-              +<AnimatedCounter from={0} to={12} />
+              +<AnimatedCounter from={0} to={50} />
             </span>
             <span className="text-xl font-semibold">Unidades disponibles</span>
           </div>
@@ -37,7 +37,7 @@ const Counters = () => {
           <PiUsersThreeFill className="text-orange-600" size={100} />
           <div className="flex flex-col items-center ">
             <span className="text-2xl font-bold">
-              +<AnimatedCounter from={0} to={400} />
+              +<AnimatedCounter from={0} to={100} />
             </span>
             <span className="text-xl font-semibold">Clientes satisfechos</span>
           </div>

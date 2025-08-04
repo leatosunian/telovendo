@@ -289,13 +289,16 @@ const ContactForm = () => {
                               Teléfono
                             </FormLabel>
                             <FormControl>
-                              <input
-                                {...field}
-                                className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
-                                placeholder="Ingrese su número de teléfono"
-                                id="phone"
-                                type="number"
-                              />
+                              <div className="flex items-center justify-center gap-1">
+                                <span className="text-xs font-semibold min-w-10 w-fit">+54 9 </span>
+                                <input
+                                  {...field}
+                                  className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
+                                  placeholder="Ingrese su número de teléfono"
+                                  id="phone"
+                                  type="number"
+                                />
+                              </div>
                             </FormControl>
                             <FormMessage className="text-xs" />
                           </FormItem>

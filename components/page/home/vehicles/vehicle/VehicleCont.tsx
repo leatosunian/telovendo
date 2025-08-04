@@ -1,4 +1,5 @@
 "use client";
+import 'react-medium-image-zoom/dist/styles.css';
 
 import Breadcrumbs from "@/components/page/home/vehicles/vehicle/Breadcrumbs";
 import React, { useEffect, useState } from "react";
@@ -43,6 +44,8 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import AccordionDescription from "./AccordionDescription";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import Zoom from 'react-medium-image-zoom';
 
 const VehicleCont = () => {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -53,7 +56,8 @@ const VehicleCont = () => {
   const [latestVehicles, setLatestVehicles] = useState<ICar[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<number | null>(0);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
   const { uuid } = useParams();
 
   useEffect(() => { }, []);
@@ -113,6 +117,8 @@ const VehicleCont = () => {
         cache: "no-store",
       });
       const gallery = await galleryFetch.json();
+      console.log(gallery)
+      console.log(cars.image)
       setGallery(gallery);
       setLoading(false);
     } catch (error) {
@@ -140,44 +146,52 @@ const VehicleCont = () => {
       <div className="w-full px-6 pt-5 pb-5 md:px-24 2xl:px-64 h-fit">
         <Breadcrumbs name={vehicleData?.name} />
       </div>
-
       <div className="w-full px-6 py-0 md:py-2 md:px-24 2xl:px-64 h-fit">
         <div className="flex flex-col gap-6 md:flex-row md:gap-20">
+
           {/* carousel */}
           <div className="relative w-full md:w-3/5 aspect-square ">
             {/* <Image src={car} alt="" className="w-full" width={500} height={500} /> */}
             <div className="relative">
               {/* Carousel */}
+
               <Carousel
                 setApi={setApi}
                 className="relative w-full h-full overflow-hidden rounded-lg aspect-square "
-                onMouseEnter={plugin.current.stop}
-                plugins={[plugin.current as any]}
+                //onMouseEnter={plugin.current.stop}
+                //plugins={[plugin.current as any]}
                 opts={{
                   align: "start",
                   loop: true,
+                  startIndex: galleryIndex
                 }}
-                onMouseLeave={plugin.current.reset}
+              //onMouseLeave={plugin.current.reset}
               >
                 <CarouselContent className="h-full">
                   <CarouselItem
                     className="w-full h-full overflow-hidden rounded-md "
                   >
+
                     <Image
                       src={vehicleData?.imagePath!}
                       alt={`Imagen `}
                       width={500}
                       objectFit="cover"
+                      onClick={() => {
+                        setGalleryIndex(0);
+                        setIsOpen(true)
+                      }}
                       height={500}
                       unoptimized
                       className="object-cover w-full h-full my-auto rounded-lg"
                     />
                   </CarouselItem>
-                  {gallery.map((image) => (
+                  {gallery.map((image, index) => (
                     <CarouselItem
                       key={image.uuid}
                       className="w-full h-full overflow-hidden rounded-md "
                     >
+                      {/* <Zoom> */}
                       <Image
                         src={image.path}
                         alt={`Imagen `}
@@ -185,11 +199,14 @@ const VehicleCont = () => {
                         objectFit="cover"
                         height={500}
                         unoptimized
+                        onClick={() => { setGalleryIndex(index + 1); setIsOpen(true) }}
                         className="object-cover w-full h-full my-auto rounded-lg"
                       />
+                      {/* </Zoom> */}
                     </CarouselItem>
                   ))}
                 </CarouselContent>
+
               </Carousel>
 
               {/* Custom Indicators */}
@@ -204,6 +221,8 @@ const VehicleCont = () => {
               </div>
             </div>
           </div>
+
+
           {/* vehicle details */}
           <div className="w-full md:w-2/3">
             {/* title, price and description */}
@@ -288,7 +307,7 @@ const VehicleCont = () => {
                     <Card className="px-4 py-1">
                       {/* <CardTitle>Account</CardTitle> */}
                       <pre
-                        style={{ font: "inherit", textWrap: "wrap", fontSize:'14px' }}
+                        style={{ font: "inherit", textWrap: "wrap", fontSize: '14px' }}
                         className="w-full my-2 text-gray-500 h-fit md:my-2"
                       >
                         {vehicleData?.description}
@@ -370,6 +389,79 @@ const VehicleCont = () => {
 
 
       </div>
+
+
+      <Dialog  open={isOpen} onOpenChange={setIsOpen} >
+        <DialogContent onClick={() => setIsOpen(false)} className="w-full min-w-[300px] md:min-w-[500px] lg:min-w-[600px] 2xl:min-w-[700px] p-0 text-transparent bg-transparent border-none shadow-none h-fit">
+
+          {/* carousel */}
+          {/* <Image src={car} alt="" className="w-full" width={500} height={500} /> */}
+          {/* Carousel */}
+
+          <Carousel
+            setApi={setApi}
+            className="relative w-full h-full max-w-full overflow-hidden rounded-lg aspect-square"
+            //onMouseEnter={plugin.current.stop}
+            //plugins={[plugin.current as any]}
+            opts={{
+              align: "start",
+              loop: true,
+              startIndex: galleryIndex
+            }}
+          //onMouseLeave={plugin.current.reset}
+          >
+            <CarouselContent className="h-full">
+              <CarouselItem
+                className="w-full h-full overflow-hidden rounded-md "
+              >
+                <Image
+                  src={vehicleData?.imagePath!}
+                  alt={`Imagen `}
+                  width={500}
+                  objectFit="cover"
+                  //onClick={() => { setGalleryIndex(0); setIsOpen(true) }}
+                  height={500}
+                  unoptimized
+                  className="object-cover w-full h-full my-auto rounded-lg"
+                />
+              </CarouselItem>
+              {gallery.map((image, index) => (
+                <CarouselItem
+                  key={image.uuid}
+                  onChange={() => setGalleryIndex(index)}
+                  className="w-full h-full overflow-hidden rounded-md "
+                >
+                  {/* <Zoom> */}
+                  <Image
+                    src={image.path}
+                    alt={`Imagen `}
+                    width={500}
+                    objectFit="cover"
+                    height={500}
+                    unoptimized
+
+                    //onClick={() => { setGalleryIndex(index); setIsOpen(true) }}
+                    className="object-cover w-full h-full my-auto rounded-lg"
+                  />
+                  {/* </Zoom> */}
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+
+          </Carousel>
+
+          {/* Custom Indicators */}
+          <div className="absolute left-0 right-0 flex justify-center space-x-2 -bottom-4">
+            {gallery.map((dot, index) => (
+              <button
+                key={dot.uuid}
+                className={`w-2 h-2 rounded-full ${index + 1 === current ? "bg-black" : "bg-gray-300"
+                  }`}
+              />
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <RelatedVehicles vehicles={latestVehicles} />
     </>
