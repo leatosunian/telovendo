@@ -392,7 +392,7 @@ const VehicleCont = () => {
 
 
       <Dialog  open={isOpen} onOpenChange={setIsOpen} >
-        <DialogContent onClick={() => setIsOpen(false)} className="w-full min-w-[300px] md:min-w-[500px] lg:min-w-[600px] 2xl:min-w-[700px] p-0 text-transparent bg-transparent border-none shadow-none h-fit">
+        <DialogContent onClick={() => setIsOpen(false)} className="w-full min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[750px] 2xl:min-w-[820px] p-0 text-transparent bg-transparent border-none shadow-none h-fit">
 
           {/* carousel */}
           {/* <Image src={car} alt="" className="w-full" width={500} height={500} /> */}

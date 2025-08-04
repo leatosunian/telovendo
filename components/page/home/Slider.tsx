@@ -9,8 +9,8 @@ const Slider = () => {
       {/* black overlay for background */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.6 }}
-        transition={{ duration: 3, delay: 0, ease: "easeInOut" }}
+        animate={{ opacity: 0.9 }}
+        transition={{ duration: 4, delay: 0, ease: "easeInOut" }}
         className="absolute left-0 z-10 w-full h-full bg-black"
       ></motion.div>
       {/* black overlay for background */}
@@ -18,7 +18,7 @@ const Slider = () => {
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.9 }}
+          transition={{ duration: 0.9, delay: 1.2 }}
         >
           <h3
             className="text-5xl font-semibold sm:text-4xl xl:text-6xl"
@@ -37,7 +37,7 @@ const Slider = () => {
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 1.3 }}
+          transition={{ duration: 0.9, delay: 1.7 }}
         >
           {/* <p className="text-base md:text-base 2xl:text-lg">
             Conectamos personas con vehículos. Llegamos a quienes buscan lo que ofrecés y a quienes tienen lo que buscás.
@@ -53,7 +53,7 @@ const Slider = () => {
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.6 }}
+            transition={{ duration: 0.9, delay: 2.1 }}
           >
             <button style={{ backgroundColor: '#ea580c' }} className={styles.button}>Contactanos</button>
           </motion.div>
