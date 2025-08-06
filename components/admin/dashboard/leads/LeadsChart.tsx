@@ -221,12 +221,6 @@ const LeadsChart = () => {
                             </span>
                           )}
                         </TableCell>
-                        {searchTerm !== "" && (<>
-                          <TableCell className="text-xs font-medium w-fit">
-                            {lead.leadVehicleName}
-                          </TableCell>
-
-                        </>)}
                         <TableCell className="text-xs font-medium w-fit">
                           {lead.interestedInName === '' || !lead.interestedInName && (<>
                             <span>No especificado</span>
@@ -235,6 +229,13 @@ const LeadsChart = () => {
                             {lead.interestedInName}
                           </>)}
                         </TableCell>
+                        {searchTerm !== "" && (<>
+                          <TableCell className="text-xs font-medium w-fit">
+                            {lead.leadVehicleName}
+                          </TableCell>
+
+                        </>)}
+
                         <TableCell className="text-xs font-medium w-fit min-w-28">
                           {dayjs(lead.createdAt).format("DD-MM-YYYY")}
                         </TableCell>

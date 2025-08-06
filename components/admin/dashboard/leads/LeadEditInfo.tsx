@@ -203,14 +203,14 @@ const LeadEditForm = () => {
       createLeadVehicles(values)
       return;
     }
-    if (!selectedIntIn) {
-      setLoading(false);
-      toast({
-        description: "Selecciona un vehiculo de interés",
-        variant: "destructive",
-      });
-      return;
-    }
+    //if (!selectedIntIn) {
+    //  setLoading(false);
+    //  toast({
+    //    description: "Selecciona un vehiculo de interés",
+    //    variant: "destructive",
+    //  });
+    //  return;
+    //}
     values.leadPrefVehicleUUID = selectedIntIn?.uuid;
     values.leadID = lead?._id;
     values.interestedIn = selectedIntIn?.name;
@@ -254,14 +254,14 @@ const LeadEditForm = () => {
   // create lead vehicles function
   async function createLeadVehicles(values: any) {
     setLoading(true);
-    if (!selectedIntIn) {
-      setLoading(false);
-      toast({
-        description: "Selecciona un vehiculo de interés",
-        variant: "destructive",
-      });
-      return;
-    }
+    //if (!selectedIntIn) {
+    //  setLoading(false);
+    //  toast({
+    //    description: "Selecciona un vehiculo de interés",
+    //    variant: "destructive",
+    //  });
+    //  return;
+    //}
     values.leadPrefVehicleUUID = selectedIntIn?.uuid;
     values.leadID = lead?._id;
     values.interestedIn = selectedIntIn?.name;
@@ -769,7 +769,7 @@ const LeadEditForm = () => {
                               variant={"destructive"}
                               className="w-full mt-2 md:mt-0"
                             >
-                              Cambiar vehículo
+                              Quitar selección
                             </Button>
                           </CardFooter>
                         </div>

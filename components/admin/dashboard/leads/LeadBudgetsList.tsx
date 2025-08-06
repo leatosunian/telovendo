@@ -55,15 +55,16 @@ const LeadBudgetsList = ({ budgets, leadID }: props) => {
               </span>
 
               {/* create task modal */}
-              <Button
-                type="submit"
-                //onClick={() => setOpenCreateModal(true)}
-                className="w-full mt-7 md:w-1/4"
+              <Link href={`/admin/dashboard/budgets/create/${leadID}`} className="w-full mt-7 md:w-1/4"
               >
-                <Link href={`/admin/dashboard/budgets/create/${leadID}`}>
+                <Button
+                  className="w-full"
+                  type="submit"
+                //onClick={() => setOpenCreateModal(true)}
+                >
                   Crear presupuesto
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               {/* create task modal */}
             </div>
           </>
@@ -81,17 +82,17 @@ const LeadBudgetsList = ({ budgets, leadID }: props) => {
                     </h4>
                     <Separator className="" />
                     <div className="flex flex-col w-full gap-4 h-fit">
-                      <div className="flex flex-col gap-1 ">
+                      {budget.vehicleName  && <div className="flex flex-col gap-1 ">
                         <span className="text-sm font-semibold">
                           Interesado en
                         </span>
                         <span className="text-xs font-medium text-gray-500">
                           {budget.vehicleName}
                         </span>
-                      </div>
+                      </div>}
                       {budget.clientVehicleName !== "" && (
                         <div className="flex flex-col gap-1">
-                          <span className="text-sm font-semibold">Usado</span>
+                          <span className="text-sm font-semibold">Vehículo usado</span>
                           <span className="text-xs font-medium text-gray-500">
                             {budget.clientVehicleName}
                           </span>

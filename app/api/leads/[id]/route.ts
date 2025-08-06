@@ -81,8 +81,11 @@ export async function PUT(
   await connectDB();
   const { id } = params;
   const data: ILead = await request.json();
-  console.log(data);
-
+  console.log('edit lead data', data);
+  if (!data.interestedInName) {
+    data.interestedIn = "No especificado."
+    data.interestedInName = "No especificado."
+  }
   try {
     const updatedLead = await LeadModel.findOneAndUpdate({ _id: id }, data, {
       new: true,

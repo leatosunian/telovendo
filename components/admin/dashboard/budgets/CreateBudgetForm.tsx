@@ -94,6 +94,8 @@ const CreateBudgetForm = () => {
   const [currency, setCurrency] = useState("");
   const [USDValue, setUSDValue] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [transferFixedInput, setTransferFixedInput] = useState("");
+
   const [bonifToCreate, setBonifToCreate] = useState({
     details: "",
     amount: null,
@@ -132,20 +134,28 @@ const CreateBudgetForm = () => {
         method: "GET",
         cache: "no-store",
       });
+      setLoading(false);
       const lead = await leadFetch.json();
+      console.log('lead', lead)
+      console.log('lead.leadVehicles.leadPrice', Number(lead.leadVehicles.leadPrice))
+      setInitialLeadVehicleCurrency({
+        currency: lead.leadVehicles.leadCurrency,
+        price: Number(lead.leadVehicles.leadPrice),
+      });
       setLeadVehicles(lead.leadVehicles);
       setSelectedLead(lead.lead);
-      setCurrency(lead.intInVehicle.currency);
+      if (lead.intInVehicle === null) {
+        setCurrency(lead.leadVehicles.leadCurrency);
+      } else {
+        setCurrency(lead.intInVehicle.currency);
+      }
       setIntInVehicle(lead.intInVehicle);
       setInitialIntInCurrency({
         currency: lead.intInVehicle.currency,
         price: lead.intInVehicle.price,
       });
-      setInitialLeadVehicleCurrency({
-        currency: lead.leadVehicles.leadCurrency,
-        price: parseInt(lead.leadVehicles.leadPrice),
-      });
-      setLoading(false);
+      console.log(lead.intInVehicle);
+      //if(!leadVehicles)
     } catch (error) {
       return;
     }
@@ -154,7 +164,8 @@ const CreateBudgetForm = () => {
 
   // currency handlers
   function convertVehiclesPriceByCurrency(USDvalue: number) {
-
+    if (USDvalue === null || Number.isNaN(USDvalue)) return;
+    console.log('currtency', currency)
     // set back values when usd is set back
     if (initialIntInCurrency?.currency === "USD" && currency === "USD") {
       if (USDValue === null) return;
@@ -209,7 +220,7 @@ const CreateBudgetForm = () => {
         if (!prev) return;
         let newData = { ...(prev.toObject?.() || prev) };
         newData.leadCurrency = "USD";
-        newData.leadPrice = initialIntInCurrency?.price!;
+        newData.leadPrice = initialLeadVehicleCurrency?.price!;
         return newData;
       });
       return;
@@ -222,36 +233,52 @@ const CreateBudgetForm = () => {
 
       if (initialIntInCurrency?.currency === "ARS") return;
       if (Number.isNaN(USDvalue)) {
+        if (intInVehicle) {
+
+          setIntInVehicle((prev) => {
+            if (!prev || USDvalue === null) return;
+            let newData = { ...(prev.toObject?.() || prev) };
+            newData.currency = "USD";
+            newData.price = initialIntInCurrency?.price!;
+            return newData;
+          });
+        }
+        if (leadVehicles?.leadName !== "") {
+          setLeadVehicles((prev) => {
+            if (!prev || USDvalue === null) return;
+            let newData = { ...(prev.toObject?.() || prev) };
+            newData.leadCurrency = "USD";
+            console.log('initialLeadVehicleCurrency?.price!', initialLeadVehicleCurrency?.price!)
+            newData.leadPrice = initialLeadVehicleCurrency?.price!;
+            console.log('newData.leadPrice', newData.leadPrice)
+            return newData;
+          });
+        }
+        return;
+      }
+
+      if (intInVehicle) {
         setIntInVehicle((prev) => {
           if (!prev || USDvalue === null) return;
           let newData = { ...(prev.toObject?.() || prev) };
-          newData.currency = "USD";
-          newData.price = initialIntInCurrency?.price!;
+          newData.currency = "ARS";
+          newData.price = initialIntInCurrency?.price! * USDvalue;
           return newData;
         });
+      }
+
+      if (leadVehicles?.leadName !== "") {
         setLeadVehicles((prev) => {
           if (!prev || USDvalue === null) return;
           let newData = { ...(prev.toObject?.() || prev) };
-          newData.leadCurrency = "USD";
-          newData.leadPrice = initialLeadVehicleCurrency?.price!;
+          newData.leadCurrency = "ARS";
+          console.log('initialLeadVehicleCurrency?.price', initialLeadVehicleCurrency?.price)
+          newData.leadPrice = initialLeadVehicleCurrency?.price! * USDvalue;
+          console.log('newData.leadPrice down', newData.leadPrice)
           return newData;
         });
-        return;
       }
-      setIntInVehicle((prev) => {
-        if (!prev || USDvalue === null) return;
-        let newData = { ...(prev.toObject?.() || prev) };
-        newData.currency = "ARS";
-        newData.price = initialIntInCurrency?.price! * USDvalue;
-        return newData;
-      });
-      setLeadVehicles((prev) => {
-        if (!prev || USDvalue === null) return;
-        let newData = { ...(prev.toObject?.() || prev) };
-        newData.leadCurrency = "ARS";
-        newData.leadPrice = initialLeadVehicleCurrency?.price! * USDvalue;
-        return newData;
-      });
+
     }
   }
 
@@ -309,14 +336,31 @@ const CreateBudgetForm = () => {
     let total = 0;
     console.log('intInVehicle?.price', intInVehicle?.price!);
     console.log(intInVehicleBonifsSubtotal);
-    console.log(Number(leadVehicles?.leadPrice));
-    console.log(transfer);
+    console.log('Number(leadVehicles?.leadPrice)', Number(leadVehicles?.leadPrice));
+    console.log('leadVehicles?.leadPrice', leadVehicles?.leadPrice);
+    console.log('transfer', transfer);
 
-    total =
-      intInVehicle?.price! +
-      intInVehicleBonifsSubtotal -
-      Number(leadVehicles?.leadPrice) +
-      transfer;
+    // cuando no hay vehiculo del lead
+    if (leadVehicles?.leadPrice !== "") {
+      total =
+        intInVehicle?.price! +
+        intInVehicleBonifsSubtotal +
+        transfer;
+    }
+    // cuando no hay intin
+    if (!intInVehicle) {
+      total =
+        Number(leadVehicles?.leadPrice) +
+        transfer;
+    }
+
+    if (intInVehicle && leadVehicles?.leadPrice !== '') {
+      total =
+        intInVehicle?.price! +
+        intInVehicleBonifsSubtotal -
+        Number(leadVehicles?.leadPrice) +
+        transfer;
+    }
 
     setTotal(total);
   }
@@ -337,16 +381,27 @@ const CreateBudgetForm = () => {
   }, [intInVehicleBonifs]);
 
   useEffect(() => {
-    if (currency === "USD") {
-      convertVehiclesPriceByCurrency(USDValue!);
+    if (currency === "USD" && USDValue) {
+      convertVehiclesPriceByCurrency(USDValue);
     }
-  }, [currency]);
+  }, [currency, USDValue]);
+
   useEffect(() => {
     console.log(setBonifToCreate);
   }, [setBonifToCreate]);
+
   useEffect(() => {
     getLead();
   }, []);
+
+  useEffect(() => {
+    console.log('intInVehicle', intInVehicle)
+  }, [intInVehicle]);
+
+  useEffect(() => {
+    console.log('initialLeadVehicleCurrency', initialLeadVehicleCurrency)
+  }, [initialLeadVehicleCurrency])
+
 
   // useEffects
 
@@ -431,6 +486,8 @@ const CreateBudgetForm = () => {
                         setCurrency(value);
                         setTransfer(0);
                         setTransferFixed(0);
+                        setTransferFixedInput("");
+
                         //convertVehiclesPriceByCurrency(1);
                       }}
                     >
@@ -479,213 +536,221 @@ const CreateBudgetForm = () => {
           <Card className="mt-10 p-7">
             <div className="flex flex-col justify-center w-full gap-10 md:gap-0 h-fit">
               {/* Vehiculo de interés */}
-              <div className="w-full">
-                <span className="text-xl font-semibold">
-                  2. Vehiculo de interés
-                </span>
-                <div className="flex items-center justify-center gap-5 mt-8 sm:items-start">
-                  <div className="flex flex-col w-full h-full lg:flex-row ">
-                    {/* vehicle details */}
-                    <Card className="flex flex-col h-full max-w-full sm:max-w-[250px] shadow-lg">
-                      <Image
-                        src={intInVehicle?.imagePath!}
-                        alt=""
-                        unoptimized
-                        width={500}
-                        height={500}
-                        className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
-                      />
-                      <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
-                        <CardHeader style={{ padding: "0 16px 10px 16px" }}>
-                          <CardTitle className="text-base textCut">
-                            {/* {car.name} */}
-                            {intInVehicle?.name}
-                          </CardTitle>
-                          <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
-                            <div className="flex items-center gap-2">
-                              {/* <FaRegCalendar /> <span>{car.year}</span> */}
-                              <FaRegCalendar />{" "}
-                              <span> {intInVehicle?.year}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <IoSpeedometerOutline size={20} />
-                              {/* <span> {car.kilometers} km</span> */}
-                              <span> {intInVehicle?.kilometers} km</span>
-                            </div>
-                          </CardDescription>
-                          <span className="text-lg font-semibold">
-                            {/* {car.currency} ${car.price} */}
-                            {intInVehicle?.currency} $
-                            {intInVehicle?.price.toLocaleString()}
-                          </span>
-                        </CardHeader>
-                        <CardFooter className="w-full p-4">
-                          <Link
-                            className="w-full h-full"
-                            href={
-                              "/admin/dashboard/leads/edit/" + selectedLead?._id
-                            }
-                          >
-                            <Button
-                              //onClick={() => setSelectedIntIn(car)}
-                              variant={"default"}
-                              className="w-full mt-2 md:mt-0"
-                            >
-                              Cambiar vehículo
-                            </Button>
-                          </Link>
-                        </CardFooter>
-                      </div>
-                    </Card>
-
-                    <Separator
-                      className="mx-7 h-[300px] my-auto hidden lg:block"
-                      orientation="vertical"
-                    />
-
-                    <div className="flex flex-col w-full h-full mt-7 lg:mt-0 xl:flex-row">
-                      {/* bonificaciones section */}
-                      <div className="flex flex-col w-full max-w-full md:max-w-[400px] ">
-                        <div className="flex flex-col w-full gap-2 h-fit">
-                          <Label htmlFor="email" className="text-lg">
-                            Bonificaciones
-                          </Label>
-                          <span className="text-xs font-light text-gray-400">
-                            Ingresa el costo de transferencia en{" "}
-                            <b>pesos argentinos.</b> De ser el presupuesto hecho
-                            en dólares, será convertido con la cotización
-                            ingresada
-                          </span>
-                        </div>
-                        <Separator
-                          className="my-3 opacity-70 xl:my-3"
-                          orientation="horizontal"
+              {intInVehicle && (<>
+                <div className="w-full">
+                  <span className="text-xl font-semibold">
+                    2. Vehiculo de interés
+                  </span>
+                  <div className="flex items-center justify-center gap-5 mt-8 sm:items-start">
+                    <div className="flex flex-col w-full h-full lg:flex-row ">
+                      {/* vehicle details */}
+                      <Card className="flex flex-col h-full max-w-full sm:max-w-[250px] shadow-lg">
+                        <Image
+                          src={intInVehicle?.imagePath!}
+                          alt=""
+                          unoptimized
+                          width={500}
+                          height={500}
+                          className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
                         />
-                        <div className="w-full h-fit">
-                          {intInVehicleBonifs.length === 0 && (
-                            <div className="justify-center w-full p-2 text-center h-fit">
-                              <span className="text-sm font-normal ">
-                                No hay bonificaciones.
-                              </span>
-                            </div>
-                          )}
-                          {intInVehicleBonifs.length > 0 &&
-                            intInVehicleBonifs.map((bonif) => (
-                              <>
-                                <div className="flex justify-between py-1">
-                                  <span className="text-sm font-semibold">
-                                    {bonif.details}{" "}
-                                  </span>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-sm ">
-                                      {bonif.addOrSub}${bonif.amount}{" "}
-                                    </span>
-                                    <TiDelete
-                                      className="cursor-pointer "
-                                      onClick={() =>
-                                        onDeleteIntInBonif(bonif.details)
-                                      }
-                                      size={25}
-                                      color="red"
-                                    />
-                                  </div>
-                                </div>
-                              </>
-                            ))}
+                        <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
+                          <CardHeader style={{ padding: "0 16px 10px 16px" }}>
+                            <CardTitle className="text-base textCut">
+                              {/* {car.name} */}
+                              {intInVehicle?.name}
+                            </CardTitle>
+                            <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
+                              <div className="flex items-center gap-2">
+                                {/* <FaRegCalendar /> <span>{car.year}</span> */}
+                                <FaRegCalendar />{" "}
+                                <span> {intInVehicle?.year}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <IoSpeedometerOutline size={20} />
+                                {/* <span> {car.kilometers} km</span> */}
+                                <span> {intInVehicle?.kilometers} km</span>
+                              </div>
+                            </CardDescription>
+                            <span className="text-lg font-semibold">
+                              {/* {car.currency} ${car.price} */}
+                              {intInVehicle?.currency} $
+                              {intInVehicle?.price.toLocaleString()}
+                            </span>
+                          </CardHeader>
+                          <CardFooter className="w-full p-4">
+                            <Link
+                              className="w-full h-full"
+                              href={
+                                "/admin/dashboard/leads/edit/" + selectedLead?._id
+                              }
+                            >
+                              <Button
+                                //onClick={() => setSelectedIntIn(car)}
+                                variant={"default"}
+                                className="w-full mt-2 md:mt-0"
+                              >
+                                Cambiar vehículo
+                              </Button>
+                            </Link>
+                          </CardFooter>
                         </div>
-                        <Button
-                          className="mt-5"
-                          onClick={() => setCreateBonifModal(true)}
-                        >
-                          Añadir bonificación
-                        </Button>
-                      </div>
+                      </Card>
 
                       <Separator
-                        className="mx-7 h-[300px] my-auto hidden xl:block"
+                        className="mx-7 h-[300px] my-auto hidden lg:block"
                         orientation="vertical"
                       />
 
-                      <Separator
-                        className="block w-full md:w-[400px]  my-10 xl:hidden"
-                        orientation="horizontal"
-                      />
-
-                      {/* transfer value section */}
-                      <div className="flex flex-col w-full md:w-fit mt-0 md:mt-0 min-w-0 sm:min-w-[250px]">
-                        <div className="grid w-full max-w-sm items-center gap-1.5">
-                          <Label htmlFor="email" className="text-lg">
-                            Gastos de transferencia
-                          </Label>
-                          <span className="text-xs font-light text-gray-400">
-                            Ingresa el costo de transferencia en{" "}
-                            <b>pesos argentinos.</b> De ser el presupuesto hecho
-                            en dólares, será convertido con la cotización
-                            ingresada
-                          </span>
+                      <div className="flex flex-col w-full h-full mt-7 lg:mt-0 xl:flex-row">
+                        {/* bonificaciones section */}
+                        <div className="flex flex-col w-full max-w-full md:max-w-[400px] ">
+                          <div className="flex flex-col w-full gap-2 h-fit">
+                            <Label htmlFor="email" className="text-lg">
+                              Bonificaciones
+                            </Label>
+                            <span className="text-xs font-light text-gray-400">
+                              Ingresa el costo de transferencia en{" "}
+                              <b>pesos argentinos.</b> De ser el presupuesto hecho
+                              en dólares, será convertido con la cotización
+                              ingresada
+                            </span>
+                          </div>
                           <Separator
-                            className="my-3 opacity-70 xl:my-2"
+                            className="my-3 opacity-70 xl:my-3"
                             orientation="horizontal"
                           />
-                          <Label htmlFor="email" className="text-sm">
-                            Costo de transferencia
-                          </Label>
-                          <span className="mb-1 text-xs font-light text-gray-400">
-                            Ingresa el monto a pagar para transferir el vehículo
-                          </span>
-                          <Input
-                            type="number"
-                            value={transferFixed}
-                            onChange={(e) => {
-                              setTransferFixed(Number(e.target.value));
-                              if (
-                                currency === "USD" &&
-                                USDValue &&
-                                transferFixed
-                              ) {
-                                setTransfer(Number(e.target.value) / USDValue!);
-                                return;
-                              }
-                              setTransfer(Number(e.target.value));
-                            }}
-                            id="transferPrice"
-                            placeholder="Ingresá una cifra"
-                          />
+                          <div className="w-full h-fit">
+                            {intInVehicleBonifs.length === 0 && (
+                              <div className="justify-center w-full p-2 text-center h-fit">
+                                <span className="text-sm font-normal ">
+                                  No hay bonificaciones.
+                                </span>
+                              </div>
+                            )}
+                            {intInVehicleBonifs.length > 0 &&
+                              intInVehicleBonifs.map((bonif) => (
+                                <>
+                                  <div className="flex justify-between py-1">
+                                    <span className="text-sm font-semibold">
+                                      {bonif.details}{" "}
+                                    </span>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-sm ">
+                                        {bonif.addOrSub}${bonif.amount}{" "}
+                                      </span>
+                                      <TiDelete
+                                        className="cursor-pointer "
+                                        onClick={() =>
+                                          onDeleteIntInBonif(bonif.details)
+                                        }
+                                        size={25}
+                                        color="red"
+                                      />
+                                    </div>
+                                  </div>
+                                </>
+                              ))}
+                          </div>
+                          <Button
+                            className="mt-5"
+                            onClick={() => setCreateBonifModal(true)}
+                          >
+                            Añadir bonificación
+                          </Button>
                         </div>
-                        {currency === "USD" && (
-                          <div className="mt-5 grid w-full max-w-sm items-center gap-1.5">
+
+                        <Separator
+                          className="mx-7 h-[300px] my-auto hidden xl:block"
+                          orientation="vertical"
+                        />
+
+                        <Separator
+                          className="block w-full md:w-[400px]  my-10 xl:hidden"
+                          orientation="horizontal"
+                        />
+
+                        {/* transfer value section */}
+                        <div className="flex flex-col w-full md:w-fit mt-0 md:mt-0 min-w-0 sm:min-w-[250px]">
+                          <div className="grid w-full max-w-sm items-center gap-1.5">
+                            <Label htmlFor="email" className="text-lg">
+                              Gastos de transferencia
+                            </Label>
+                            <span className="text-xs font-light text-gray-400">
+                              Ingresa el costo de transferencia en{" "}
+                              <b>pesos argentinos.</b> De ser el presupuesto hecho
+                              en dólares, será convertido con la cotización
+                              ingresada
+                            </span>
+                            <Separator
+                              className="my-3 opacity-70 xl:my-2"
+                              orientation="horizontal"
+                            />
                             <Label htmlFor="email" className="text-sm">
-                              Cotización del dolar
+                              Costo de transferencia
                             </Label>
                             <span className="mb-1 text-xs font-light text-gray-400">
-                              Ingresa la cotización del dolar para convertir el
-                              precio
+                              Ingresa el monto a pagar para transferir el vehículo
                             </span>
                             <Input
-                              onChange={(value) => {
-                                setUSDValue(parseInt(value.target.value));
-                                if (currency === "USD" && transferFixed) {
-                                  setTransfer(
-                                    transferFixed / Number(value.target.value)!
-                                  );
-                                  return;
-                                }
-                                setTransfer(transfer);
-                              }}
                               type="number"
+                              value={transferFixedInput}
+                              onWheel={(e) => e.currentTarget.blur()}
+                              onChange={(e) => {
+                                const inputValue = e.target.value;
+                                setTransferFixedInput(inputValue);
+
+                                const parsedValue = Number(inputValue);
+
+                                if (!isNaN(parsedValue)) {
+                                  setTransferFixed(parsedValue);
+
+                                  if (currency === "USD" && USDValue) {
+                                    setTransfer(parsedValue / USDValue);
+                                  } else {
+                                    setTransfer(parsedValue);
+                                  }
+                                }
+                              }}
                               id="transferPrice"
                               placeholder="Ingresá una cifra"
                             />
                           </div>
-                        )}
+                          {currency === "USD" && (
+                            <div className="mt-5 grid w-full max-w-sm items-center gap-1.5">
+                              <Label htmlFor="email" className="text-sm">
+                                Cotización del dolar
+                              </Label>
+                              <span className="mb-1 text-xs font-light text-gray-400">
+                                Ingresa la cotización del dolar para convertir el
+                                precio
+                              </span>
+                              <Input
+                                onWheel={(e) => e.currentTarget.blur()}
+                                onChange={(value) => {
+                                  setUSDValue(parseInt(value.target.value));
+                                  if (currency === "USD" && transferFixed) {
+                                    setTransfer(
+                                      transferFixed / Number(value.target.value)!
+                                    );
+                                    return;
+                                  }
+                                  setTransfer(transfer);
+                                }}
+                                type="number"
+                                id="transferPrice"
+                                placeholder="Ingresá una cifra"
+                              />
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+                <Separator className="my-4 md:my-10" orientation="horizontal" />
+              </>)}
               {/* Vehiculo de interés */}
 
-              <Separator className="my-4 md:my-10" orientation="horizontal" />
 
               {/* Vehiculo del lead */}
               <div className="w-full h-full ">
@@ -759,7 +824,7 @@ const CreateBudgetForm = () => {
                         </div>
                       </Card>
 
-                      <Separator
+                      {/* <Separator
                         className="mx-10 h-[300px] my-auto hidden md:block"
                         orientation="vertical"
                       />
@@ -808,7 +873,7 @@ const CreateBudgetForm = () => {
                         >
                           Añadir bonificación
                         </Button>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 )}
@@ -824,20 +889,21 @@ const CreateBudgetForm = () => {
             </span>
             <Card className="w-full p-5 my-6 md:w-1/2">
               {/* precio del vehiculo */}
-              <div className="flex flex-col gap-2">
-                <div className="flex items-start justify-between w-full">
-                  <span className="text-sm font-semibold">
-                    Precio del vehículo
+              {intInVehicle && (<>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold">
+                      Precio del vehículo
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {intInVehicle?.currency} $
+                      {intInVehicle?.price.toLocaleString()}{" "}
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-400">
+                    {intInVehicle?.name}
                   </span>
-                  <span className="text-sm font-semibold">
-                    {intInVehicle?.currency} $
-                    {intInVehicle?.price.toLocaleString()}{" "}
-                  </span>
-                </div>
-                <span className="text-xs text-gray-400">
-                  {intInVehicle?.name}
-                </span>
-              </div>
+                </div></>)}
               {/* precio del vehiculo */}
               {/* bonificaciones */}
               {intInVehicleBonifs.length > 0 && (
@@ -884,18 +950,19 @@ const CreateBudgetForm = () => {
               )}
               {/* bonificaciones */}
 
-              <Separator className="my-5 " orientation="horizontal" />
 
               {/* entrega de usado */}
               {leadVehicles?.leadName !== "" && (
                 <>
+                  {intInVehicle && <Separator className="my-5 " orientation="horizontal" />}
                   <div className="flex flex-col gap-2">
                     <div className="flex items-start justify-between w-full">
                       <span className="text-sm font-semibold">
-                        Entrega de vehículo
+                        {intInVehicle ? "Entrega de vehículo" : "Vehículo ofrecido"}
                       </span>
-                      <span className="text-sm font-semibold">
-                        - {leadVehicles?.leadCurrency} $
+                      <span className="text-xs font-semibold">
+                        {intInVehicle ? "- " : ""}
+                        {leadVehicles?.leadCurrency} $
                         {Number(leadVehicles?.leadPrice).toLocaleString()}
                       </span>
                     </div>
@@ -906,27 +973,32 @@ const CreateBudgetForm = () => {
                 </>
               )}
               {/* entrega de usado */}
+              {intInVehicle && (
+                <>
+                  <Separator className="my-5 " orientation="horizontal" />
 
-              <Separator className="my-5 " orientation="horizontal" />
-
-              {/* costos de transferencia */}
-              <div className="flex items-start justify-between w-full">
-                <span className="text-sm font-semibold">
-                  Costos de transferencia
-                </span>
-                <span className="text-sm font-semibold">
-                  {currency} ${Number(transfer.toFixed(2)).toLocaleString()}
-                </span>
-              </div>
-              {/* costos de transferencia */}
-
+                  {/* costos de transferencia */}
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold">
+                      Costos de transferencia
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {currency} ${Number(transfer.toFixed(2)).toLocaleString()}
+                    </span>
+                  </div>
+                  {/* costos de transferencia */}
+                </>
+              )}
               <Separator className="my-5 " orientation="horizontal" />
 
               {/* total a pagar */}
               <div className="flex items-start justify-between w-full">
                 <span className="text-sm font-semibold">Total a pagar</span>
-                <span className="text-sm font-semibold">
-                  {currency} ${Number(total.toFixed(2)).toLocaleString()}
+                <span className="text-sm font-semibold underline">
+                  {currency} $
+                  {intInVehicle
+                    ? Number(total.toFixed(2)).toLocaleString()
+                    : Number(leadVehicles?.leadPrice ?? 0).toLocaleString()}
                 </span>
               </div>
               {/* total a pagar */}

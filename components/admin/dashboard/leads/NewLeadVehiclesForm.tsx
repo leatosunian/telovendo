@@ -59,6 +59,7 @@ import { cn } from "@/lib/utils";
 import { IAdmin } from "@/app/models/admin";
 import { useToast } from "@/hooks/use-toast";
 import { ILead } from "@/app/models/lead";
+import Link from "next/link";
 
 interface props {
   onChangeFormStep: () => void;
@@ -121,14 +122,14 @@ const NewLeadForm = ({ onChangeFormStep, createdLeadData }: props) => {
   // create lead vehicles function
   async function onSubmit(values: any) {
     setLoading(true);
-    if (!selectedIntIn) {
-      setLoading(false);
-      toast({
-        description: "Selecciona un vehiculo de interés",
-        variant: "destructive",
-      });
-      return;
-    }
+    //if (!selectedIntIn) {
+    //  setLoading(false);
+    //  toast({
+    //    description: "Selecciona un vehiculo de interés",
+    //    variant: "destructive",
+    //  });
+    //  return;
+    //}
     values.leadPrefVehicleUUID = selectedIntIn?.uuid;
     values.leadID = createdLeadData?._id;
     values.interestedIn = selectedIntIn?.name;
@@ -602,13 +603,15 @@ const NewLeadForm = ({ onChangeFormStep, createdLeadData }: props) => {
               <div></div>
 
               <div className="flex flex-col justify-center w-full gap-5 my-12 md:flex-row md:gap-8">
-                <Button
-                  type="button"
-                  variant={"outline"}
-                  className="w-full md:w-1/3"
-                >
-                  Añadir mas tarde
-                </Button>
+                <Link className="w-full md:w-1/3" href={'/admin/dashboard/leads/' + createdLeadData?._id}>
+                  <Button
+                    type="button"
+                    variant={"outline"}
+                    className="w-full "
+                  >
+                    Añadir mas tarde
+                  </Button>
+                </Link>
                 <Button type="submit" className="w-full md:w-1/3">
                   Finalizar
                 </Button>

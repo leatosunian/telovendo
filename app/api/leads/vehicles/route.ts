@@ -27,13 +27,11 @@ export async function POST(request: NextRequest) {
   const leadObservations = data.get("leadObservations") as string;
   const leadVehicleImage = data.getAll("leadVehicleImage") as File[];
 
-  console.log(leadVehicleImage);
-  console.log(leadVehicleImage[0]);
 
   let leadVehicleImagePath = "";
 
   // upload lead vehicle thumbnail in cloudinary
-  if (leadVehicleImage[0]) {
+  if (leadVehicleImage[0] !== undefined) {
     const bytes = await leadVehicleImage[0].arrayBuffer();
     const buffer = Buffer.from(bytes);
     try {
@@ -103,6 +101,9 @@ export async function PUT(request: NextRequest) {
   const data = await request.json();
   delete data.interestedIn
   console.log('edit ', data);
+  if (!data.leadPrefVehicleUUID) {
+    data.leadPrefVehicleUUID = ""
+  }
   try {
     const editedLead = await LeadVehiclesModel.findOneAndUpdate(
       { leadID: data.leadID },
