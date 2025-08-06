@@ -180,10 +180,10 @@ const LeadEditForm = () => {
         body: formData,
       }).then((response) => response.json());
       console.log('uploadfile', editedLead);
-      toast({
-        description: "¡Cambios guardados correctamente!",
-        variant: "default",
-      });
+      //toast({
+      //  description: "¡Cambios guardados correctamente!",
+      //  variant: "default",
+      //});
       setLoading(false);
     } catch (error) {
       // error alert
@@ -822,7 +822,7 @@ const LeadEditForm = () => {
                             console.log(file);
                             if (file) {
                               setIntInImage(file);
-                              setExistentIntInImage(""); // Esto puede causar re-render
+                              //setExistentIntInImage(""); // Esto puede causar re-render
                               uploadImage(file);
                             }
                             e.target.value = ""; // Limpia el valor del input para evitar conflictos
