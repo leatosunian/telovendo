@@ -13,7 +13,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from "@/components/ui/carousel";
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 import { ICar } from "@/app/models/car";
 import { ICarImage } from "@/app/models/carimage";
 import { useParams } from "next/navigation";
@@ -46,6 +48,7 @@ import {
 import AccordionDescription from "./AccordionDescription";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Zoom from 'react-medium-image-zoom';
+import { Separator } from '@/components/ui/separator';
 
 const VehicleCont = () => {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -147,10 +150,10 @@ const VehicleCont = () => {
         <Breadcrumbs name={vehicleData?.name} />
       </div>
       <div className="w-full px-6 py-0 md:py-2 md:px-24 2xl:px-64 h-fit">
-        <div className="flex flex-col gap-6 md:flex-row md:gap-20">
+        <div className="flex flex-col gap-6 md:flex-row md:gap-10 lg:gap-20 2xl:gap-10">
 
           {/* carousel */}
-          <div className="relative w-full md:w-3/5 aspect-square ">
+          <div className="relative w-full md:w-3/5 2xl:md:w-4/6 aspect-square ">
             {/* <Image src={car} alt="" className="w-full" width={500} height={500} /> */}
             <div className="relative">
               {/* Carousel */}
@@ -220,64 +223,252 @@ const VehicleCont = () => {
                 ))}
               </div>
             </div>
+
+            <Card className="flex-col hidden gap-2 px-4 py-3 mt-10 md:flex ">
+              <span className='font-semibold text-md 2xl:text-lg'>Caracteristicas del vehículo</span>
+              <Separator className='mb-1 bg-orange-600'></Separator>
+              {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
+              <Card className='flex flex-col gap-3 px-4 py-3 md:flex-row'>
+
+                <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
+                  <span className="text-sm md:text-xs text-wrap"><b>Marca:</b> {vehicleData?.brand} </span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Puertas:</b> {vehicleData?.doors?.replace("P", "")}</span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Último service:</b> {vehicleData?.lastestService} km</span>
+                  {vehicleData?.hasVTV === true ? <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b> Si</span> :
+                    <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b>No</span>
+
+                  }
+                  <span className="text-sm md:text-xs text-wrap"><b>Fecha de batería:</b> {vehicleData?.battery}</span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Cantidad de dueños:</b> {vehicleData?.ownerNumber}</span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Detalles de pintura:</b> {vehicleData?.paintDetails}</span>
+
+                </div>
+                <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
+                  <span className="text-sm md:text-xs text-wrap"><b>Modelo:</b> {vehicleData?.modelName}</span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Condición general:</b> {vehicleData?.generalCondition}</span>
+                  {vehicleData?.gearbox === "AUTOMATIC" && (
+                    <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Automática</span>
+                  )}
+                  {vehicleData?.gearbox === "MANUAL" && (
+                    <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Manual</span>
+                  )}
+                  <span className="text-sm md:text-xs text-wrap"><b>Tracción:</b> {vehicleData?.drive}</span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Vencimiento de VTV:</b> {vehicleData?.VTVExpDate}</span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt} km</span>
+                  <span className="text-sm md:text-xs text-wrap"><b>Condición de neumáticos:</b> {vehicleData?.tireCondition}%</span>
+
+                </div>
+
+              </Card>
+            </Card>
+
           </div>
 
 
           {/* vehicle details */}
-          <div className="w-full md:w-2/3">
+          <div className="w-full md:w-2/3 2xl:md:w-3/6">
             {/* title, price and description */}
             <div className="flex flex-col gap-4">
-              <h4 className="text-2xl font-semibold md:text-3xl">
-                {vehicleData?.name}
-              </h4>
 
-              {/* vehicle data */}
-              <div className="flex flex-wrap mt-2 gap-y-4 gap-x-8 md:mt-0">
-                <div className="flex items-center gap-2 w-fit h-fit">
-                  <IoSpeedometerOutline size={25} />
-                  <span className="text-sm font-medium">
-                    {vehicleData?.kilometers} km
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 w-fit h-fit">
-                  <MdOutlineCalendarMonth size={25} />
-                  <span className="text-sm font-medium">
-                    {vehicleData?.year}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 w-fit h-fit">
-                  <GiGearStickPattern size={25} />
-                  {vehicleData?.gearbox === "AUTOMATIC" && (
-                    <span className="text-sm font-medium">Automático</span>
-                  )}
-                  {vehicleData?.gearbox === "MANUAL" && (
-                    <span className="text-sm font-medium">Manual</span>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 w-fit h-fit">
-                  <PiGasPump size={25} />
+              <Separator className='block md:hidden'></Separator>
+              <div className='flex flex-col gap-4 p-0 md:hidden md:gap-3 2xl:gap-5 '>
 
-                  {vehicleData?.gas === "NAFTA" && (
-                    <span className="text-sm font-medium">Nafta</span>
-                  )}
-                  {vehicleData?.gas === "GNC" && (
-                    <span className="text-sm font-medium">GNC</span>
-                  )}
-                  {vehicleData?.gas === "DIESEL" && (
-                    <span className="text-sm font-medium">Diésel</span>
-                  )}
+                <div className='flex flex-col gap-0'>
+                  <span className='text-sm font-semibold text-orange-600'>Hatchback</span>
+                  <h4 className="text-xl font-semibold md:text-2xl 2xl:text-3xl">
+                    {vehicleData?.name}
+                  </h4>
                 </div>
-                <div className="flex items-center gap-2 w-fit h-fit">
-                  <PiEngineBold size={25} />
-                  <span className="text-sm font-medium">
-                    {vehicleData?.motor}
-                  </span>
+
+                {/* vehicle data */}
+                <div className="flex flex-wrap mt-2 gap-y-4 gap-x-8 md:mt-0">
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <IoSpeedometerOutline size={25} />
+                    <span className="text-sm font-medium">
+                      {vehicleData?.kilometers} km
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <MdOutlineCalendarMonth size={25} />
+                    <span className="text-sm font-medium">
+                      {vehicleData?.year}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <GiGearStickPattern size={25} />
+                    {vehicleData?.gearbox === "AUTOMATIC" && (
+                      <span className="text-sm font-medium">Automático</span>
+                    )}
+                    {vehicleData?.gearbox === "MANUAL" && (
+                      <span className="text-sm font-medium">Manual</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <PiGasPump size={25} />
+
+                    {vehicleData?.gas === "NAFTA" && (
+                      <span className="text-sm font-medium">Nafta</span>
+                    )}
+                    {vehicleData?.gas === "GNC" && (
+                      <span className="text-sm font-medium">GNC</span>
+                    )}
+                    {vehicleData?.gas === "DIESEL" && (
+                      <span className="text-sm font-medium">Diésel</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <PiEngineBold size={25} />
+                    <span className="text-sm font-medium">
+                      {vehicleData?.motor}
+                    </span>
+                  </div>
                 </div>
+
+                <span className="my-2 text-2xl font-semibold md:mb-2">
+                  {vehicleData?.currency} ${vehicleData?.price}{" "}
+                </span>
+                <Link className=" w-fit h-fit md:mx-0" href={'https://wa.me/5493424216075'}>
+                  <Button
+                    variant={"default"}
+                    className="w-full mb-1 text-sm"
+                    style={{ backgroundColor: '#ea580c' }}
+                  >
+                    Consultar por la unidad
+                  </Button>
+                </Link>
               </div>
 
-              <span className="my-3 text-2xl font-semibold md:mb-2">
-                {vehicleData?.currency} ${vehicleData?.price}{" "}
-              </span>
+              <Card className='flex-col hidden gap-5 p-4 md:flex md:gap-3 2xl:gap-5 '>
+                <div className='flex flex-col gap-0'>
+                  <span className="text-sm font-semibold text-orange-600">
+                    {vehicleData?.type === "CAR" && "Automóvil"}
+                    {vehicleData?.type === "BIKE" && "Motocicleta"}
+                    {vehicleData?.type === "PICKUP" && "Pickup"}
+                    {vehicleData?.type === "UTILITARY" && "Utilitario"}
+                    {vehicleData?.type === "SUV" && "SUV"}
+                    {vehicleData?.type === "VAN" && "Van"}
+                    {vehicleData?.type === "COUPE" && "Coupe"}
+                    {vehicleData?.type === "HATCHBACK" && "Hatchback"}
+                    {vehicleData?.type === "CONVERTIBLE" && "Convertible"}
+                  </span>
+                  <h4 className="text-xl font-semibold md:text-2xl 2xl:text-3xl">
+                    {vehicleData?.name}
+                  </h4>
+                </div>
+
+                {/* vehicle data */}
+                <div className="flex flex-wrap mt-2 gap-y-4 gap-x-8 md:mt-0">
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <IoSpeedometerOutline size={25} />
+                    <span className="text-sm font-medium">
+                      {vehicleData?.kilometers} km
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <MdOutlineCalendarMonth size={25} />
+                    <span className="text-sm font-medium">
+                      {vehicleData?.year}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <GiGearStickPattern size={25} />
+                    {vehicleData?.gearbox === "AUTOMATIC" && (
+                      <span className="text-sm font-medium">Automático</span>
+                    )}
+                    {vehicleData?.gearbox === "MANUAL" && (
+                      <span className="text-sm font-medium">Manual</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <PiGasPump size={25} />
+
+                    {vehicleData?.gas === "NAFTA" && (
+                      <span className="text-sm font-medium">Nafta</span>
+                    )}
+                    {vehicleData?.gas === "GNC" && (
+                      <span className="text-sm font-medium">GNC</span>
+                    )}
+                    {vehicleData?.gas === "DIESEL" && (
+                      <span className="text-sm font-medium">Diésel</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 w-fit h-fit">
+                    <PiEngineBold size={25} />
+                    <span className="text-sm font-medium">
+                      {vehicleData?.motor}
+                    </span>
+                  </div>
+                </div>
+
+                <span className="my-2 text-2xl font-semibold md:mb-2">
+                  {vehicleData?.currency} ${vehicleData?.price}{" "}
+                </span>
+                <Link className=" w-fit h-fit md:mx-0" href={'https://wa.me/5493424216075'}>
+                  <Button
+                    variant={"default"}
+                    className="w-full mb-1 text-sm"
+                    style={{ backgroundColor: '#ea580c' }}
+                  >
+                    Consultar por la unidad
+                  </Button>
+                </Link>
+              </Card>
+
+
+              <Card className="flex flex-col gap-2 px-4 py-3 mt-4 md:mt-0 ">
+                <span className='font-semibold text-md 2xl:text-lg'>Descripción del vehículo</span>
+                <Separator className='mb-1 bg-orange-600'></Separator>
+                {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
+
+                <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
+                  <pre
+                    style={{ font: "inherit", textWrap: "wrap", fontSize: '14px' }}
+                    className="w-full mb-1 text-gray-500 h-fit "
+                  >
+                    {vehicleData?.description}
+                  </pre>
+                </div>
+
+              </Card>
+
+              <Card className="flex flex-col gap-2 px-4 py-3 mt-0 md:hidden ">
+                <span className='font-semibold text-md 2xl:text-lg'>Caracteristicas del vehículo</span>
+                <Separator className='mb-1 bg-orange-600'></Separator>
+                {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
+                <div className='flex flex-col gap-3 py-1 md:flex-row'>
+
+
+                  <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
+                    <span className="text-sm md:text-xs text-wrap"><b>Marca:</b> {vehicleData?.brand} </span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Puertas:</b> {vehicleData?.doors?.replace("P", "")}</span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Último service:</b> {vehicleData?.lastestService} km</span>
+                    {vehicleData?.hasVTV === true ? <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b> Si</span> :
+                      <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b>No</span>
+
+                    }
+                    <span className="text-sm md:text-xs text-wrap"><b>Fecha de batería:</b> {vehicleData?.battery}</span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Cantidad de dueños:</b> {vehicleData?.ownerNumber}</span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Detalles de pintura:</b> {vehicleData?.paintDetails}</span>
+
+                  </div>
+                  <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
+                    <span className="text-sm md:text-xs text-wrap"><b>Modelo:</b> {vehicleData?.modelName}</span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Condición general:</b> {vehicleData?.generalCondition}</span>
+                    {vehicleData?.gearbox === "AUTOMATIC" && (
+                      <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Automática</span>
+                    )}
+                    {vehicleData?.gearbox === "MANUAL" && (
+                      <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Manual</span>
+                    )}
+                    <span className="text-sm md:text-xs text-wrap"><b>Tracción:</b> {vehicleData?.drive}</span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Vencimiento de VTV:</b> {vehicleData?.VTVExpDate}</span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt} km</span>
+                    <span className="text-sm md:text-xs text-wrap"><b>Condición de neumáticos:</b> {vehicleData?.tireCondition}%</span>
+
+                  </div>
+
+                </div>
+              </Card>
 
               {/* <div className="w-full h-fit rounded-xl ">
                 <AccordionDescription
@@ -297,7 +488,7 @@ const VehicleCont = () => {
                 />
               </div> */}
 
-              <div className="h-fit">
+              {/* <div className="h-fit">
                 <Tabs defaultValue="description">
                   <TabsList>
                     <TabsTrigger value="description">Descripción</TabsTrigger>
@@ -305,7 +496,7 @@ const VehicleCont = () => {
                   </TabsList>
                   <TabsContent value="description">
                     <Card className="px-4 py-1">
-                      {/* <CardTitle>Account</CardTitle> */}
+                      <CardTitle>Account</CardTitle> 
                       <pre
                         style={{ font: "inherit", textWrap: "wrap", fontSize: '14px' }}
                         className="w-full my-2 text-gray-500 h-fit md:my-2"
@@ -348,7 +539,7 @@ const VehicleCont = () => {
                     </Card>
                   </TabsContent>
                 </Tabs>
-              </div>
+              </div> */}
 
               {/* <div className="w-full mt-4 h-fit">
                 <pre
@@ -374,25 +565,18 @@ const VehicleCont = () => {
                 </div> */}
 
               </div>
-              <Link className="mx-auto w-fit h-fit md:mx-0" href={'https://wa.me/5493424216075'}>
-                <Button
-                  variant={"default"}
-                  className="w-full text-sm"
-                  style={{ backgroundColor: '#ea580c' }}
-                >
-                  Consultar por la unidad
-                </Button>
-              </Link>
+
             </div>
           </div>
         </div>
 
 
+        <Separator className='mt-10 mb-12 md:mt-14 md:mb-10'></Separator>
       </div>
 
 
-      <Dialog  open={isOpen} onOpenChange={setIsOpen} >
-        <DialogContent onClick={() => setIsOpen(false)} className="w-full min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[750px] 2xl:min-w-[820px] p-0 text-transparent bg-transparent border-none shadow-none h-fit">
+      <Dialog open={isOpen} onOpenChange={setIsOpen} >
+        <DialogContent className="w-full min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[750px] 2xl:min-w-[820px] p-0 text-transparent bg-transparent border-none shadow-none h-fit">
 
           {/* carousel */}
           {/* <Image src={car} alt="" className="w-full" width={500} height={500} /> */}
@@ -400,7 +584,7 @@ const VehicleCont = () => {
 
           <Carousel
             setApi={setApi}
-            className="relative w-full h-full max-w-full overflow-hidden rounded-lg aspect-square"
+            className="relative w-full h-full max-w-full rounded-lg aspect-square"
             //onMouseEnter={plugin.current.stop}
             //plugins={[plugin.current as any]}
             opts={{
@@ -447,7 +631,8 @@ const VehicleCont = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-
+            <CarouselPrevious />
+            <CarouselNext />
           </Carousel>
 
           {/* Custom Indicators */}

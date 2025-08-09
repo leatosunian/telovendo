@@ -60,7 +60,7 @@ const RelatedVehicles = ({ vehicles }: Props) => {
 
   return (
     <>
-      <section className="flex flex-col justify-center w-full gap-5 py-20 md:py-44 align-middle md:gap-8">
+      <section className="flex flex-col justify-center w-full gap-5 pb-20 align-middle md:pb-28 md:gap-8">
         <motion.header
           initial={{ opacity: 0, y: -70 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,10 +69,10 @@ const RelatedVehicles = ({ vehicles }: Props) => {
           className="flex flex-col items-start justify-center w-full px-6 sm:items-center"
         >
           <div className="flex flex-col ">
-            <span className="text-sm font-bold text-orange-600 upper sm:text-base">
+            <span className="text-sm font-bold text-orange-600 2xl:text-base ">
               Vehículos relacionados
             </span>
-            <h4 className="text-xl font-bold sm:text-2xl">
+            <h4 className="text-xl font-bold md:text-xl 2xl:text-2xl">
               Unidades que podrían interesarte
             </h4>
           </div>
@@ -157,7 +157,7 @@ const RelatedVehicles = ({ vehicles }: Props) => {
             <Button onClick={() => api?.scrollTo(current + 1)}>+</Button>
           </div> */}
           {/* Custom Indicators */}
-          <div className="flex justify-center mt-6 space-x-2 md:mt-10">
+          <div className="flex justify-center mt-5 space-x-2 md:mt-10">
             {latestVehicles.map((dot, index) => (
               <button
                 key={dot.uuid}
@@ -167,7 +167,7 @@ const RelatedVehicles = ({ vehicles }: Props) => {
             ))}
           </div>
         </div>
-        <div className="flex justify-center w-fit mx-auto mt-4 h-fit">
+        <div className="flex justify-center mx-auto mt-4 w-fit h-fit">
           <Button
             variant={"default"}
             className="w-full text-sm"
