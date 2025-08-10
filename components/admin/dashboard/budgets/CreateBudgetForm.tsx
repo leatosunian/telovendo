@@ -126,6 +126,8 @@ const CreateBudgetForm = () => {
   const [intInVehicleBonifsSubtotal, setIntInVehicleBonifsSubtotal] =
     useState<number>(1);
   const [total, setTotal] = useState<number>(0);
+  const [infoAutosValue, setInfoAutosValue] = useState<number>();
+  const [MLValue, setMLValue] = useState<number>();
 
   // get lead, leadVehicles and intInVehicle
   async function getLead() {
@@ -366,6 +368,13 @@ const CreateBudgetForm = () => {
   }
 
   useEffect(() => {
+    console.log('MLValue', MLValue);
+    console.log('infoautos', infoAutosValue);
+    
+  }, [MLValue, infoAutosValue])
+  
+
+  useEffect(() => {
     calcTotal();
   }, [
     intInVehicleBonifsSubtotal,
@@ -539,7 +548,7 @@ const CreateBudgetForm = () => {
               {intInVehicle && (<>
                 <div className="w-full">
                   <span className="text-xl font-semibold">
-                    2. Vehiculo de interés
+                    Vehiculo de interés
                   </span>
                   <div className="flex items-center justify-center gap-5 mt-8 sm:items-start">
                     <div className="flex flex-col w-full h-full lg:flex-row ">
@@ -770,61 +779,65 @@ const CreateBudgetForm = () => {
                   </Link>
                 )}
                 {leadVehicles?.leadName !== "" && (
-                  <div className="flex flex-col items-center justify-center gap-5 mt-8 sm:items-start">
-                    <div className="flex flex-col w-full h-full max-w-full md:flex-row ">
-                      <Card className="lex flex-col h-full max-w-full sm:max-w-[270px] shadow-lg">
-                        <Image
-                          src={leadVehicles?.leadVehicleImage!}
-                          alt=""
-                          unoptimized
-                          width={500}
-                          height={500}
-                          className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
-                        />
-                        <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
-                          <CardHeader style={{ padding: "0 16px 10px 16px" }}>
-                            <CardTitle className="text-base textCut">
-                              {/* {car.name} */}
-                              {leadVehicles?.leadName}
-                            </CardTitle>
-                            <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
-                              <div className="flex items-center gap-2">
-                                {/* <FaRegCalendar /> <span>{car.year}</span> */}
-                                <FaRegCalendar />{" "}
-                                <span> {leadVehicles?.leadYear}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <IoSpeedometerOutline size={20} />
-                                {/* <span> {car.kilometers} km</span> */}
-                                <span> {leadVehicles?.leadKilometers} km</span>
-                              </div>
-                            </CardDescription>
-                            <span className="text-lg font-semibold">
-                              {leadVehicles?.leadCurrency} $
-                              {Number(leadVehicles?.leadPrice).toLocaleString()}
-                            </span>
-                          </CardHeader>
-                          <CardFooter className="w-full p-4">
-                            <Link
-                              className="w-full h-full"
-                              href={
-                                "/admin/dashboard/leads/edit/" +
-                                selectedLead?._id
-                              }
-                            >
-                              <Button
-                                //onClick={() => setSelectedIntIn(car)}
-                                variant={"default"}
-                                className="w-full mt-2 md:mt-0"
-                              >
-                                Editar vehículo
-                              </Button>
-                            </Link>
-                          </CardFooter>
-                        </div>
-                      </Card>
+                  <>
+                    <div className="flex w-full mt-6 h-fit ">
 
-                      {/* <Separator
+
+                      <div className="flex flex-col items-center justify-center gap-5 sm:items-start">
+                        <div className="flex flex-col w-full h-full max-w-full md:flex-row ">
+                          <Card className="lex flex-col h-full max-w-full sm:max-w-[270px] shadow-lg">
+                            <Image
+                              src={leadVehicles?.leadVehicleImage!}
+                              alt=""
+                              unoptimized
+                              width={500}
+                              height={500}
+                              className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
+                            />
+                            <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
+                              <CardHeader style={{ padding: "0 16px 10px 16px" }}>
+                                <CardTitle className="text-base textCut">
+                                  {/* {car.name} */}
+                                  {leadVehicles?.leadName}
+                                </CardTitle>
+                                <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
+                                  <div className="flex items-center gap-2">
+                                    {/* <FaRegCalendar /> <span>{car.year}</span> */}
+                                    <FaRegCalendar />{" "}
+                                    <span> {leadVehicles?.leadYear}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <IoSpeedometerOutline size={20} />
+                                    {/* <span> {car.kilometers} km</span> */}
+                                    <span> {leadVehicles?.leadKilometers} km</span>
+                                  </div>
+                                </CardDescription>
+                                <span className="text-lg font-semibold">
+                                  {leadVehicles?.leadCurrency} $
+                                  {Number(leadVehicles?.leadPrice).toLocaleString()}
+                                </span>
+                              </CardHeader>
+                              <CardFooter className="w-full p-4">
+                                <Link
+                                  className="w-full h-full"
+                                  href={
+                                    "/admin/dashboard/leads/edit/" +
+                                    selectedLead?._id
+                                  }
+                                >
+                                  <Button
+                                    //onClick={() => setSelectedIntIn(car)}
+                                    variant={"default"}
+                                    className="w-full mt-2 md:mt-0"
+                                  >
+                                    Editar vehículo
+                                  </Button>
+                                </Link>
+                              </CardFooter>
+                            </div>
+                          </Card>
+
+                          {/* <Separator
                         className="mx-10 h-[300px] my-auto hidden md:block"
                         orientation="vertical"
                       />
@@ -874,8 +887,50 @@ const CreateBudgetForm = () => {
                           Añadir bonificación
                         </Button>
                       </div> */}
+                        </div>
+                      </div>
+                      <Separator className="mx-5" orientation="vertical"></Separator>
+
+                      <div className="flex flex-col ">
+                        <div className="grid mb-3 md:mb-0 w-full h-fit max-w-sm items-center gap-1.5">
+                          <Label className="mb-2">Valor en InfoAutos</Label>
+
+
+                          <Input
+                            onWheel={(e) => e.currentTarget.blur()}
+                            onChange={(value) => {
+                              setMLValue(
+                                parseInt(value.target.value)
+                              );
+                            }}
+                            type="number"
+                            id="infoAutosValue"
+                            placeholder="Ingresá un valor"
+                          />
+                        </div>
+                        <Separator
+                          className="my-5 "
+                          orientation="horizontal"
+                        />
+                        <div className="grid mb-3 md:mb-0 w-full h-fit max-w-sm items-center gap-1.5">
+                          <Label className="mb-2">Valor en Mercado Libre</Label>
+
+
+                          <Input
+                            onWheel={(e) => e.currentTarget.blur()}
+                            onChange={(value) => {
+                              setInfoAutosValue(
+                                parseInt(value.target.value)
+                              );
+                            }}
+                            type="number"
+                            id="MLValue"
+                            placeholder="Ingresá un valor"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </>
                 )}
               </div>
               {/* Vehiculo del lead */}
@@ -1013,6 +1068,8 @@ const CreateBudgetForm = () => {
                 lead={selectedLead}
                 currency={currency}
                 transfer={transfer}
+                infoAutosValue={infoAutosValue}
+                MLValue={MLValue}
                 total={total}
               />
               {/* <Button className="w-full gap-2 md:w-fit">

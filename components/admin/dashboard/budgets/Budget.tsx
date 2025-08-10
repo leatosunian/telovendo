@@ -26,6 +26,8 @@ interface props {
   intInVehicleBonifsSubtotal: number;
   leadVehicles: ILeadVehicle | undefined;
   total: number;
+  infoAutosValue: number | undefined;
+  MLValue: number | undefined;
   currency: string;
   transfer: number;
   lead: ILead | undefined;
@@ -40,6 +42,8 @@ const Budget = ({
   transfer,
   currency,
   lead,
+  infoAutosValue,
+  MLValue
 }: props) => {
   const budgetRef = useRef<HTMLDivElement>(null);
   const [budgetNumber, setBudgetNumber] = useState<number>(0);
@@ -54,6 +58,13 @@ const Budget = ({
   useEffect(() => {
     setBudgetNumber(createRandomFiveDigits());
   }, []);
+
+  useEffect(() => {
+    console.log('MLValue', MLValue);
+    console.log('infoautos', infoAutosValue);
+
+  }, [MLValue, infoAutosValue])
+
 
   async function generatePDF() {
 
@@ -158,7 +169,7 @@ const Budget = ({
     <>
       <div
         ref={budgetRef}
-        className={`${styles.page}   sr-only   overflow-hidden px-8 text-black`}
+        className={`${styles.page}    overflow-hidden px-8 text-black`}
       >
         {/* header */}
         <div className="flex items-center justify-between text-black h-28">
@@ -280,47 +291,51 @@ const Budget = ({
 
           </Card>
         </div>
-
+        <Separator
+          className="px-5 mx-auto my-3 "
+          style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+          orientation="horizontal"
+        />
         {/* vehicles and budget details */}
-        <div className="flex w-full h-full gap-8 mt-3">
+        <div className="flex flex-col w-full h-full gap-0 mt-3">
           {/* vehicles' details */}
 
 
-          <div className="flex flex-col w-1/2 gap-5 h-fit">
+          <div className="flex flex-col w-full gap-3 h-fit">
             {intInVehicle && (
 
               <Card
                 style={{ borderColor: "rgb(228, 228, 231)" }}
-                className="flex w-full h-full p-5 bg-white border-border"
+                className="flex w-full h-full px-5 py-3 bg-white border-border"
               >
                 <div className="flex flex-col w-full gap-0">
                   <span
-                    style={{ fontSize: "15px" }}
+                    style={{ fontSize: "16px" }}
                     className="font-semibold text-black "
                   >
                     Vehículo a comprar
                   </span>
 
                   <Separator
-                    className="px-5 mx-auto my-4 "
+                    className="px-5 mx-auto my-3 "
                     style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                     orientation="horizontal"
                   />
-                  <div className="flex flex-col ">
-                    <div className="flex flex-col text-black">
+                  <div className="flex flex-row flex-wrap gap-y-3 ">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Vehículo</span>
                       <span className="text-xs text-gray-400">
                         {intInVehicle?.name}
                       </span>
                     </div>
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
+                    /> */}
 
-                    <div className="flex flex-col text-black">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">
                         Tipo de vehículo
                       </span>
@@ -339,13 +354,13 @@ const Budget = ({
                       </span>
                     </div>
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
+                    /> */}
 
-                    <div className="flex flex-col text-black">
+                    <div className="flex flex-col w-1/2 text-black ">
                       <span className="text-xs font-semibold ">
                         Año de fabricación
                       </span>
@@ -354,39 +369,39 @@ const Budget = ({
                       </span>
                     </div>
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
+                    /> */}
 
-                    <div className="flex flex-col text-black">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Kilometraje</span>
                       <span className="text-xs text-gray-400">
-                        {intInVehicle?.kilometers}
+                        {intInVehicle?.kilometers.toLocaleString()} km
                       </span>
                     </div>
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
-
-                    <div className="flex flex-col text-black">
+                    /> */}
+                    {/* 
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Motorizacíon</span>
                       <span className="text-xs text-gray-400">
                         {intInVehicle?.motor}
                       </span>
-                    </div>
+                    </div> */}
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
+                    /> */}
 
-                    <div className="flex flex-col text-black">
+                    {/* <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">
                         Cantidad de puertas
                       </span>
@@ -396,15 +411,15 @@ const Budget = ({
                         {intInVehicle?.doors === "4P" && "4 puertas"}
                         {intInVehicle?.doors === "5P" && "5 puertas"}
                       </span>
-                    </div>
+                    </div> */}
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
+                    /> */}
 
-                    <div className="flex flex-col text-black">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Combustible</span>
                       <span className="text-xs text-gray-400 ">
                         {intInVehicle?.gas === "DIESEL" && "Diésel"}
@@ -413,13 +428,13 @@ const Budget = ({
                       </span>
                     </div>
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
+                    /> */}
 
-                    <div className="flex flex-col text-black">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Transmisión</span>
                       <span className="text-xs text-gray-400">
                         {intInVehicle?.gearbox === "AUTOMATIC" && "Automática"}
@@ -433,36 +448,36 @@ const Budget = ({
             {leadVehicles?.leadName !== "" && (
               <Card
                 style={{ borderColor: "rgb(228, 228, 231)" }}
-                className="flex w-full h-full p-5 bg-white border-border"
+                className="flex w-full h-full px-5 py-3 bg-white border-border"
               >
-                <div className="flex flex-col w-full gap-0">
+                <div className="flex flex-col w-full ">
                   <span
-                    style={{ fontSize: "15px" }}
+                    style={{ fontSize: "16px" }}
                     className="font-semibold text-black "
                   >
                     Vehículo usado
                   </span>
 
                   <Separator
-                    className="px-5 mx-auto my-4 "
+                    className="px-5 mx-auto my-3 "
                     style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                     orientation="horizontal"
                   />
-                  <div className="flex flex-col ">
-                    <div className="flex flex-col text-black">
+                  <div className="flex flex-wrap gap-y-3 ">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Vehículo</span>
                       <span className="text-xs text-gray-400">
                         {leadVehicles?.leadName}
                       </span>
                     </div>
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
+                    /> */}
 
-                    <div className="flex flex-col text-black">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">
                         Año de fabricación
                       </span>
@@ -471,54 +486,78 @@ const Budget = ({
                       </span>
                     </div>
 
-                    <Separator
+                    {/* <Separator
                       className="px-5 mx-auto my-2 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
-                    />
-                    <div className="flex flex-col text-black">
+                    /> */}
+                    <div className="flex flex-col w-1/2 gap-1 text-black">
                       <span className="text-xs font-semibold ">
                         Kilometraje
                       </span>
                       <span className="text-xs text-gray-400">
-                        {leadVehicles?.leadKilometers}
+                        {Number(leadVehicles?.leadKilometers).toLocaleString()} km
                       </span>
 
-                      <Separator
+                      {/* <Separator
                         className="px-5 mx-auto my-2 "
                         style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                         orientation="horizontal"
-                      />
-                      <div className="flex flex-col text-black">
-                        <span className="text-xs font-semibold ">
-                          Motorizacíon
-                        </span>
-                        <span className="text-xs text-gray-400">
-                          {leadVehicles?.leadMotor}
-                        </span>
-                      </div>
+                      /> */}
+                    </div>
+                    <div className="flex flex-col w-1/2 text-black">
+                      <span className="text-xs font-semibold ">
+                        Motorizacíon
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        {leadVehicles?.leadMotor}
+                      </span>
                     </div>
                   </div>
+
+                  {(MLValue || infoAutosValue) && (<>
+                    <Separator
+                      className="px-5 mx-auto my-3 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    />
+                    <div className="flex w-full text-xs text-black h-fit">
+                      {(!Number.isNaN(infoAutosValue) && infoAutosValue !== undefined) && (
+                        <div className="w-1/2">
+                          <span className="font-semibold">Valor en InfoAutos: {" "} </span> <span className="font-semibold text-gray-600">ARS ${Number(infoAutosValue).toLocaleString()} </span>
+                        </div>
+                      )}
+                      {(!Number.isNaN(MLValue) && MLValue !== undefined) && (
+                        <div className="w-1/2">
+                          <span className="font-semibold">Valor promedio en Mercado Libre: {" "} </span> <span className="font-semibold text-gray-600">ARS ${Number(MLValue).toLocaleString()}</span>
+                        </div>
+                      )}
+                    </div>
+                  </>)}
                 </div>
               </Card>
             )}
           </div>
-
+          <Separator
+            className="px-5 mx-auto my-3 "
+            style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+            orientation="horizontal"
+          />
           {/* resumen de presupuesto */}
           <Card
             style={{ borderColor: "rgb(228, 228, 231)" }}
-            className="w-1/2 p-5 bg-white h-fit"
+            className="w-full px-5 py-3 bg-white h-fit"
           >
             <div className="flex flex-col gap-0 text-black bg-white">
               <span
-                style={{ fontSize: "15px" }}
-                className="font-semibold text-black"
+                style={{ fontSize: "16px" }}
+                className="font-semibold text-black "
               >
                 Resumen
               </span>
 
               <Separator
-                className="my-4 "
+                className="my-3 "
                 style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                 orientation="horizontal"
               />
@@ -526,7 +565,7 @@ const Budget = ({
                 {intInVehicle && (
                   <>
                     {/* precio del vehiculo */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1">
                       <div className="flex items-start justify-between w-full">
                         <span className="text-xs font-semibold">
                           Precio del vehículo
@@ -541,7 +580,7 @@ const Budget = ({
                       </span>
                     </div>
                     <Separator
-                      className="my-5 "
+                      className="my-3 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
                     />
@@ -549,7 +588,7 @@ const Budget = ({
                     {intInVehicleBonifs.length > 0 && (<>
 
                       {/* bonificaciones */}
-                      <div className="flex flex-col mt-5">
+                      <div className="flex flex-col mt-3">
                         <span className="mb-3 text-xs font-semibold ">
                           Bonificaciones
                         </span>
@@ -591,7 +630,7 @@ const Budget = ({
                         </div>
                       </div>
                       <Separator
-                        className="my-5 "
+                        className="my-3 "
                         style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                         orientation="horizontal"
                       />
@@ -604,7 +643,7 @@ const Budget = ({
                 {/* entrega de usado */}
                 {leadVehicles?.leadName !== "" && (
                   <>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1">
                       <div className="flex items-start justify-between w-full">
                         <span className="text-xs font-semibold">
                           Entrega de vehículo
@@ -619,7 +658,7 @@ const Budget = ({
                       </span>
                     </div>
                     <Separator
-                      className="my-5 "
+                      className="my-3 "
                       style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                       orientation="horizontal"
                     />
@@ -641,7 +680,7 @@ const Budget = ({
                 {/* costos de transferencia */}
 
                 <Separator
-                  className="my-5 "
+                  className="my-3 "
                   style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                   orientation="horizontal"
                 />
