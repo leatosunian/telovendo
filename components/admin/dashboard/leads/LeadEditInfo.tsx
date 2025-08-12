@@ -822,7 +822,7 @@ const LeadEditForm = () => {
                             console.log(file);
                             if (file) {
                               setIntInImage(file);
-                              //setExistentIntInImage(""); // Esto puede causar re-render
+                              setExistentIntInImage(""); // Esto puede causar re-render
                               uploadImage(file);
                             }
                             e.target.value = ""; // Limpia el valor del input para evitar conflictos
@@ -838,7 +838,7 @@ const LeadEditForm = () => {
                               <Button
                                 variant="outline"
                                 className="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50"
-                                onClick={handleFileInputRefClick}
+                                //onClick={handleFileInputRefClick}
                                 type="button"
                               >
                                 <Camera className="w-12 h-12 mb-4 text-muted-foreground" />
