@@ -370,9 +370,9 @@ const CreateBudgetForm = () => {
   useEffect(() => {
     console.log('MLValue', MLValue);
     console.log('infoautos', infoAutosValue);
-    
+
   }, [MLValue, infoAutosValue])
-  
+
 
   useEffect(() => {
     calcTotal();
@@ -562,7 +562,7 @@ const CreateBudgetForm = () => {
                           height={500}
                           className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
                         />
-                        <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
+                        <div className="flex flex-col justify-between w-full h-fit ">
                           <CardHeader style={{ padding: "0 16px 10px 16px" }}>
                             <CardTitle className="text-base textCut">
                               {/* {car.name} */}
@@ -780,12 +780,12 @@ const CreateBudgetForm = () => {
                 )}
                 {leadVehicles?.leadName !== "" && (
                   <>
-                    <div className="flex w-full mt-6 h-fit ">
+                    <div className="flex flex-col w-full gap-5 mt-6 md:flex-row h-fit md:gap-0">
 
 
                       <div className="flex flex-col items-center justify-center gap-5 sm:items-start">
                         <div className="flex flex-col w-full h-full max-w-full md:flex-row ">
-                          <Card className="lex flex-col h-full max-w-full sm:max-w-[270px] shadow-lg">
+                          <Card className="lex flex-col h-fit max-w-full sm:max-w-[270px] shadow-lg">
                             <Image
                               src={leadVehicles?.leadVehicleImage!}
                               alt=""
@@ -794,7 +794,7 @@ const CreateBudgetForm = () => {
                               height={500}
                               className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
                             />
-                            <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
+                            <div className="flex flex-col justify-between w-full h-fit ">
                               <CardHeader style={{ padding: "0 16px 10px 16px" }}>
                                 <CardTitle className="text-base textCut">
                                   {/* {car.name} */}
@@ -828,7 +828,7 @@ const CreateBudgetForm = () => {
                                   <Button
                                     //onClick={() => setSelectedIntIn(car)}
                                     variant={"default"}
-                                    className="w-full mt-2 md:mt-0"
+                                    className="w-full mt-5 md:mt-5"
                                   >
                                     Editar vehículo
                                   </Button>
@@ -1044,18 +1044,63 @@ const CreateBudgetForm = () => {
                   {/* costos de transferencia */}
                 </>
               )}
-              <Separator className="my-5 " orientation="horizontal" />
+
+              {(!intInVehicle && leadVehicles?.leadName) && (
+                <>
+                  {/* <Separator className="my-5 " orientation="horizontal" />
+
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold">
+                      Valor de venta
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {currency} ${Number(leadVehicles.leadPrice).toLocaleString()}
+                    </span>
+                  </div> */}
+
+                  <Separator className="my-5 " orientation="horizontal" />
+
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold">
+                      Comisión (4%)
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {currency} ${(Number(leadVehicles.leadPrice) * 0.04).toLocaleString()}
+                    </span>
+                  </div>
+
+                  <Separator className="my-5 " orientation="horizontal" />
+
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold">
+                      Ganancia neta
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {currency} $
+                      {(Number(leadVehicles.leadPrice) - (Number(leadVehicles.leadPrice) * 0.04)).toLocaleString()}
+                    </span>
+                  </div>
+                </>
+              )}
+
+
 
               {/* total a pagar */}
-              <div className="flex items-start justify-between w-full">
-                <span className="text-sm font-semibold">Total a pagar</span>
-                <span className="text-sm font-semibold underline">
-                  {currency} $
-                  {intInVehicle
-                    ? Number(total.toFixed(2)).toLocaleString()
-                    : Number(leadVehicles?.leadPrice ?? 0).toLocaleString()}
-                </span>
-              </div>
+              {(intInVehicle ) && (<>
+                <Separator className="my-5 " orientation="horizontal" />
+                <div className="flex items-start justify-between w-full">
+                  <span className="text-sm font-semibold">Total a pagar</span>
+                  <span className="text-sm font-semibold underline">
+                    {currency} $
+                    {intInVehicle
+                      ? Number(total.toFixed(2)).toLocaleString()
+                      : Number(leadVehicles?.leadPrice ?? 0).toLocaleString()}
+                  </span>
+                </div>
+              </>)}
+
+
+
               {/* total a pagar */}
             </Card>
 

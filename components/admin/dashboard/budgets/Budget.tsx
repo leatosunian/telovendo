@@ -169,7 +169,7 @@ const Budget = ({
     <>
       <div
         ref={budgetRef}
-        className={`${styles.page}    overflow-hidden px-8 text-black`}
+        className={`${styles.page}  sr-only  overflow-hidden px-8 text-black`}
       >
         {/* header */}
         <div className="flex items-center justify-between text-black h-28">
@@ -524,12 +524,12 @@ const Budget = ({
                     <div className="flex w-full text-xs text-black h-fit">
                       {(!Number.isNaN(infoAutosValue) && infoAutosValue !== undefined) && (
                         <div className="w-1/2">
-                          <span className="font-semibold">Valor en InfoAutos: {" "} </span> <span className="font-semibold text-gray-600">ARS ${Number(infoAutosValue).toLocaleString()} </span>
+                          <span className="font-semibold">Valor en InfoAutos: {" "} </span> <span className="font-semibold underline">ARS ${Number(infoAutosValue).toLocaleString()} </span>
                         </div>
                       )}
                       {(!Number.isNaN(MLValue) && MLValue !== undefined) && (
                         <div className="w-1/2">
-                          <span className="font-semibold">Valor promedio en Mercado Libre: {" "} </span> <span className="font-semibold text-gray-600">ARS ${Number(MLValue).toLocaleString()}</span>
+                          <span className="font-semibold">Valor promedio en Mercado Libre: {" "} </span> <span className="font-semibold underline">ARS ${Number(MLValue).toLocaleString()}</span>
                         </div>
                       )}
                     </div>
@@ -668,36 +668,86 @@ const Budget = ({
 
 
                 {/* costos de transferencia */}
-                <div className="flex items-start justify-between w-full">
-                  <span className="text-xs font-semibold">
-                    Costos de transferencia
-                  </span>
-                  <span className="text-xs font-semibold">
-                    {currency} ${Number(transfer.toFixed(2)).toLocaleString()}
-
-                  </span>
-                </div>
+                {(intInVehicle && (<>
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-xs font-semibold">
+                      Costos de transferencia
+                    </span>
+                    <span className="text-xs font-semibold">
+                      {currency} ${Number(transfer.toFixed(2)).toLocaleString()}
+                    </span>
+                  </div>
+                </>))}
                 {/* costos de transferencia */}
 
-                <Separator
-                  className="my-3 "
-                  style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                  orientation="horizontal"
-                />
 
                 {/* total a pagar */}
-                <div className="flex items-start justify-between w-full">
-                  <span className="text-sm font-semibold underline">
-                    Total a pagar
-                  </span>
-                  <span className="text-sm font-semibold underline">
-                    {currency} $
-                    {intInVehicle
-                      ? Number(total.toFixed(2)).toLocaleString()
-                      : Number(leadVehicles?.leadPrice ?? 0).toLocaleString()}
-                  </span>
-                </div>
+                {(intInVehicle ) && (<>
+                  <Separator
+                    className="my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  />
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold underline">
+                      Total a pagar
+                    </span>
+                    <span className="text-sm font-semibold underline">
+                      {currency} $
+                      {intInVehicle
+                        ? Number(total.toFixed(2)).toLocaleString()
+                        : Number(leadVehicles?.leadPrice ?? 0).toLocaleString()}
+                    </span>
+                  </div>
+                </>)}
                 {/* total a pagar */}
+                {(!intInVehicle && leadVehicles?.leadName) && (<>
+                  {/* <Separator
+                    className="my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  /> */}
+                  {/* <div className="flex items-start justify-between w-full">
+                    <span className="text-xs font-semibold">
+                      Valor de venta
+                    </span>
+                    <span className="text-xs font-semibold">
+                      {currency} ${Number(leadVehicles?.leadPrice).toLocaleString()}
+                    </span>
+                  </div> 
+
+                  <Separator
+                    className="my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  />*/}
+
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-xs font-semibold">
+                      Comisión por venta (4%)
+                    </span>
+                    <span className="text-xs font-semibold">
+                      {currency} ${(Number(leadVehicles?.leadPrice) * 0.04).toLocaleString()}
+
+                    </span>
+                  </div>
+                  <Separator
+                    className="my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  />
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold underline">
+                      Ganancia neta del titular
+                    </span>
+                    <span className="text-sm font-semibold underline">
+                      {currency} $
+                      {(Number(leadVehicles?.leadPrice) - (Number(leadVehicles?.leadPrice) * 0.04)).toLocaleString()}
+                    </span>
+                  </div>
+                </>)}
+
+
               </div>
             </div>
           </Card>
