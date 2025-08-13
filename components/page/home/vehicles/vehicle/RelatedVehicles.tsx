@@ -127,7 +127,11 @@ const RelatedVehicles = ({ vehicles }: Props) => {
                               </div>
                             </CardDescription>
                             <p className="text-lg font-semibold">
-                              {car.currency} ${car.price}
+                              <p className="text-lg font-semibold md:text-base 2xl:text-lg">
+                                {car.currency === "USD"
+                                  ? `USD ${Number(car.price).toLocaleString()}`
+                                  : `$${Number(car.price).toLocaleString()}`}
+                              </p>
                             </p>
                           </CardHeader>
                           <CardFooter className="px-4 pb-5 mt-5 md:mt-0">

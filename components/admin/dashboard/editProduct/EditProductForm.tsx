@@ -476,14 +476,16 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="CAR">Automóvil</SelectItem>
-                            <SelectItem value="BIKE">Motocicleta</SelectItem>
+                            <SelectItem value="HATCHBACK">Hatchback</SelectItem>
+                            <SelectItem value="SEDAN3P">Sedán 3 Puertas</SelectItem>
+                            <SelectItem value="SEDAN5P">Sedán 5 Puertas</SelectItem>
+                            <SelectItem value="CABRIO">Descapotable</SelectItem>
+                            <SelectItem value="WAGON">Rural</SelectItem>
+                            <SelectItem value="COUPE">Coupé</SelectItem>
                             <SelectItem value="PICKUP">Pickup</SelectItem>
                             <SelectItem value="UTILITARY">Utilitario</SelectItem>
                             <SelectItem value="SUV">SUV</SelectItem>
                             <SelectItem value="VAN">Van</SelectItem>
-                            <SelectItem value="COUPE">Coupe</SelectItem>
-                            <SelectItem value="HATCHBACK">Hatchback</SelectItem>
                             <SelectItem value="CONVERTIBLE">Convertible</SelectItem>
                           </SelectContent>
                         </Select>

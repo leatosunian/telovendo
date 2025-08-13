@@ -20,7 +20,10 @@ export interface ICar extends Document {
   | "CONVERTIBLE"
   | "COUPE"
   | "HATCHBACK"
-  | "SEDAN"
+  | "SEDAN3P"
+  | "SEDAN5P"
+  | "WAGON"
+  | "CABRIO"
   | "MOTORHOME"
   | "ATV"
   | "SCOOTER";

@@ -18,7 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/selectxs";
 import styles from "@/app/css-modules/vehicles/vehicles.module.css";
 import buttonStyle from "@/app/css-modules/home.search.module.css";
 import {
@@ -54,6 +54,7 @@ import { FaRegCalendar } from "react-icons/fa";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge";
 import noresults from "@/public/noresults.png"
+import { LuSearchX } from "react-icons/lu";
 
 const VehiclesCont = () => {
   const [open, setOpen] = useState(false);
@@ -210,7 +211,7 @@ const VehiclesCont = () => {
         {/*  title and sort by */}
         <div className="flex flex-col justify-between w-full gap-2 mt-0 md:mt-2 md:flex-row h-fit ">
           <div className="flex flex-col w-fit">
-            <h4 className="text-2xl font-medium md:text-3xl">
+            <h4 className="text-2xl font-medium 2xl:text-3xl">
               Todos los vehículos
             </h4>
             <span className="mb-2 text-sm text-gray-400">
@@ -308,10 +309,10 @@ const VehiclesCont = () => {
           {/* FILTERS SIDEBAR */}
           <div
             style={{ border: "1px solid #0000001c" }}
-            className="flex-col hidden w-1/4 px-5 pt-3 pb-5 rounded-md shadow-lg h-fit lg:flex"
+            className="flex-col hidden w-1/4 px-5 pt-3 pb-5 bg-white rounded-md shadow-lg h-fit lg:flex"
           >
             <div className="">
-              <span className="text-lg font-semibold">Filtros</span>
+              <span className="text-base font-semibold 2xl:text-lg">Filtros</span>
             </div>
 
             {/* divider */}
@@ -324,9 +325,9 @@ const VehiclesCont = () => {
               }}
             ></div>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3 2xl:gap-5">
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium">Tipo de vehículo</span>
+                <span className="text-xs font-semibold 2xl:text-sm">Tipo de vehículo</span>
                 <Select
                   onValueChange={(type) => {
                     console.log(type);
@@ -338,28 +339,30 @@ const VehiclesCont = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="CAR">Automóvil</SelectItem>
-                      <SelectItem value="BIKE">Motocicleta</SelectItem>
+                      <SelectItem value="HATCHBACK">Hatchback</SelectItem>
+                      <SelectItem value="SEDAN3P">Sedán 3 Puertas</SelectItem>
+                      <SelectItem value="SEDAN5P">Sedán 5 Puertas</SelectItem>
+                      <SelectItem value="CABRIO">Descapotable</SelectItem>
+                      <SelectItem value="WAGON">Rural</SelectItem>
+                      <SelectItem value="COUPE">Coupé</SelectItem>
                       <SelectItem value="PICKUP">Pickup</SelectItem>
                       <SelectItem value="UTILITARY">Utilitario</SelectItem>
                       <SelectItem value="SUV">SUV</SelectItem>
                       <SelectItem value="VAN">Van</SelectItem>
-                      <SelectItem value="COUPE">Coupe</SelectItem>
-                      <SelectItem value="HATCHBACK">Hatchback</SelectItem>
                       <SelectItem value="CONVERTIBLE">Convertible</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium">Marca</span>
+                <span className="text-xs font-semibold 2xl:text-sm">Marca</span>
                 <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       role="combobox"
                       aria-expanded={open}
-                      className="justify-between w-full"
+                      className="justify-between w-full h-8 text-xs font-normal"
                     >
                       {brandFilter
                         ? carBrands.find((brand) => brand === brandFilter)
@@ -406,8 +409,8 @@ const VehiclesCont = () => {
                 </Popover>
               </div>
 
-              <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium">Cantidad de puertas</span>
+              {/* <div className="flex flex-col gap-1">
+                <span className="text-xs font-semibold 2xl:text-sm">Cantidad de puertas</span>
                 <Select
                   onValueChange={(doors) => {
                     console.log(doors);
@@ -426,10 +429,10 @@ const VehiclesCont = () => {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
 
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium">Año</span>
+                <span className="text-xs font-semibold 2xl:text-sm">Año</span>
                 <Select
                   onValueChange={(year) => {
                     handleFilterByYear(year);
@@ -451,7 +454,7 @@ const VehiclesCont = () => {
               </div>
 
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium">Transmisión</span>
+                <span className="text-xs font-semibold 2xl:text-sm">Transmisión</span>
                 <Select
                   onValueChange={(gearbox) => {
                     handleFilterByGearbox(gearbox);
@@ -471,6 +474,7 @@ const VehiclesCont = () => {
 
               <Button
                 style={{ backgroundColor: '#ea580c' }}
+                className="mt-2 text-xs 2xl:text-sm "
                 onClick={() => {
                   console.log(searchFilter);
 
@@ -541,20 +545,22 @@ const VehiclesCont = () => {
                               <CardHeader
                                 style={{ padding: "0 16px 0px 16px" }}
                               >
-                                <CardTitle className="text-lg md:text-base textCut">
+                                <CardTitle className="text-lg md:text-sm 2xl:text-base textCut">
                                   {car.name}
                                 </CardTitle>
                                 <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
                                   <div className="flex items-center gap-2">
-                                    <FaRegCalendar /> <span>{car.year}</span>
+                                    <FaRegCalendar /> <span className="text-base md:text-xs 2xl:text-base">{car.year}</span>
                                   </div>
                                   <div className="flex items-center gap-2">
-                                    <IoSpeedometerOutline size={20} />
-                                    <span> {car.kilometers} km</span>
+                                    <IoSpeedometerOutline size={19} />
+                                    <span className="text-base md:text-xs 2xl:text-base"> {car.kilometers} km</span>
                                   </div>
                                 </CardDescription>
-                                <p className="text-lg font-semibold">
-                                  {car.currency} ${car.price}
+                                <p className="text-lg font-semibold md:text-sm 2xl:text-lg">
+                                  {car.currency === "USD"
+                                    ? `USD ${Number(car.price).toLocaleString()}`
+                                    : `$${Number(car.price).toLocaleString()}`}
                                 </p>
                               </CardHeader>
                               <CardFooter className="px-4 pb-5 mt-5 md:mt-3">
@@ -565,7 +571,7 @@ const VehiclesCont = () => {
                                   <Button
                                     variant={"default"}
                                     style={{ backgroundColor: '#ea580c' }}
-                                    className="w-full"
+                                    className="w-full text-sm md:text-xs 2xl:text-sm"
                                   >
                                     Ver más
                                   </Button>
@@ -620,8 +626,9 @@ const VehiclesCont = () => {
               <>
                 <div className="flex flex-col items-center justify-center w-full gap-6 my-12 h-fit">
                   <div className="flex flex-col items-center justify-center w-full gap-1 h-fit">
-                    <Image width={180} className="hidden mb-5 2xl:block" src={noresults} alt=""></Image>
-                    <Image width={100} className="block mb-5 2xl:hidden" src={noresults} alt=""></Image>
+                    {/* <Image width={180} className="hidden mb-5 2xl:block" src={noresults} alt=""></Image>
+                    <Image width={100} className="block mb-5 2xl:hidden" src={noresults} alt=""></Image> */}
+                    <LuSearchX size={100} className="text-orange-600" />
                     <span className="text-xl font-semibold text-center 2xl:text-2xl">
                       No se encontró ningún resultado,
                     </span>
@@ -629,7 +636,7 @@ const VehiclesCont = () => {
                   </div>
                   <Link href={"https://api.whatsapp.com/send/?phone=5493424216075"} target="_blank">
                     <button
-                    style={{ backgroundColor: '#ea580c' }}
+                      style={{ backgroundColor: '#ea580c' }}
                       className={`${buttonStyle.button}`}
                     >
                       Contactanos

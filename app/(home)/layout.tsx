@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body style={{backgroundColor:'#ededed'}} className={inter.className}>
         <Suspense>{children}</Suspense>
         <Link
           className="fixed bottom-0 right-0 z-50 m-5 cursor-pointer w-fit h-fit"

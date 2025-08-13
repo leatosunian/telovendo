@@ -147,7 +147,9 @@ const NewProducts = ({ vehicles }: Props) => {
                               </div>
                             </CardDescription>
                             <p className="text-lg font-semibold md:text-base 2xl:text-lg">
-                              {car.currency} ${car.price}
+                              {car.currency === "USD"
+                                ? `USD ${Number(car.price).toLocaleString()}`
+                                : `$${Number(car.price).toLocaleString()}`}
                             </p>
                           </CardHeader>
                           <CardFooter className="px-4 pb-5 mt-5 md:mt-0">
@@ -182,15 +184,14 @@ const NewProducts = ({ vehicles }: Props) => {
           {latestVehicles.map((dot, index) => (
             <button
               key={dot.uuid}
-              className={`w-2 h-2 rounded-full ${
-                index === current ? "bg-orange-600" : "bg-gray-300"
-              }`}
+              className={`w-2 h-2 rounded-full ${index === current ? "bg-orange-600" : "bg-gray-300"
+                }`}
             />
           ))}
         </div>
         <div className="flex justify-center w-full mt-4 md:hidden h-fit">
           <Link className="w-fit h-fit" href={"/vehicles"}>
-            <button  style={{ backgroundColor: '#ea580c' }} className={`${stylesSearch.button}`}>
+            <button style={{ backgroundColor: '#ea580c' }} className={`${stylesSearch.button}`}>
               Ver todos los vehículos
             </button>
           </Link>
