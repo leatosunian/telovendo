@@ -1,7 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useState } from "react";
-import contactImg from "@/public/cotizar.jpg";
+import contactImg from "@/public/cotizar.png";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { IBranch } from "@/app/models/branch";
@@ -276,7 +276,7 @@ const ContactForm = () => {
                             <input
                               {...field}
                               className="w-full px-4 py-2 text-xs font-normal transition duration-300 bg-gray-100 border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-200 focus:ring-1 focus:ring-orange-600"
-                              placeholder="Ingrese su número de teléfono"
+                              placeholder="342 421 6075"
                               id="phone"
                               type="number"
                             />
