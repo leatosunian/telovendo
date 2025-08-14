@@ -229,58 +229,70 @@ const VehicleCont = () => {
               <Separator className='mb-1 bg-orange-600'></Separator>
               {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
               <Card className='flex flex-col gap-3 px-4 py-4 md:flex-row'>
-
                 <div className="flex flex-col items-start justify-center w-full gap-4 h-fit">
-                  <span className="text-sm md:text-xs text-wrap"><b>Marca:</b> {vehicleData?.brand} </span>
-                  {/*<span className="text-sm md:text-xs text-wrap"><b>Puertas:</b> {vehicleData?.doors?.replace("P", "")}</span> */}
-                  {/* <span className="text-sm md:text-xs text-wrap"><b>Condición general:</b> {vehicleData?.generalCondition}</span> */}
-                  {/* {vehicleData?.hasVTV === true ? <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b> Si</span> :
-                    <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b>No</span>
-                  } */}
-                  <span className="text-sm md:text-xs text-wrap"><b>Kilometraje:</b> {vehicleData?.kilometers} km</span>
-
-                  <span className="text-sm md:text-xs text-wrap"><b>Año</b> {vehicleData?.year}</span>
-                  <span className="text-sm md:text-xs text-wrap"><b>Tipo de carrocería: </b>
-                    {vehicleData?.type === "HATCHBACK" && "Hatchback"}
-                    {vehicleData?.type === "SEDAN3P" && "Sedán 3 Puertas"}
-                    {vehicleData?.type === "SEDAN5P" && "Sedán 5 Puertas"}
-                    {vehicleData?.type === "CABRIO" && "Descapotable"}
-                    {vehicleData?.type === "WAGON" && "Rural"}
-                    {vehicleData?.type === "COUPE" && "Coupé"}
-                    {vehicleData?.type === "PICKUP" && "Pickup"}
-                    {vehicleData?.type === "UTILITARY" && "Utilitario"}
-                    {vehicleData?.type === "SUV" && "SUV"}
-                    {vehicleData?.type === "VAN" && "Van"}
-                    {vehicleData?.type === "COUPE" && "Coupe"}
-                    {vehicleData?.type === "CONVERTIBLE" && "Convertible"}
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Marca:</b> {vehicleData?.brand?.trim() || "No especificado."}
                   </span>
-                  {/* <span className="text-sm md:text-xs text-wrap"><b>Detalles de pintura:</b> {vehicleData?.paintDetails}</span> */}
 
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Kilometraje:</b> {vehicleData?.kilometers?.toString().trim() || "No especificado."} {vehicleData?.kilometers ? "km" : ''}
+                  </span>
+
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Año:</b> {vehicleData?.year?.toString().trim() || "No especificado."}
+                  </span>
+
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Tipo de carrocería:</b>{" "}
+                    {vehicleData?.type
+                      ? (
+                        vehicleData?.type === "HATCHBACK" && "Hatchback" ||
+                        vehicleData?.type === "SEDAN3P" && "Sedán 3 Puertas" ||
+                        vehicleData?.type === "SEDAN5P" && "Sedán 5 Puertas" ||
+                        vehicleData?.type === "CABRIO" && "Descapotable" ||
+                        vehicleData?.type === "WAGON" && "Rural" ||
+                        vehicleData?.type === "COUPE" && "Coupé" ||
+                        vehicleData?.type === "PICKUP" && "Pickup" ||
+                        vehicleData?.type === "UTILITARY" && "Utilitario" ||
+                        vehicleData?.type === "SUV" && "SUV" ||
+                        vehicleData?.type === "VAN" && "Van" ||
+                        vehicleData?.type === "CONVERTIBLE" && "Convertible"
+                      )
+                      : "No especificado."
+                    }
+                  </span>
                 </div>
+
                 <div className="flex flex-col items-start justify-center w-full gap-4 h-fit">
-                  <span className="text-sm md:text-xs text-wrap"><b>Modelo:</b> {vehicleData?.modelName}</span>
-                  {vehicleData?.gearbox === "AUTOMATIC" && (
-                    <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Automática</span>
-                  )}
-                  {vehicleData?.gearbox === "MANUAL" && (
-                    <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Manual</span>
-                  )}
-                  <span className="text-sm md:text-xs text-wrap"><b>Tracción:</b> {vehicleData?.drive}</span>
-                  {vehicleData?.gas === "NAFTA" && (
-                    <span className="text-sm md:text-xs text-wrap"><b>Combustible: </b>Nafta</span>
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Modelo:</b> {vehicleData?.modelName?.trim() || "No especificado."}
+                  </span>
 
-                  )}
-                  {vehicleData?.gas === "GNC" && (
-                    <span className="text-sm md:text-xs text-wrap"><b>Combustible: </b>GNC</span>
-                  )}
-                  {vehicleData?.gas === "DIESEL" && (
-                    <span className="text-sm md:text-xs text-wrap"><b>Combustible: </b>Diésel</span>
-                  )}
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Transmisión:</b>{" "}
+                    {vehicleData?.gearbox === "AUTOMATIC"
+                      ? "Automática"
+                      : vehicleData?.gearbox === "MANUAL"
+                        ? "Manual"
+                        : "No especificado."
+                    }
+                  </span>
 
-                  {/* 
-                  <span className="text-sm md:text-xs text-wrap"><b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt} km</span>
-                  <span className="text-sm md:text-xs text-wrap"><b>Condición de neumáticos:</b> {vehicleData?.tireCondition}%</span> */}
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Tracción:</b> {vehicleData?.drive?.trim() || "No especificado."}
+                  </span>
 
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Combustible:</b>{" "}
+                    {vehicleData?.gas === "NAFTA"
+                      ? "Nafta"
+                      : vehicleData?.gas === "GNC"
+                        ? "GNC"
+                        : vehicleData?.gas === "DIESEL"
+                          ? "Diésel"
+                          : "No especificado."
+                    }
+                  </span>
                 </div>
 
               </Card>
@@ -291,35 +303,40 @@ const VehicleCont = () => {
               <Separator className='mb-1 bg-orange-600'></Separator>
               {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
               <Card className='flex flex-col gap-3 px-4 py-4 md:flex-row'>
-
                 <div className="flex flex-col items-start justify-center w-full gap-4 h-fit">
-                  {/* <span className="text-sm md:text-xs text-wrap"><b>Marca:</b> {vehicleData?.brand} </span>
-                  <span className="text-sm md:text-xs text-wrap"><b>Puertas:</b> {vehicleData?.doors?.replace("P", "")}</span> */}
-                  <span className="text-sm md:text-xs text-wrap"><b>Condición general:</b> {vehicleData?.generalCondition}</span>
-                  {/* {vehicleData?.hasVTV === true ? <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b> Si</span> :
-                    <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b>No</span>
-                  } */}
-                  <span className="text-sm md:text-xs text-wrap"><b>Último service:</b> {vehicleData?.lastestService} km</span>
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Condición general:</b> {vehicleData?.generalCondition?.trim() || "No especificado."}
+                  </span>
 
-                  <span className="text-sm md:text-xs text-wrap"><b>Fecha de batería:</b> {vehicleData?.battery}</span>
-                  <span className="text-sm md:text-xs text-wrap"><b>Detalles de pintura:</b> {vehicleData?.paintDetails}</span>
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Último service:</b> {vehicleData?.lastestService?.toString().trim() || "No especificado."} {vehicleData?.lastestService ? "km" : ''}
+                  </span>
 
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Fecha de batería:</b> {vehicleData?.battery?.trim() || "No especificado."}
+                  </span>
+
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Detalles de pintura:</b> {vehicleData?.paintDetails?.trim() || "No especificado."}
+                  </span>
                 </div>
+
                 <div className="flex flex-col items-start justify-center w-full gap-4 h-fit">
-                  {/* <span className="text-sm md:text-xs text-wrap"><b>Modelo:</b> {vehicleData?.modelName}</span> */}
-                  {/* {vehicleData?.gearbox === "AUTOMATIC" && (
-                    <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Automática</span>
-                  )}
-                  {vehicleData?.gearbox === "MANUAL" && (
-                    <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Manual</span>
-                  )} */}
-                  {/* <span className="text-sm md:text-xs text-wrap"><b>Tracción:</b> {vehicleData?.drive}</span> */}
-                  <span className="text-sm md:text-xs text-wrap"><b>Cantidad de dueños:</b> {vehicleData?.ownerNumber}</span>
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Cantidad de dueños:</b> {vehicleData?.ownerNumber?.toString().trim() || "No especificado."}
+                  </span>
 
-                  <span className="text-sm md:text-xs text-wrap"><b>Vencimiento de VTV:</b> {vehicleData?.VTVExpDate}</span>
-                  <span className="text-sm md:text-xs text-wrap"><b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt} km</span>
-                  <span className="text-sm md:text-xs text-wrap"><b>Condición de neumáticos:</b> {vehicleData?.tireCondition}%</span>
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Vencimiento de VTV:</b> {vehicleData?.VTVExpDate?.trim() || "No especificado."}
+                  </span>
 
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt?.toString().trim() || "No especificado."} {vehicleData?.timingBelt ? "km" : ''}
+                  </span>
+
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Condición de neumáticos:</b> {vehicleData?.tireCondition?.toString().trim() || "No especificado."}{vehicleData?.tireCondition ? "%" : ''}
+                  </span>
                 </div>
 
               </Card>
@@ -494,7 +511,7 @@ const VehicleCont = () => {
                     style={{ font: "inherit", textWrap: "wrap", fontSize: '14px' }}
                     className="w-full mb-1 text-gray-500 h-fit "
                   >
-                    {vehicleData?.description}
+                    {vehicleData?.description !== '' ? vehicleData?.description : "No hay descripción."}
                   </pre>
                 </div>
 
@@ -508,56 +525,69 @@ const VehicleCont = () => {
                   {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
 
                   <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
-                    <span className="text-sm md:text-xs text-wrap"><b>Marca:</b> {vehicleData?.brand} </span>
-                    {/*<span className="text-sm md:text-xs text-wrap"><b>Puertas:</b> {vehicleData?.doors?.replace("P", "")}</span> */}
-                    {/* <span className="text-sm md:text-xs text-wrap"><b>Condición general:</b> {vehicleData?.generalCondition}</span> */}
-                    {/* {vehicleData?.hasVTV === true ? <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b> Si</span> :
-                    <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b>No</span>
-                  } */}
-                    <span className="text-sm md:text-xs text-wrap"><b>Kilometraje:</b> {vehicleData?.kilometers} km</span>
-
-                    <span className="text-sm md:text-xs text-wrap"><b>Año</b> {vehicleData?.year}</span>
-                    <span className="text-sm md:text-xs text-wrap"><b>Tipo de carrocería: </b>
-                      {vehicleData?.type === "HATCHBACK" && "Hatchback"}
-                      {vehicleData?.type === "SEDAN3P" && "Sedán 3 Puertas"}
-                      {vehicleData?.type === "SEDAN5P" && "Sedán 5 Puertas"}
-                      {vehicleData?.type === "CABRIO" && "Descapotable"}
-                      {vehicleData?.type === "WAGON" && "Rural"}
-                      {vehicleData?.type === "COUPE" && "Coupé"}
-                      {vehicleData?.type === "PICKUP" && "Pickup"}
-                      {vehicleData?.type === "UTILITARY" && "Utilitario"}
-                      {vehicleData?.type === "SUV" && "SUV"}
-                      {vehicleData?.type === "VAN" && "Van"}
-                      {vehicleData?.type === "COUPE" && "Coupe"}
-                      {vehicleData?.type === "CONVERTIBLE" && "Convertible"}
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Marca:</b> {vehicleData?.brand?.trim() || "No especificado."}
                     </span>
-                    {/* <span className="text-sm md:text-xs text-wrap"><b>Detalles de pintura:</b> {vehicleData?.paintDetails}</span> */}
 
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Kilometraje:</b> {vehicleData?.kilometers?.toString().trim() || "No especificado."} {vehicleData?.kilometers ? "km" : ''}
+                    </span>
+
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Año:</b> {vehicleData?.year?.toString().trim() || "No especificado."}
+                    </span>
+
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Tipo de carrocería:</b>{" "}
+                      {vehicleData?.type
+                        ? (
+                          vehicleData?.type === "HATCHBACK" && "Hatchback" ||
+                          vehicleData?.type === "SEDAN3P" && "Sedán 3 Puertas" ||
+                          vehicleData?.type === "SEDAN5P" && "Sedán 5 Puertas" ||
+                          vehicleData?.type === "CABRIO" && "Descapotable" ||
+                          vehicleData?.type === "WAGON" && "Rural" ||
+                          vehicleData?.type === "COUPE" && "Coupé" ||
+                          vehicleData?.type === "PICKUP" && "Pickup" ||
+                          vehicleData?.type === "UTILITARY" && "Utilitario" ||
+                          vehicleData?.type === "SUV" && "SUV" ||
+                          vehicleData?.type === "VAN" && "Van" ||
+                          vehicleData?.type === "CONVERTIBLE" && "Convertible"
+                        )
+                        : "No especificado."
+                      }
+                    </span>
                   </div>
+
                   <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
-                    <span className="text-sm md:text-xs text-wrap"><b>Modelo:</b> {vehicleData?.modelName}</span>
-                    {vehicleData?.gearbox === "AUTOMATIC" && (
-                      <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Automática</span>
-                    )}
-                    {vehicleData?.gearbox === "MANUAL" && (
-                      <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Manual</span>
-                    )}
-                    <span className="text-sm md:text-xs text-wrap"><b>Tracción:</b> {vehicleData?.drive}</span>
-                    {vehicleData?.gas === "NAFTA" && (
-                      <span className="text-sm md:text-xs text-wrap"><b>Combustible: </b>Nafta</span>
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Modelo:</b> {vehicleData?.modelName?.trim() || "No especificado."}
+                    </span>
 
-                    )}
-                    {vehicleData?.gas === "GNC" && (
-                      <span className="text-sm md:text-xs text-wrap"><b>Combustible: </b>GNC</span>
-                    )}
-                    {vehicleData?.gas === "DIESEL" && (
-                      <span className="text-sm md:text-xs text-wrap"><b>Combustible: </b>Diésel</span>
-                    )}
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Transmisión:</b>{" "}
+                      {vehicleData?.gearbox === "AUTOMATIC"
+                        ? "Automática"
+                        : vehicleData?.gearbox === "MANUAL"
+                          ? "Manual"
+                          : "No especificado."
+                      }
+                    </span>
 
-                    {/* 
-                  <span className="text-sm md:text-xs text-wrap"><b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt} km</span>
-                  <span className="text-sm md:text-xs text-wrap"><b>Condición de neumáticos:</b> {vehicleData?.tireCondition}%</span> */}
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Tracción:</b> {vehicleData?.drive?.trim() || "No especificado."}
+                    </span>
 
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Combustible:</b>{" "}
+                      {vehicleData?.gas === "NAFTA"
+                        ? "Nafta"
+                        : vehicleData?.gas === "GNC"
+                          ? "GNC"
+                          : vehicleData?.gas === "DIESEL"
+                            ? "Diésel"
+                            : "No especificado."
+                      }
+                    </span>
                   </div>
                 </div>
 
@@ -571,34 +601,31 @@ const VehicleCont = () => {
 
 
                   <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
-                    {/* <span className="text-sm md:text-xs text-wrap"><b>Marca:</b> {vehicleData?.brand} </span>
-                    <span className="text-sm md:text-xs text-wrap"><b>Puertas:</b> {vehicleData?.doors?.replace("P", "")}</span> */}
-                    {/* <span className="text-sm md:text-xs text-wrap"><b>Último service:</b> {vehicleData?.lastestService} km</span>
-                    {vehicleData?.hasVTV === true ? <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b> Si</span> :
-                      <span className="text-sm md:text-xs text-wrap"><b>VTV Vigente:</b>No</span>
-
-                    } */}
-                    <span className="text-sm md:text-xs text-wrap"><b>Fecha de batería:</b> {vehicleData?.battery}</span>
-                    <span className="text-sm md:text-xs text-wrap"><b>Cantidad de dueños:</b> {vehicleData?.ownerNumber}</span>
-                    <span className="text-sm md:text-xs text-wrap"><b>Detalles de pintura:</b> {vehicleData?.paintDetails}</span>
-
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Fecha de batería:</b> {vehicleData?.battery?.trim() || "No especificado."}
+                    </span>
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Cantidad de dueños:</b> {vehicleData?.ownerNumber?.toString().trim() || "No especificado."}
+                    </span>
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Detalles de pintura:</b> {vehicleData?.paintDetails?.trim() || "No especificado."}
+                    </span>
                   </div>
+
                   <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
-                    {/* <span className="text-sm md:text-xs text-wrap"><b>Modelo:</b> {vehicleData?.modelName}</span> */}
-                    <span className="text-sm md:text-xs text-wrap"><b>Condición general:</b> {vehicleData?.generalCondition}</span>
-                    {/* {vehicleData?.gearbox === "AUTOMATIC" && (
-                      <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Automática</span>
-                    )} 
-                     {vehicleData?.gearbox === "MANUAL" && (
-                      <span className="text-sm md:text-xs text-wrap"><b>Transmisión:</b> Manual</span>
-                    )} */}
-                    {/* <span className="text-sm md:text-xs text-wrap"><b>Tracción:</b> {vehicleData?.drive}</span> */}
-                    <span className="text-sm md:text-xs text-wrap"><b>Vencimiento de VTV:</b> {vehicleData?.VTVExpDate}</span>
-                    <span className="text-sm md:text-xs text-wrap"><b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt} km</span>
-                    <span className="text-sm md:text-xs text-wrap"><b>Condición de neumáticos:</b> {vehicleData?.tireCondition}%</span>
-
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Condición general:</b> {vehicleData?.generalCondition?.trim() || "No especificado."}
+                    </span>
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Vencimiento de VTV:</b> {vehicleData?.VTVExpDate?.trim() || "No especificado."}
+                    </span>
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt?.toString().trim() || "No especificado."} {vehicleData?.timingBelt ? "km" : ''}
+                    </span>
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Condición de neumáticos:</b> {vehicleData?.tireCondition?.toString().trim() || "No especificado."} {vehicleData?.tireCondition ? "%" : ''}
+                    </span>
                   </div>
-
                 </div>
               </Card>
 
@@ -706,7 +733,7 @@ const VehicleCont = () => {
 
 
       <Dialog open={isOpen} onOpenChange={setIsOpen} >
-        <DialogContent className="w-full min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[750px] 2xl:min-w-[820px] p-0 text-transparent bg-transparent border-none shadow-none h-fit">
+        <DialogContent className="w-full min-w-[400px] md:min-w-[500px] lg:min-w-[600px] xl:min-w-[600px] 2xl:min-w-[830px] p-0 text-transparent bg-transparent border-none shadow-none h-fit">
 
           {/* carousel */}
           {/* <Image src={car} alt="" className="w-full" width={500} height={500} /> */}
