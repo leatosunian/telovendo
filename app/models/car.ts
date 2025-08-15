@@ -99,7 +99,8 @@ export interface ICar extends Document {
   hasVTV: boolean;
   ownerNumber: number;
   timingBelt: number;
-  tireCondition: number;
+  tireConditionBack: number;
+  tireConditionFront: number;
   drive: string;
   battery: string,
   paintDetails: string;
@@ -217,7 +218,11 @@ const carSchema: Schema = new Schema<ICar>(
       type: Number,
       required: false,
     },
-    tireCondition: {
+    tireConditionFront: {
+      type: Number,
+      required: false,
+    },
+    tireConditionBack: {
       type: Number,
       required: false,
     },

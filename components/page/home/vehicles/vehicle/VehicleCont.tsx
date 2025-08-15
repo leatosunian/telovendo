@@ -49,6 +49,7 @@ import AccordionDescription from "./AccordionDescription";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import Zoom from 'react-medium-image-zoom';
 import { Separator } from '@/components/ui/separator';
+import { IConfortSecurity } from '@/app/models/confortsecurity';
 
 const VehicleCont = () => {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -61,9 +62,8 @@ const VehicleCont = () => {
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<number | null>(0);
   const [isOpen, setIsOpen] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [confortData, setConfortData] = useState<any>(null);
   const { uuid } = useParams();
-
-  useEffect(() => { }, []);
 
   useEffect(() => {
     if (!api) {
@@ -96,6 +96,22 @@ const VehicleCont = () => {
     return latestVehicles;
   }
 
+  async function getVehicleConfortData(carID: string) {
+    try {
+      const confortFetch = await fetch(`/api/cars/confort/${carID}`, {
+        method: "GET",
+        cache: "no-store",
+      });
+      const confortData = await confortFetch.json();
+      console.log('confortData', confortData);
+      setConfortData(confortData);
+    }
+    catch (error) {
+      console.error("Error fetching vehicle confort data:", error);
+      return [];
+    }
+  }
+
   useEffect(() => {
     getLastVehicles();
     //fetch 10 lastest vehicles
@@ -114,6 +130,7 @@ const VehicleCont = () => {
       });
       const cars = await carsFetch.json();
       setVehicleData(cars);
+      getVehicleConfortData(cars._id);
       // get vehicle gallery
       const galleryFetch = await fetch(`/api/gallery/${uuid}`, {
         method: "GET",
@@ -319,6 +336,9 @@ const VehicleCont = () => {
                   <span className="text-sm md:text-xs text-wrap">
                     <b>Detalles de pintura:</b> {vehicleData?.paintDetails?.trim() || "No especificado."}
                   </span>
+                  <span className="text-sm md:text-xs text-wrap">
+                    <b>Neumáticos traseros:</b> {vehicleData?.tireConditionBack?.toString().trim() || "No especificado."}{vehicleData?.tireConditionBack ? "%" : ''}
+                  </span>
                 </div>
 
                 <div className="flex flex-col items-start justify-center w-full gap-4 h-fit">
@@ -335,7 +355,7 @@ const VehicleCont = () => {
                   </span>
 
                   <span className="text-sm md:text-xs text-wrap">
-                    <b>Condición de neumáticos:</b> {vehicleData?.tireCondition?.toString().trim() || "No especificado."}{vehicleData?.tireCondition ? "%" : ''}
+                    <b>Neumáticos delanteros:</b> {vehicleData?.tireConditionFront?.toString().trim() || "No especificado."}{vehicleData?.tireConditionFront ? "%" : ''}
                   </span>
                 </div>
 
@@ -517,6 +537,43 @@ const VehicleCont = () => {
 
               </Card>
 
+
+
+
+              {confortData && confortData.length > 0 && (<>
+                <Card className="flex-col hidden gap-2 px-4 py-3 md:flex ">
+                  <span className='font-semibold text-md 2xl:text-lg'>Confort y seguridad</span>
+                  <Separator className='mb-1 bg-orange-600'></Separator>
+                  {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
+                  <Card className="flex flex-col gap-3 px-4 py-4 md:flex-row">
+                    <div className="flex flex-col items-start justify-center w-full gap-4 h-fit">
+                      {confortData && Object.keys(confortData).length > 0 ? (
+                        confortData.map((item: IConfortSecurity) => (
+                          <span key={item._id as string} className="text-sm md:text-xs text-wrap">
+                            <b>{item.key}:</b>{" "}
+                            {typeof item.value === "boolean"
+                              ? item.value
+                                ? "Sí"
+                                : "No"
+                              : item.value !== undefined && item.value !== null
+                                ? item.value.toString().trim()
+                                : "No especificado."}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-sm md:text-xs text-wrap">
+                          No hay datos de confort y seguridad disponibles.
+                        </span>
+                      )}
+                    </div>
+                  </Card>
+                </Card>
+              </>)}
+
+
+
+
+
               <Card className="flex flex-col gap-2 px-4 py-3 mt-0 md:hidden ">
                 <div className='flex flex-col gap-3 py-1 md:flex-row'>
 
@@ -593,6 +650,36 @@ const VehicleCont = () => {
 
               </Card>
 
+
+              <Card className="flex flex-col gap-2 px-4 py-3 md:hidden ">
+                <span className='font-semibold text-md 2xl:text-lg'>Confort y seguridad</span>
+                <Separator className='mb-1 bg-orange-600'></Separator>
+                {/* <div className='bg-orange-600 h-[1px] w-full '></div> */}
+                <Card className="flex flex-col gap-3 px-4 py-4 md:flex-row">
+                  <div className="flex flex-col items-start justify-center w-full gap-4 h-fit">
+                    {confortData && Object.keys(confortData).length > 0 ? (
+                      confortData.map((item: IConfortSecurity) => (
+                        <span key={item._id as string} className="text-sm md:text-xs text-wrap">
+                          <b>{item.key}:</b>{" "}
+                          {typeof item.value === "boolean"
+                            ? item.value
+                              ? "Sí"
+                              : "No"
+                            : item.value !== undefined && item.value !== null
+                              ? item.value.toString().trim()
+                              : "No especificado."}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-sm md:text-xs text-wrap">
+                        No hay datos de confort y seguridad disponibles.
+                      </span>
+                    )}
+                  </div>
+                </Card>
+              </Card>
+
+
               <Card className="flex flex-col gap-2 px-4 py-3 mt-0 md:hidden ">
                 <span className='font-semibold text-md 2xl:text-lg'>Mantenimiento del vehículo</span>
                 <Separator className='mb-1 bg-orange-600'></Separator>
@@ -610,6 +697,9 @@ const VehicleCont = () => {
                     <span className="text-sm md:text-xs text-wrap">
                       <b>Detalles de pintura:</b> {vehicleData?.paintDetails?.trim() || "No especificado."}
                     </span>
+                    <span className="text-sm md:text-xs text-wrap">
+                      <b>Neumáticos delanteros:</b> {vehicleData?.tireConditionFront?.toString().trim() || "No especificado."} {vehicleData?.tireConditionFront ? "%" : ''}
+                    </span>
                   </div>
 
                   <div className="flex flex-col items-start justify-center w-full gap-3 h-fit">
@@ -623,7 +713,7 @@ const VehicleCont = () => {
                       <b>Reemplazo kit de distribución:</b> {vehicleData?.timingBelt?.toString().trim() || "No especificado."} {vehicleData?.timingBelt ? "km" : ''}
                     </span>
                     <span className="text-sm md:text-xs text-wrap">
-                      <b>Condición de neumáticos:</b> {vehicleData?.tireCondition?.toString().trim() || "No especificado."} {vehicleData?.tireCondition ? "%" : ''}
+                      <b>Neumáticos traseros:</b> {vehicleData?.tireConditionBack?.toString().trim() || "No especificado."} {vehicleData?.tireConditionBack ? "%" : ''}
                     </span>
                   </div>
                 </div>

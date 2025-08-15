@@ -56,7 +56,18 @@ export const formSchema = z.object({
   hasVTV: z.boolean(),
   ownerNumber: z.string().optional().or(z.literal("")),
   timingBelt: z.string().optional().or(z.literal("")),
-  tireCondition: z
+  tireConditionFront: z
+    .string()
+    .optional()
+    .or(z.literal("")) // permite que esté vacío
+    .refine((val) => {
+      if (val === "") return true; // si está vacío, es válido
+      const num = Number(val);
+      return !isNaN(num) && num >= 1 && num <= 100;
+    }, {
+      message: "Ingrese un porcentaje válido.",
+    }),
+  tireConditionBack: z
     .string()
     .optional()
     .or(z.literal("")) // permite que esté vacío

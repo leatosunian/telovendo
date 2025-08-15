@@ -40,6 +40,7 @@ import { carBrands } from "@/app/utils/carBrands";
 import { useEffect, useRef, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { formSchema } from "@/app/schemas/editProductForm";
+import { formSchema as confortFormSchema } from "@/app/schemas/addConfortForm";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -50,8 +51,19 @@ import ImageGallery from "./ImageGallery";
 import { CardContent } from "@/components/ui/card";
 import React from "react";
 import { IBranch } from "@/app/models/branch";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { IoMdAdd } from "react-icons/io";
+import { IConfortSecurity } from "@/app/models/confortsecurity";
 
 const EditProductForm = ({ uuid }: { uuid: string }) => {
+  const formConfort = useForm<z.infer<typeof confortFormSchema>>({
+    resolver: zodResolver(confortFormSchema),
+    defaultValues: {
+      key: "",
+      value: "",
+    },
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -74,7 +86,8 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
       hasVTV: true,
       ownerNumber: "",
       timingBelt: "",
-      tireCondition: "",
+      tireConditionFront: "",
+      tireConditionBack: "",
       drive: "",
       battery: "",
       paintDetails: "",
@@ -92,28 +105,58 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
   const [loading, setLoading] = useState(true);
   const [branches, setBranches] = useState<IBranch[]>();
   const [buttonLoading, setButtonLoading] = useState(false);
+  const [carConfortItems, setCarConfortItems] = useState<IConfortSecurity[]>([]);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
 
   async function getVehicleData() {
     try {
-      const vehicle = await fetch("/api/cars/" + uuid, {
+      const response = await fetch("/api/cars/" + uuid, {
         method: "GET",
-      }).then((response) => response.json());
+      });
+      const vehicle = await response.json();
       if (vehicle) {
         setVehicleData(vehicle);
         console.log(vehicle);
+
+        const confortResponse = await fetch(`/api/cars/confort/${vehicle._id as string}`);
+        const confortData = await confortResponse.json();
+        console.log("getCarConfortItems", confortData);
+        if (confortData) {
+          setCarConfortItems(confortData);
+        }
+
         setTimeout(() => {
           setLoading(false);
         }, 500);
       }
-    } catch (error) { }
+    } catch (error) {
+      console.error("Error fetching vehicle data:", error);
+    }
   }
 
+  // Delete confort item
+  async function deleteCarConfortItem(itemId: string) {
+    if (!vehicleData?._id) return;
+    try {
+      const response = await fetch(`/api/cars/confort`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: itemId }),
+      });
+      if (response.ok) {
+        setCarConfortItems((prev) => prev.filter((item) => item._id !== itemId));
+        toast({ description: "Dato eliminado", variant: "default" });
+      } else {
+        toast({ description: "Error al eliminar dato", variant: "destructive" });
+      }
+    } catch (error) {
+      toast({ description: "Error al eliminar dato", variant: "destructive" });
+    }
+  }
 
-
-
-
-
-
+  // Fetch vehicle data on component mount
   useEffect(() => {
     getVehicleData();
   }, []);
@@ -129,6 +172,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
     }
   }, [scrollToDiv]);
 
+  // Handle form submission for editing vehicle
   async function handleEdit() {
     setButtonLoading(true);
     try {
@@ -154,6 +198,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
     }
   }
 
+  // Set form values when vehicle data is available
   useEffect(() => {
     if (vehicleData) {
       form.setValue("name", vehicleData!.name);
@@ -182,8 +227,11 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
       if (vehicleData.timingBelt !== null) {
         form.setValue("timingBelt", vehicleData!.timingBelt.toString());
       }
-      if (vehicleData.tireCondition !== null) {
-        form.setValue("tireCondition", vehicleData!.tireCondition.toString());
+      if (vehicleData.tireConditionFront !== null) {
+        form.setValue("tireConditionFront", vehicleData!.tireConditionFront.toString());
+      }
+      if (vehicleData.tireConditionBack !== null) {
+        form.setValue("tireConditionBack", vehicleData!.tireConditionBack.toString());
       }
       form.setValue("drive", vehicleData!.drive);
       form.setValue("battery", vehicleData!.battery);
@@ -204,7 +252,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
   };
 
 
-
+  // Function to upload image
   async function uploadImage(file: File) {
     if (!file) return;
     try {
@@ -227,6 +275,36 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
       });
     }
   }
+
+
+  async function onSubmitConfort(data: z.infer<typeof confortFormSchema>) {
+    setOpenCreateModal(false);
+    const postData = {
+      key: data.key,
+      value: data.value,
+      carID: vehicleData?._id as string,
+    };
+
+    // Reset the form fields
+    formConfort.reset();
+    try {
+      const response = await fetch("/api/cars/confort", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+      const result = await response.json();
+      getVehicleData();
+      return result;
+    } catch (error) {
+      console.error("Error creating confort:", error);
+      return null;
+    }
+  }
+
+
 
   return (
     <>
@@ -702,7 +780,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
 
             {/* INFORMACION ADICIONAL */}
             <span className="text-xl font-semibold">Información adicional <span className="text-xs text-gray-500 sm:text-sm">(opcional)</span></span>
-            <div className="grid grid-cols-1 gap-4 mt-4 md:gap-10 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 mt-4 mb-10 md:gap-10 md:grid-cols-2">
 
               <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
                 <FormField
@@ -744,10 +822,10 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
 
                 <FormField
                   control={form.control}
-                  name="tireCondition"
+                  name="tireConditionBack"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Condición de neumáticos <span className="text-gray-500">(%)</span></FormLabel>
+                      <FormLabel>Condición de neumáticos traseros<span className="text-gray-500">(%)</span></FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Ej. 90"
@@ -760,7 +838,24 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
                     </FormItem>
                   )}
                 />
-
+                <FormField
+                  control={form.control}
+                  name="tireConditionFront"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Condición de neumáticos delanteros<span className="text-gray-500">(%)</span></FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ej. 90"
+                          type="number"
+                          maxLength={3}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="battery"
@@ -781,7 +876,7 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
               </div>
 
 
-              <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 h-fit md:gap-8 md:grid-cols-2">
                 <FormField
                   control={form.control}
                   name="ownerNumber"
@@ -872,6 +967,113 @@ const EditProductForm = ({ uuid }: { uuid: string }) => {
               />
             </div>
 
+
+            <span className="mt-5 text-xl font-semibold">Confort y seguridad <span className="text-xs text-gray-500 sm:text-sm">(opcional)</span></span>
+
+            <div className="w-full mt-4 md:w-1/2">
+              <div className="grid gap-2">
+                {carConfortItems.length === 0 && (
+                  <span className="text-sm text-muted-foreground">No hay datos de confort y seguridad.</span>
+                )}
+                {carConfortItems?.map((item) => (
+                  <div
+                    key={item._id as string}
+                    className="flex flex-row items-start justify-between gap-2 p-3 rounded-lg bg-muted/40"
+                  >
+                    <div className="flex flex-col">
+                      <span className="font-medium capitalize">{item.key}</span>
+                      <span className="text-sm text-muted-foreground">{item.value}</span>
+                    </div>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      className="mt-2 md:mt-0"
+                      onClick={() => deleteCarConfortItem(item._id as string)}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* create confort item modal */}
+            <div className="flex items-center justify-between mt-4">
+              <Dialog open={openCreateModal} onOpenChange={setOpenCreateModal}>
+                <DialogTrigger asChild>
+                  <Button variant="default" className="w-full p-2 mt-3 sm:w-fit h-fit">
+                    <IoMdAdd size={20} className="w-fit h-fit" />
+                    <span className="ml-1 ">Agregar dato</span>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <Form {...form}>
+                    <DialogHeader>
+                      <DialogTitle className="text-left">
+                        Nuevo dato
+                      </DialogTitle>
+                      <DialogDescription className="text-left">
+                        Ingresá un dato y su valor para la información de confort y seguridad del vehículo.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={formConfort.handleSubmit(onSubmitConfort)}>
+                      <div className="grid gap-4 py-4">
+                        <div className="flex flex-col gap-3">
+                          <FormField
+                            control={formConfort.control}
+                            name="key"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="font-semibold text-left">
+                                  Dato
+                                </FormLabel>
+                                <FormControl>
+                                  <Input
+                                    id="title"
+                                    placeholder="Ej. ABS"
+                                    className="w-full"
+                                    type="text"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-3">
+                          <FormField
+                            control={formConfort.control}
+                            name="value"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="font-semibold text-left">
+                                  Valor
+                                </FormLabel>
+                                <FormControl>
+                                  <Input
+                                    id="title"
+                                    placeholder="Ej. Volante y rodillas"
+                                    className="w-full"
+                                    type="text"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      <DialogFooter className="mt-5">
+                        <Button type="submit">Crear dato</Button>
+                      </DialogFooter>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
+            </div>
             <Separator className="my-12" />
 
             <span className="text-xl font-semibold">
