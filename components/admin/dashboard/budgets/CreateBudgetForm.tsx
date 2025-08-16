@@ -343,7 +343,7 @@ const CreateBudgetForm = () => {
     console.log('transfer', transfer);
 
     // cuando no hay vehiculo del lead
-    if (leadVehicles?.leadPrice !== "") {
+    if ((leadVehicles?.leadPrice !== "" && intInVehicle)) {
       total =
         intInVehicle?.price! +
         intInVehicleBonifsSubtotal +
@@ -1065,7 +1065,7 @@ const CreateBudgetForm = () => {
                       Comisión (4%)
                     </span>
                     <span className="text-sm font-semibold">
-                      {currency} ${(Number(leadVehicles.leadPrice) * 0.04).toLocaleString()}
+                      - {currency} ${(Number(leadVehicles.leadPrice) * 0.04).toLocaleString()}
                     </span>
                   </div>
 

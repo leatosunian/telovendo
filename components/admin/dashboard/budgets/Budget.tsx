@@ -117,6 +117,9 @@ const Budget = ({
           bonifsSubtotal: 0,
           transfer: 0,
           total: Number(leadVehicles?.leadPrice) || 0,
+          infoAutosValue: infoAutosValue,
+          MLValue: MLValue,
+
         };
 
         // Si hay vehículo a comprar, agregar esos campos
@@ -133,6 +136,8 @@ const Budget = ({
           budgetData.bonifsSubtotal = intInVehicleBonifsSubtotal;
           budgetData.transfer = transfer.toFixed(2);
           budgetData.total = total;
+          budgetData.infoAutosValue = infoAutosValue;
+          budgetData.MLValue = MLValue;
         }
         const dataToSave = { bonifs: intInVehicleBonifs, budgetData };
 
@@ -682,7 +687,7 @@ const Budget = ({
 
 
                 {/* total a pagar */}
-                {(intInVehicle ) && (<>
+                {(intInVehicle) && (<>
                   <Separator
                     className="my-3 "
                     style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}

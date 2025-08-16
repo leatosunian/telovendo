@@ -25,6 +25,8 @@ export interface IBudget extends Document {
   clientVehicleMotor: string;
   budgetCurrency: "ARS" | "USD";
   bonifsSubtotal: number;
+  infoAutosValue: number;
+  MLValue: number;
   transfer: number;
   total: number;
   _id?: string;
@@ -137,6 +139,14 @@ const budgetSchema: Schema = new Schema<IBudget>(
     leadID: {
       type: String,
       required: true,
+    },
+    infoAutosValue: {
+      type: Number,
+      required: false,
+    },
+    MLValue: {
+      type: Number,
+      required: false,
     },
   },
   {

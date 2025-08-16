@@ -152,7 +152,6 @@ export default function Navbar() {
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  {/* User Avatar */}
                   <CircleUserRound size={30} strokeWidth={1} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
@@ -160,7 +159,7 @@ export default function Navbar() {
                   style={{ zIndex: "9999999999" }}
                   className="w-52"
                 >
-                  <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
+                  {/* <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem>
@@ -171,7 +170,7 @@ export default function Navbar() {
                       <Settings className="w-4 h-4 mr-2" />
                       <span>Configuración</span>
                     </DropdownMenuItem>
-                  </DropdownMenuGroup>
+                  </DropdownMenuGroup> */}
 
                   <DropdownMenuSeparator />
                   <DropdownMenuItem

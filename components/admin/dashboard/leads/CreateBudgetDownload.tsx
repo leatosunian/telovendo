@@ -67,15 +67,15 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
         budget = undefined
         budgetBonifs = undefined
         console.log('budget:', budget, 'budgetbonifs', budgetBonifs);
-        
+
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   useEffect(() => {
     console.log(budget);
     if (budget !== undefined) {
-      generatePDF();
+      //generatePDF();
     }
   }, [budget]);
 
@@ -166,7 +166,7 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                 >
                   Cliente
                 </span>
-                <div className="flex flex-col flex-wrap w-full gap-1">
+                <div className="flex flex-col flex-wrap w-full gap-1 mb-auto">
                   <div className="flex flex-row justify-between">
                     <span
                       style={{ fontSize: "11px" }}
@@ -194,159 +194,20 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
               </div>
               {/* client */}
             </div>
-            <Separator
-              style={{ backgroundColor: "rgb(228, 228, 231, 80%)" }}
-              className="w-full mb-2 "
-              orientation="horizontal"
-            />
-            <div className="flex gap-2 pt-1 pb-3 pl-4 font-light text-black h-fit">
-              <IoLocationSharp className="my-auto" size={16} />
-              <span style={{ fontSize: "11px" }} className="my-auto">
-                Sucursal Juan B. Justo 2040, Buenos Aires, Mar del plata.
-              </span>
-            </div>
           </Card>
         </div>
 
+        <Separator
+          className="px-5 mx-auto my-3 "
+          style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+          orientation="horizontal"
+        />
+
         {/* vehicles and budget details */}
-        <div className="flex w-full h-full gap-8 mt-3">
+        <div className="flex flex-col w-full h-full gap-0 mt-3">
           {/* vehicles' details */}
-          <div className="flex flex-col w-1/2 gap-5 h-fit">
-            <Card
-              style={{ borderColor: "rgb(228, 228, 231)" }}
-              className="flex w-full h-full p-5 bg-white border-border"
-            >
-              <div className="flex flex-col w-full gap-0">
-                <span
-                  style={{ fontSize: "15px" }}
-                  className="font-semibold text-black "
-                >
-                  Vehículo a comprar
-                </span>
-
-                <Separator
-                  className="px-5 mx-auto my-4 "
-                  style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                  orientation="horizontal"
-                />
-                <div className="flex flex-col ">
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">Vehículo</span>
-                    <span className="text-xs text-gray-400">
-                      {budget?.vehicleName}
-                    </span>
-                  </div>
-
-                  <Separator
-                    className="px-5 mx-auto my-2 "
-                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                    orientation="horizontal"
-                  />
-
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">
-                      Tipo de vehículo
-                    </span>
-                    <span className="text-xs text-gray-400">
-                      {budget?.vehicleType === "CAR" && "Automóvil"}
-                      {budget?.vehicleType === "BIKE" && "Motocicleta"}
-                      {budget?.vehicleType === "QUAD" && "Cuatriciclo"}
-                      {budget?.vehicleType === "UTV" && "UTV"}
-                    </span>
-                  </div>
-
-                  <Separator
-                    className="px-5 mx-auto my-2 "
-                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                    orientation="horizontal"
-                  />
-
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">
-                      Año de fabricación
-                    </span>
-                    <span className="text-xs text-gray-400">
-                      {budget?.vehicleYear}
-                    </span>
-                  </div>
-
-                  <Separator
-                    className="px-5 mx-auto my-2 "
-                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                    orientation="horizontal"
-                  />
-
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">Kilometraje</span>
-                    <span className="text-xs text-gray-400">
-                      {budget?.vehicleKilometers}
-                    </span>
-                  </div>
-
-                  <Separator
-                    className="px-5 mx-auto my-2 "
-                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                    orientation="horizontal"
-                  />
-
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">Motorizacíon</span>
-                    <span className="text-xs text-gray-400">
-                      {budget?.vehicleMotor}
-                    </span>
-                  </div>
-
-                  <Separator
-                    className="px-5 mx-auto my-2 "
-                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                    orientation="horizontal"
-                  />
-
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">
-                      Cantidad de puertas
-                    </span>
-                    <span className="text-xs text-gray-400">
-                      {budget?.vehicleDoors === "2P" && "2 puertas"}
-                      {budget?.vehicleDoors === "3P" && "3 puertas"}
-                      {budget?.vehicleDoors === "4P" && "4 puertas"}
-                      {budget?.vehicleDoors === "5P" && "5 puertas"}
-                    </span>
-                  </div>
-
-                  <Separator
-                    className="px-5 mx-auto my-2 "
-                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                    orientation="horizontal"
-                  />
-
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">Combustible</span>
-                    <span className="text-xs text-gray-400 ">
-                      {budget?.vehicleGas === "DIESEL" && "Diésel"}
-                      {budget?.vehicleGas === "GNC" && "GNC"}
-                      {budget?.vehicleGas === "NAFTA" && "Nafta"}
-                    </span>
-                  </div>
-
-                  <Separator
-                    className="px-5 mx-auto my-2 "
-                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                    orientation="horizontal"
-                  />
-
-                  <div className="flex flex-col text-black">
-                    <span className="text-xs font-semibold ">Transmisión</span>
-                    <span className="text-xs text-gray-400">
-                      {budget?.vehicleGearbox === "AUTOMATIC" && "Automática"}
-                      {budget?.vehicleGearbox === "MANUAL" && "Manual"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {budget?.clientVehicleName !== "" && (
+          <div className="flex flex-col w-full gap-3 h-fit">
+            {(budget?.vehicleName !== '' && budget?.vehicleName) && (<>
               <Card
                 style={{ borderColor: "rgb(228, 228, 231)" }}
                 className="flex w-full h-full p-5 bg-white border-border"
@@ -356,7 +217,7 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                     style={{ fontSize: "15px" }}
                     className="font-semibold text-black "
                   >
-                    Vehículo usado
+                    Vehículo a comprar
                   </span>
 
                   <Separator
@@ -364,8 +225,152 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                     style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                     orientation="horizontal"
                   />
-                  <div className="flex flex-col ">
+                  <div className="flex flex-row flex-wrap gap-y-3 ">
+                    <div className="flex flex-col w-1/2 text-black">
+
+                      <span className="text-xs font-semibold ">Vehículo</span>
+                      <span className="text-xs text-gray-400">
+                        {budget?.vehicleName}
+                      </span>
+                    </div>
+
+                    {/* <Separator
+                      className="px-5 mx-auto my-2 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    /> */}
+
+                    <div className="flex flex-col w-1/2 text-black">
+                      <span className="text-xs font-semibold ">
+                        Tipo de vehículo
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        {budget?.vehicleType === "CAR" && "Automóvil"}
+                        {budget?.vehicleType === "BIKE" && "Motocicleta"}
+                        {budget?.vehicleType === "PICKUP" && "Pickup"}
+                        {budget?.vehicleType === "UTILITARY" && "Utilitario"}
+                        {budget?.vehicleType === "SUV" && "SUV"}
+                        {budget?.vehicleType === "VAN" && "Van"}
+                        {budget?.vehicleType === "COUPE" && "Coupe"}
+                        {budget?.vehicleType === "HATCHBACK" && "Hatchback"}
+                        {budget?.vehicleType === "CONVERTIBLE" && "Convertible"}
+                        {budget?.vehicleType === "QUAD" && "Cuatriciclo"}
+                        {budget?.vehicleType === "UTV" && "UTV"}
+                      </span>
+                    </div>
+
+                    {/* <Separator
+                      className="px-5 mx-auto my-2 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    /> */}
+
+                    <div className="flex flex-col w-1/2 text-black ">
+                      <span className="text-xs font-semibold ">
+                        Año de fabricación
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        {budget?.vehicleYear}
+                      </span>
+                    </div>
+
+                    {/* <Separator
+                      className="px-5 mx-auto my-2 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    /> */}
+
+                    <div className="flex flex-col w-1/2 text-black">
+                      <span className="text-xs font-semibold ">Kilometraje</span>
+                      <span className="text-xs text-gray-400">
+                        {budget?.vehicleKilometers?.toLocaleString()} km
+                      </span>
+                    </div>
+
+                    {/* <Separator
+                      className="px-5 mx-auto my-2 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    /> 
+
                     <div className="flex flex-col text-black">
+                      <span className="text-xs font-semibold ">Motorizacíon</span>
+                      <span className="text-xs text-gray-400">
+                        {budget?.vehicleMotor}
+                      </span>
+                    </div>
+
+                    <Separator
+                      className="px-5 mx-auto my-2 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    />
+
+                    <div className="flex flex-col text-black">
+                      <span className="text-xs font-semibold ">
+                        Cantidad de puertas
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        {budget?.vehicleDoors === "2P" && "2 puertas"}
+                        {budget?.vehicleDoors === "3P" && "3 puertas"}
+                        {budget?.vehicleDoors === "4P" && "4 puertas"}
+                        {budget?.vehicleDoors === "5P" && "5 puertas"}
+                      </span>
+                    </div>
+
+                    <Separator
+                      className="px-5 mx-auto my-2 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    />*/}
+
+                    <div className="flex flex-col w-1/2 text-black">
+                      <span className="text-xs font-semibold ">Combustible</span>
+                      <span className="text-xs text-gray-400 ">
+                        {budget?.vehicleGas === "DIESEL" && "Diésel"}
+                        {budget?.vehicleGas === "GNC" && "GNC"}
+                        {budget?.vehicleGas === "NAFTA" && "Nafta"}
+                      </span>
+                    </div>
+
+                    {/* <Separator
+                      className="px-5 mx-auto my-2 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    /> */}
+
+                    <div className="flex flex-col w-1/2 text-black">
+                      <span className="text-xs font-semibold ">Transmisión</span>
+                      <span className="text-xs text-gray-400">
+                        {budget?.vehicleGearbox === "AUTOMATIC" && "Automática"}
+                        {budget?.vehicleGearbox === "MANUAL" && "Manual"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </>)}
+
+            {budget?.clientVehicleName !== "" && (
+              <Card
+                style={{ borderColor: "rgb(228, 228, 231)" }}
+                className="flex w-full h-full px-5 py-3 bg-white border-border"
+              >
+                <div className="flex flex-col w-full ">
+                  <span
+                    style={{ fontSize: "16px" }}
+                    className="font-semibold text-black "
+                  >
+                    Vehículo usado
+                  </span>
+
+                  <Separator
+                    className="px-5 mx-auto my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  />
+                  <div className="flex flex-wrap gap-y-3 ">
+                    <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Vehículo</span>
                       <span className="text-xs text-gray-400">
                         {budget?.clientVehicleName}
@@ -374,15 +379,15 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
 
                     {budget?.clientVehicleYear && (
                       <>
-                        <Separator
+                        {/* <Separator
                           className="px-5 mx-auto my-2 "
                           style={{
                             backgroundColor: "rgb(228, 228, 231, 100%)",
                           }}
                           orientation="horizontal"
-                        />
+                        /> */}
 
-                        <div className="flex flex-col text-black">
+                        <div className="flex flex-col w-1/2 text-black">
                           <span className="text-xs font-semibold ">
                             Año de fabricación
                           </span>
@@ -394,32 +399,35 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                     )}
                     {budget?.clientVehicleKilometers && (
                       <>
-                        <Separator
+                        {/* <Separator
                           className="px-5 mx-auto my-2 "
                           style={{
                             backgroundColor: "rgb(228, 228, 231, 100%)",
                           }}
                           orientation="horizontal"
-                        />
-                        <span className="text-xs font-semibold text-black ">
-                          Kilometraje
-                        </span>
-                        <span className="text-xs text-gray-400">
-                          {budget?.clientVehicleKilometers}
-                        </span>
+                        /> */}
+                        <div className="flex flex-col w-1/2 text-black">
+
+                          <span className="text-xs font-semibold text-black ">
+                            Kilometraje
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            {budget?.clientVehicleKilometers}
+                          </span>
+                        </div>
                       </>
                     )}
 
                     {budget?.clientVehicleMotor !== "" && (
                       <>
-                        <Separator
+                        {/* <Separator
                           className="px-5 mx-auto my-2 "
                           style={{
                             backgroundColor: "rgb(228, 228, 231, 100%)",
                           }}
                           orientation="horizontal"
-                        />
-                        <div className="flex flex-col text-black">
+                        /> */}
+                        <div className="flex flex-col w-1/2 text-black">
                           <span className="text-xs font-semibold ">
                             Motorizacíon
                           </span>
@@ -430,15 +438,38 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                       </>
                     )}
                   </div>
+                  {(budget?.MLValue || budget?.infoAutosValue) && (<>
+                    <Separator
+                      className="px-5 mx-auto my-3 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    />
+                    <div className="flex w-full text-xs text-black h-fit">
+                      {(!Number.isNaN(budget?.infoAutosValue) && budget?.infoAutosValue !== undefined) && (
+                        <div className="w-1/2">
+                          <span className="font-semibold">Valor en InfoAutos: {" "} </span> <span className="font-semibold underline">ARS ${Number(budget?.infoAutosValue).toLocaleString()} </span>
+                        </div>
+                      )}
+                      {(!Number.isNaN(budget?.MLValue) && budget?.MLValue !== undefined) && (
+                        <div className="w-1/2">
+                          <span className="font-semibold">Valor promedio en Mercado Libre: {" "} </span> <span className="font-semibold underline">ARS ${Number(budget?.MLValue).toLocaleString()}</span>
+                        </div>
+                      )}
+                    </div>
+                  </>)}
                 </div>
               </Card>
             )}
           </div>
-
+          <Separator
+            className="px-5 mx-auto my-3 "
+            style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+            orientation="horizontal"
+          />
           {/* resumen de presupuesto */}
           <Card
             style={{ borderColor: "rgb(228, 228, 231)" }}
-            className="w-1/2 p-5 bg-white h-fit"
+            className="w-full px-5 py-3 bg-white h-fit"
           >
             <div className="flex flex-col gap-0 text-black bg-white">
               <span
@@ -449,91 +480,99 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
               </span>
 
               <Separator
-                className="my-4 "
+                className="my-3 "
                 style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                 orientation="horizontal"
               />
               <div>
-                {/* precio del vehiculo */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-start justify-between w-full">
-                    <span className="text-xs font-semibold">
-                      Precio del vehículo
-                    </span>
-                    <span className="text-xs font-semibold">
-                      {budget?.budgetCurrency} $
-                      {budget?.vehiclePrice.toLocaleString()}{" "}
+                {budget?.vehiclePrice && (<>
+
+                  {/* precio del vehiculo */}
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-start justify-between w-full">
+                      <span className="text-xs font-semibold">
+                        Precio del vehículo
+                      </span>
+                      <span className="text-xs font-semibold">
+                        {budget?.budgetCurrency} $
+                        {budget?.vehiclePrice.toLocaleString()}{" "}
+                      </span>
+                    </div>
+                    <span className="text-xs text-gray-400">
+                      {budget?.vehicleName}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-400">
-                    {budget?.vehicleName}
-                  </span>
-                </div>
-                {/* precio del vehiculo */}
-                {/* bonificaciones */}
-                {budgetBonifs && budgetBonifs?.length > 0 && (
-                  <>
-                    <Separator
-                      className="my-5 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    />
-                    <div className="flex flex-col mt-5">
-                      <span className="mb-3 text-xs font-semibold ">
-                        Bonificaciones
-                      </span>
-                      {/* <Separator className="my-1" orientation="horizontal" /> */}
-                      <div className="flex flex-col gap-2">
-                        {budgetBonifs?.map((bonif) => (
-                          <>
-                            <div className="flex items-start justify-between w-full">
-                              <span className="text-xs font-normal text-gray-400">
-                                {bonif.details}
-                              </span>
-                              <span className="text-xs text-gray-400 ">
-                                {bonif.addOrSub} {budget?.budgetCurrency} $
-                                {bonif.amount.toLocaleString()}{" "}
-                              </span>
-                            </div>
-                          </>
-                        ))}
-                      </div>
-                      <div className="flex items-start justify-between w-full mt-2">
-                        <span className="text-xs font-semibold">
-                          Subtot. de bonificaciones
+                  <Separator
+                    className="my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  />
+                  {/* precio del vehiculo */}
+                  {/* bonificaciones */}
+                  {budgetBonifs && budgetBonifs?.length > 0 && (
+                    <>
+                      {/* <Separator
+                        className="my-5 "
+                        style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                        orientation="horizontal"
+                      /> */}
+                      <div className="flex flex-col mt-3">
+                        <span className="mb-3 text-xs font-semibold ">
+                          Bonificaciones
                         </span>
-                        <span className="text-xs font-semibold">
-                          {Number(budget?.bonifsSubtotal.toLocaleString()) < 0
-                            ? "-"
-                            : ""}{" "}
-                          {budget?.budgetCurrency} $
-                          {Number(budget?.bonifsSubtotal.toLocaleString()) < 0
-                            ? Number(budget?.bonifsSubtotal.toLocaleString()) *
+                        {/* <Separator className="my-1" orientation="horizontal" /> */}
+                        <div className="flex flex-col gap-2">
+                          {budgetBonifs?.map((bonif) => (
+                            <>
+                              <div className="flex items-start justify-between w-full">
+                                <span className="text-xs font-normal text-gray-400">
+                                  {bonif.details}
+                                </span>
+                                <span className="text-xs text-gray-400 ">
+                                  {bonif.addOrSub} {budget?.budgetCurrency} $
+                                  {bonif.amount.toLocaleString()}{" "}
+                                </span>
+                              </div>
+                            </>
+                          ))}
+                        </div>
+                        <div className="flex items-start justify-between w-full mt-2">
+                          <span className="text-xs font-semibold">
+                            Subtot. de bonificaciones
+                          </span>
+                          <span className="text-xs font-semibold">
+                            {Number(budget?.bonifsSubtotal.toLocaleString()) < 0
+                              ? "-"
+                              : ""}{" "}
+                            {budget?.budgetCurrency} $
+                            {Number(budget?.bonifsSubtotal.toLocaleString()) < 0
+                              ? Number(budget?.bonifsSubtotal.toLocaleString()) *
                               -1
-                            : Number(budget?.bonifsSubtotal.toLocaleString())}
-                        </span>
+                              : Number(budget?.bonifsSubtotal.toLocaleString())}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </>
-                )}
-                {/* bonificaciones */}
+                      <Separator
+                        className="my-3 "
+                        style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                        orientation="horizontal"
+                      />
+                    </>
+                  )}
+                  {/* bonificaciones */}
+                </>)}
 
-                <Separator
-                  className="my-5 "
-                  style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                  orientation="horizontal"
-                />
 
                 {/* entrega de usado */}
                 {budget?.clientVehicleName !== "" && (
                   <>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1">
                       <div className="flex items-start justify-between w-full">
                         <span className="text-xs font-semibold">
                           Entrega de vehículo
                         </span>
                         <span className="text-xs font-semibold">
-                          - {budget?.budgetCurrency} $
+                          {(budget?.vehicleName !== "" && budget?.vehicleName) ? "- " : ""} {budget?.budgetCurrency} $
                           {Number(budget?.clientVehiclePrice).toLocaleString()}
                         </span>
                       </div>
@@ -541,45 +580,78 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                         {budget?.clientVehicleName}
                       </span>
                     </div>
+                    <Separator
+                      className="my-3 "
+                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                      orientation="horizontal"
+                    />
                   </>
                 )}
                 {/* entrega de usado */}
 
-                <Separator
-                  className="my-5 "
-                  style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                  orientation="horizontal"
-                />
 
-                {/* costos de transferencia */}
-                <div className="flex items-start justify-between w-full">
-                  <span className="text-xs font-semibold">
-                    Costos de transferencia
-                  </span>
-                  <span className="text-xs font-semibold">
-                    {budget?.budgetCurrency} $
-                    {budget?.transfer.toFixed(2).toLocaleString()}
-                  </span>
-                </div>
-                {/* costos de transferencia */}
 
-                <Separator
-                  className="my-5 "
-                  style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                  orientation="horizontal"
-                />
+                {(budget?.vehicleName !== "" && budget?.vehicleName) && (<>
+
+                  {/* costos de transferencia */}
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-xs font-semibold">
+                      Costos de transferencia
+                    </span>
+                    <span className="text-xs font-semibold">
+                      {budget?.budgetCurrency} $
+                      {budget?.transfer.toLocaleString()}
+                    </span>
+                  </div>
+                  {/* costos de transferencia */}</>)}
+
+
 
                 {/* total a pagar */}
-                <div className="flex items-start justify-between w-full">
-                  <span className="text-sm font-semibold underline">
-                    Total a pagar
-                  </span>
-                  <span className="text-sm font-semibold underline">
-                    {budget?.budgetCurrency} $
-                    {Number(budget?.total.toFixed(2)).toLocaleString()}
-                  </span>
-                </div>
+                {(budget?.vehicleName !== "" && budget?.vehicleName) && (<>
+                  <Separator
+                    className="my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  />
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold underline">
+                      Total a pagar
+                    </span>
+                    <span className="text-sm font-semibold underline">
+                      {budget?.budgetCurrency} $
+                      {budget?.total
+                        ? Number(budget.total.toFixed(2)).toLocaleString()
+                        : "0"}
+                    </span>
+                  </div>
+                </>)}
                 {/* total a pagar */}
+                {((budget?.vehicleName === "" || !budget?.vehicleName) && budget?.clientVehicleName) && (<>
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-xs font-semibold">
+                      Comisión por venta (4%)
+                    </span>
+                    <span className="text-xs font-semibold">
+                      {budget?.budgetCurrency} $
+                      {(Number(budget?.clientVehiclePrice ?? 0) * 0.04).toLocaleString()}
+                    </span>
+                  </div>
+                  <Separator
+                    className="my-3 "
+                    style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
+                    orientation="horizontal"
+                  />
+                  <div className="flex items-start justify-between w-full">
+                    <span className="text-sm font-semibold underline">
+                      Ganancia neta del titular
+                    </span>
+                    <span className="text-sm font-semibold underline">
+                      {budget?.budgetCurrency} $
+                      {(Number(budget?.clientVehiclePrice ?? 0) - (Number(budget?.clientVehiclePrice ?? 0) * 0.04)).toLocaleString()}
+                    </span>
+                  </div>
+                </>)}
               </div>
             </div>
           </Card>
