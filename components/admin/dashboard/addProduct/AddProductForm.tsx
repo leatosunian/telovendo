@@ -85,7 +85,8 @@ const AddProductForm = () => {
       hasVTV: true,
       ownerNumber: "",
       timingBelt: "",
-      tireCondition: "",
+      tireConditionBack: "",
+      tireConditionFront: "",
       drive: "",
       battery: "",
       paintDetails: "",
@@ -623,10 +624,10 @@ const AddProductForm = () => {
 
                   <FormField
                     control={form.control}
-                    name="tireCondition"
+                    name="tireConditionBack"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Condición de neumáticos <span className="text-gray-500">(%)</span></FormLabel>
+                        <FormLabel>Condición de neumáticos traseros <span className="text-gray-500">(%)</span></FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Ej. 90"
@@ -638,7 +639,23 @@ const AddProductForm = () => {
                       </FormItem>
                     )}
                   />
-
+                  <FormField
+                    control={form.control}
+                    name="tireConditionFront"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Condición de neumáticos delanteros <span className="text-gray-500">(%)</span></FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ej. 90"
+                            type="number"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="battery"
@@ -659,7 +676,7 @@ const AddProductForm = () => {
                 </div>
 
 
-                <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 h-fit md:gap-8 md:grid-cols-2">
                   <FormField
                     control={form.control}
                     name="ownerNumber"
@@ -750,7 +767,7 @@ const AddProductForm = () => {
                 />
               </div>
 
-          
+
               {/* create task modal */}
 
               <Separator className="my-12" />
