@@ -1,7 +1,7 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useState } from "react";
-import contactImg from "@/public/cotizar.jpg";
+import contactImg from "@/public/cotizar.png";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { IBranch } from "@/app/models/branch";

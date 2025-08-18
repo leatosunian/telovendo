@@ -59,13 +59,6 @@ const Budget = ({
     setBudgetNumber(createRandomFiveDigits());
   }, []);
 
-  useEffect(() => {
-    console.log('MLValue', MLValue);
-    console.log('infoautos', infoAutosValue);
-
-  }, [MLValue, infoAutosValue])
-
-
   async function generatePDF() {
 
     if (currency === '') {

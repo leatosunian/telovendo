@@ -29,14 +29,9 @@ interface props {
 const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
   const budgetRef = useRef<HTMLDivElement>(null);
 
-  const [leadData, setLeadData] = useState<ILead>();
-
   function createRandomFiveDigits() {
     return Math.floor(10000 + Math.random() * 90000);
   }
-
-  const { data: session }: any = useSession();
-  console.log(session);
 
   async function generatePDF() {
     const data = budgetRef.current;
@@ -75,7 +70,7 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
   useEffect(() => {
     console.log(budget);
     if (budget !== undefined) {
-      //generatePDF();
+      generatePDF();
     }
   }, [budget]);
 

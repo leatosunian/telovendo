@@ -29,9 +29,15 @@ export async function POST(request: NextRequest) {
 
 
   let leadVehicleImagePath = "";
+  console.log('leadVehicleImage', leadVehicleImage);
 
   // upload lead vehicle thumbnail in cloudinary
-  if (leadVehicleImage[0] !== undefined) {
+  if (
+    Array.isArray(leadVehicleImage) &&
+    leadVehicleImage.length > 0 &&
+    leadVehicleImage[0] instanceof File &&
+    leadVehicleImage[0].name !== "undefined"
+  ) {
     const bytes = await leadVehicleImage[0].arrayBuffer();
     const buffer = Buffer.from(bytes);
     try {
