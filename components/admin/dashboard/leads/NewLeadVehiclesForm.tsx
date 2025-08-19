@@ -144,8 +144,10 @@ const NewLeadForm = ({ onChangeFormStep, createdLeadData }: props) => {
     formData.append("leadType", values.leadType);
     formData.append("leadCurrency", values.leadCurrency);
     formData.append("leadPrice", values.leadPrice);
-    formData.append("interestedIn", selectedIntIn?.name!);
-    formData.append("interestedInName", selectedIntIn?.name!);
+    if (selectedIntIn?.name) {
+      formData.append("interestedIn", selectedIntIn?.name!);
+      formData.append("interestedInName", selectedIntIn?.name!);
+    }
     formData.append("leadID", createdLeadData?._id!);
     formData.append("leadPrefVehicleUUID", selectedIntIn?.uuid!);
     formData.append("leadObservations", values.leadObservations);
