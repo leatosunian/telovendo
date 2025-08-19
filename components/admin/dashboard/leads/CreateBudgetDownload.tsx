@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/app/css-modules/budget/budget.module.css";
-import logo from "@/public/logomuestrablack.png";
+import logo from "@/public/logomuestrablackletras.png";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -87,20 +87,16 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
               Presupuesto
             </span>
             <span className="text-sm font-normal text-gray-600">
-              N° {budget?.budgetNumber}{" "}
+              N° {budget?.budgetNumber ? budget.budgetNumber : "No especificado."}{" "}
             </span>
           </div>
           <div className="flex gap-8">
-            {/* <div className="flex flex-col ">
-              <span className="text-xs font-semibold">Tipo de negocio</span>
-              <span className="text-xs font-light">
-                {budget?.businessType}{" "}
-              </span>
-            </div> */}
             <div className="flex flex-col ">
               <span className="text-xs font-semibold">Fecha </span>
               <span className="text-xs font-light">
-                {dayjs(budget?.createdAt).format("DD/MM/YYYY")}{" "}
+                {budget?.createdAt
+                  ? dayjs(budget.createdAt).format("DD/MM/YYYY")
+                  : "No especificado."}{" "}
               </span>
             </div>
           </div>
@@ -127,13 +123,13 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                       style={{ fontSize: "11px" }}
                       className="flex items-center gap-1.5 font-light"
                     >
-                      <FaUserTie /> {budget?.sellerName}
+                      <FaUserTie /> {budget?.sellerName && budget.sellerName !== "" ? budget.sellerName : "No especificado."}
                     </span>
                     <span
                       style={{ fontSize: "11px" }}
                       className="flex items-center gap-1.5 font-light"
                     >
-                      <FaPhoneAlt /> {budget?.sellerPhone}
+                      <FaPhoneAlt /> {budget?.sellerPhone && budget.sellerPhone !== "" ? budget.sellerPhone : "No especificado."}
                     </span>
                   </div>
                   <span
@@ -141,7 +137,7 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                     className="flex items-center gap-1.5 font-light"
                   >
                     <IoIosMail />
-                    {budget?.sellerEmail}
+                    {budget?.sellerEmail && budget.sellerEmail !== "" ? budget.sellerEmail : "No especificado."}
                   </span>
                 </div>
               </div>
@@ -168,23 +164,16 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                       className="flex items-center gap-1.5 font-light"
                     >
                       <FaUserAlt />
-                      {budget?.clientName}
+                      {budget?.clientName && budget.clientName !== null ? budget.clientName : "No especificado."}
                     </span>
                     <span
                       style={{ fontSize: "11px" }}
                       className="flex items-center gap-1.5 font-light"
                     >
                       <FaPhoneAlt />
-                      {budget?.clientPhone}
+                      {budget?.clientPhone && budget.clientPhone !== null ? budget.clientPhone : "No especificado."}
                     </span>
                   </div>
-                  {/* <span
-                    style={{ fontSize: "11px" }}
-                    className="flex items-center gap-1.5 font-light"
-                  >
-                    <IoIosMail />
-                    {budget?.clientEmail}
-                  </span> */}
                 </div>
               </div>
               {/* client */}
@@ -222,19 +211,11 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                   />
                   <div className="flex flex-row flex-wrap gap-y-3 ">
                     <div className="flex flex-col w-1/2 text-black">
-
                       <span className="text-xs font-semibold ">Vehículo</span>
                       <span className="text-xs text-gray-400">
-                        {budget?.vehicleName}
+                        {budget?.vehicleName && budget.vehicleName !== "" ? budget.vehicleName : "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
-
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">
                         Tipo de vehículo
@@ -251,94 +232,40 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                         {budget?.vehicleType === "CONVERTIBLE" && "Convertible"}
                         {budget?.vehicleType === "QUAD" && "Cuatriciclo"}
                         {budget?.vehicleType === "UTV" && "UTV"}
+                        {!budget?.vehicleType && "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
-
                     <div className="flex flex-col w-1/2 text-black ">
                       <span className="text-xs font-semibold ">
                         Año de fabricación
                       </span>
                       <span className="text-xs text-gray-400">
-                        {budget?.vehicleYear}
+                        {budget?.vehicleYear ? budget.vehicleYear : "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
-
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Kilometraje</span>
                       <span className="text-xs text-gray-400">
-                        {budget?.vehicleKilometers?.toLocaleString()} km
+                        {budget?.vehicleKilometers !== undefined && budget.vehicleKilometers !== null
+                          ? `${budget.vehicleKilometers.toLocaleString()} km`
+                          : "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> 
-
-                    <div className="flex flex-col text-black">
-                      <span className="text-xs font-semibold ">Motorizacíon</span>
-                      <span className="text-xs text-gray-400">
-                        {budget?.vehicleMotor}
-                      </span>
-                    </div>
-
-                    <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    />
-
-                    <div className="flex flex-col text-black">
-                      <span className="text-xs font-semibold ">
-                        Cantidad de puertas
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        {budget?.vehicleDoors === "2P" && "2 puertas"}
-                        {budget?.vehicleDoors === "3P" && "3 puertas"}
-                        {budget?.vehicleDoors === "4P" && "4 puertas"}
-                        {budget?.vehicleDoors === "5P" && "5 puertas"}
-                      </span>
-                    </div>
-
-                    <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    />*/}
-
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Combustible</span>
                       <span className="text-xs text-gray-400 ">
                         {budget?.vehicleGas === "DIESEL" && "Diésel"}
                         {budget?.vehicleGas === "GNC" && "GNC"}
                         {budget?.vehicleGas === "NAFTA" && "Nafta"}
+                        {!budget?.vehicleGas && "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
-
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Transmisión</span>
                       <span className="text-xs text-gray-400">
                         {budget?.vehicleGearbox === "AUTOMATIC" && "Automática"}
                         {budget?.vehicleGearbox === "MANUAL" && "Manual"}
+                        {!budget?.vehicleGearbox && "No especificado."}
                       </span>
                     </div>
                   </div>
@@ -368,46 +295,32 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Vehículo</span>
                       <span className="text-xs text-gray-400">
-                        {budget?.clientVehicleName}
+                        {budget?.clientVehicleName && budget.clientVehicleName !== "" ? budget.clientVehicleName : "No especificado."}
                       </span>
                     </div>
 
                     {budget?.clientVehicleYear && (
                       <>
-                        {/* <Separator
-                          className="px-5 mx-auto my-2 "
-                          style={{
-                            backgroundColor: "rgb(228, 228, 231, 100%)",
-                          }}
-                          orientation="horizontal"
-                        /> */}
-
                         <div className="flex flex-col w-1/2 text-black">
                           <span className="text-xs font-semibold ">
                             Año de fabricación
                           </span>
                           <span className="text-xs text-gray-400">
-                            {budget?.clientVehicleYear}
+                            {budget.clientVehicleYear ? budget.clientVehicleYear : "No especificado."}
                           </span>
                         </div>
                       </>
                     )}
-                    {budget?.clientVehicleKilometers && (
+                    {budget?.clientVehicleKilometers !== undefined && budget.clientVehicleKilometers !== null && (
                       <>
-                        {/* <Separator
-                          className="px-5 mx-auto my-2 "
-                          style={{
-                            backgroundColor: "rgb(228, 228, 231, 100%)",
-                          }}
-                          orientation="horizontal"
-                        /> */}
                         <div className="flex flex-col w-1/2 text-black">
-
                           <span className="text-xs font-semibold text-black ">
                             Kilometraje
                           </span>
                           <span className="text-xs text-gray-400">
-                            {budget?.clientVehicleKilometers}
+                            {budget.clientVehicleKilometers !== undefined && budget.clientVehicleKilometers !== null
+                              ? budget.clientVehicleKilometers.toLocaleString() + " km"
+                              : "No especificado."}
                           </span>
                         </div>
                       </>
@@ -415,19 +328,12 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
 
                     {budget?.clientVehicleMotor !== "" && (
                       <>
-                        {/* <Separator
-                          className="px-5 mx-auto my-2 "
-                          style={{
-                            backgroundColor: "rgb(228, 228, 231, 100%)",
-                          }}
-                          orientation="horizontal"
-                        /> */}
                         <div className="flex flex-col w-1/2 text-black">
                           <span className="text-xs font-semibold ">
                             Motorizacíon
                           </span>
                           <span className="text-xs text-gray-400">
-                            {budget?.clientVehicleMotor}
+                            {budget?.clientVehicleMotor && budget?.clientVehicleMotor !== "" ? budget?.clientVehicleMotor : "No especificado."}
                           </span>
                         </div>
                       </>
@@ -442,12 +348,18 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                     <div className="flex w-full text-xs text-black h-fit">
                       {(!Number.isNaN(budget?.infoAutosValue) && budget?.infoAutosValue !== undefined) && (
                         <div className="w-1/2">
-                          <span className="font-semibold">Valor en InfoAutos: {" "} </span> <span className="font-semibold underline">ARS ${Number(budget?.infoAutosValue).toLocaleString()} </span>
+                          <span className="font-semibold">Valor en InfoAutos: {" "} </span>
+                          <span className="font-semibold underline">
+                            ARS {budget.infoAutosValue ? Number(budget.infoAutosValue).toLocaleString() : "No especificado."}
+                          </span>
                         </div>
                       )}
                       {(!Number.isNaN(budget?.MLValue) && budget?.MLValue !== undefined) && (
                         <div className="w-1/2">
-                          <span className="font-semibold">Valor promedio en Mercado Libre: {" "} </span> <span className="font-semibold underline">ARS ${Number(budget?.MLValue).toLocaleString()}</span>
+                          <span className="font-semibold">Valor promedio en Mercado Libre: {" "} </span>
+                          <span className="font-semibold underline">
+                            ARS {budget.MLValue ? Number(budget.MLValue).toLocaleString() : "No especificado."}
+                          </span>
                         </div>
                       )}
                     </div>
@@ -481,7 +393,6 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
               />
               <div>
                 {budget?.vehiclePrice && (<>
-
                   {/* precio del vehiculo */}
                   <div className="flex flex-col gap-1">
                     <div className="flex items-start justify-between w-full">
@@ -489,12 +400,12 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                         Precio del vehículo
                       </span>
                       <span className="text-xs font-semibold">
-                        {budget?.budgetCurrency} $
-                        {budget?.vehiclePrice.toLocaleString()}{" "}
+                        {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                        {budget?.vehiclePrice ? budget.vehiclePrice.toLocaleString() : "No especificado."}{" "}
                       </span>
                     </div>
                     <span className="text-xs text-gray-400">
-                      {budget?.vehicleName}
+                      {budget?.vehicleName && budget.vehicleName !== "" ? budget.vehicleName : "No especificado."}
                     </span>
                   </div>
                   <Separator
@@ -502,30 +413,24 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                     style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
                     orientation="horizontal"
                   />
-                  {/* precio del vehiculo */}
                   {/* bonificaciones */}
                   {budgetBonifs && budgetBonifs?.length > 0 && (
                     <>
-                      {/* <Separator
-                        className="my-5 "
-                        style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                        orientation="horizontal"
-                      /> */}
                       <div className="flex flex-col mt-3">
                         <span className="mb-3 text-xs font-semibold ">
                           Bonificaciones
                         </span>
-                        {/* <Separator className="my-1" orientation="horizontal" /> */}
                         <div className="flex flex-col gap-2">
                           {budgetBonifs?.map((bonif) => (
                             <>
                               <div className="flex items-start justify-between w-full">
                                 <span className="text-xs font-normal text-gray-400">
-                                  {bonif.details}
+                                  {bonif.details ? bonif.details : "No especificado."}
                                 </span>
                                 <span className="text-xs text-gray-400 ">
-                                  {bonif.addOrSub} {budget?.budgetCurrency} $
-                                  {bonif.amount.toLocaleString()}{" "}
+                                  {bonif.addOrSub ? bonif.addOrSub : ""}
+                                  {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                                  {bonif.amount ? bonif.amount.toLocaleString() : "No especificado."}{" "}
                                 </span>
                               </div>
                             </>
@@ -536,14 +441,15 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                             Subtot. de bonificaciones
                           </span>
                           <span className="text-xs font-semibold">
-                            {Number(budget?.bonifsSubtotal.toLocaleString()) < 0
+                            {Number(budget?.bonifsSubtotal?.toLocaleString()) < 0
                               ? "-"
                               : ""}{" "}
-                            {budget?.budgetCurrency} $
-                            {Number(budget?.bonifsSubtotal.toLocaleString()) < 0
-                              ? Number(budget?.bonifsSubtotal.toLocaleString()) *
-                              -1
-                              : Number(budget?.bonifsSubtotal.toLocaleString())}
+                            {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                            {budget?.bonifsSubtotal !== undefined
+                              ? (Number(budget.bonifsSubtotal.toLocaleString()) < 0
+                                ? Number(budget.bonifsSubtotal.toLocaleString()) * -1
+                                : Number(budget.bonifsSubtotal.toLocaleString()))
+                              : "No especificado."}
                           </span>
                         </div>
                       </div>
@@ -557,7 +463,6 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                   {/* bonificaciones */}
                 </>)}
 
-
                 {/* entrega de usado */}
                 {budget?.clientVehicleName !== "" && (
                   <>
@@ -567,12 +472,14 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                           Entrega de vehículo
                         </span>
                         <span className="text-xs font-semibold">
-                          {(budget?.vehicleName !== "" && budget?.vehicleName) ? "- " : ""} {budget?.budgetCurrency} $
-                          {Number(budget?.clientVehiclePrice).toLocaleString()}
+                          {(budget?.vehicleName !== "" && budget?.vehicleName) ? "- " : ""} {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                          {budget?.clientVehiclePrice !== undefined && budget.clientVehiclePrice !== null
+                            ? Number(budget.clientVehiclePrice).toLocaleString()
+                            : "No especificado."}
                         </span>
                       </div>
                       <span className="text-xs text-gray-400">
-                        {budget?.clientVehicleName}
+                        {budget?.clientVehicleName && budget.clientVehicleName !== "" ? budget.clientVehicleName : "No especificado."}
                       </span>
                     </div>
                     <Separator
@@ -584,23 +491,21 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                 )}
                 {/* entrega de usado */}
 
-
-
                 {(budget?.vehicleName !== "" && budget?.vehicleName) && (<>
-
                   {/* costos de transferencia */}
                   <div className="flex items-start justify-between w-full">
                     <span className="text-xs font-semibold">
                       Costos de transferencia
                     </span>
                     <span className="text-xs font-semibold">
-                      {budget?.budgetCurrency} $
-                      {budget?.transfer.toLocaleString()}
+                      {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                      {budget?.transfer !== undefined && budget.transfer !== null
+                        ? budget.transfer.toLocaleString()
+                        : "No especificado."}
                     </span>
                   </div>
-                  {/* costos de transferencia */}</>)}
-
-
+                  {/* costos de transferencia */}
+                </>)}
 
                 {/* total a pagar */}
                 {(budget?.vehicleName !== "" && budget?.vehicleName) && (<>
@@ -614,10 +519,10 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                       Total a pagar
                     </span>
                     <span className="text-sm font-semibold underline">
-                      {budget?.budgetCurrency} $
-                      {budget?.total
+                      {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                      {budget?.total !== undefined && budget.total !== null
                         ? Number(budget.total.toFixed(2)).toLocaleString()
-                        : "0"}
+                        : "No especificado."}
                     </span>
                   </div>
                 </>)}
@@ -628,8 +533,10 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                       Comisión por venta (4%)
                     </span>
                     <span className="text-xs font-semibold">
-                      {budget?.budgetCurrency} $
-                      {(Number(budget?.clientVehiclePrice ?? 0) * 0.04).toLocaleString()}
+                      {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                      {(budget?.clientVehiclePrice !== undefined && budget.clientVehiclePrice !== null)
+                        ? (Number(budget.clientVehiclePrice ?? 0) * 0.04).toLocaleString()
+                        : "No especificado."}
                     </span>
                   </div>
                   <Separator
@@ -642,8 +549,10 @@ const CreateBudgetDownload = ({ budget, budgetBonifs }: props) => {
                       Ganancia neta del titular
                     </span>
                     <span className="text-sm font-semibold underline">
-                      {budget?.budgetCurrency} $
-                      {(Number(budget?.clientVehiclePrice ?? 0) - (Number(budget?.clientVehiclePrice ?? 0) * 0.04)).toLocaleString()}
+                      {budget?.budgetCurrency ? budget.budgetCurrency : "No especificado."} $
+                      {(budget?.clientVehiclePrice !== undefined && budget.clientVehiclePrice !== null)
+                        ? (Number(budget.clientVehiclePrice ?? 0) - (Number(budget.clientVehiclePrice ?? 0) * 0.04)).toLocaleString()
+                        : "No especificado."}
                     </span>
                   </div>
                 </>)}

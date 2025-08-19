@@ -80,7 +80,7 @@ const LeadEditForm = () => {
       leadKilometers: "",
       leadMotor: "",
       leadType: "",
-      leadCurrency: "USD",
+      leadCurrency: "ARS",
       leadPrice: "",
       leadObservations: "",
     },
@@ -632,7 +632,11 @@ const LeadEditForm = () => {
               </span>
               {/* <Separator className="my-5" /> */}
 
-              <span className="text-lg font-semibold">Vehículo de interés</span>
+              <span className="text-lg font-semibold">Vehículo de interés{" "}
+                <span className="text-base font-normal text-gray-500">
+                  (opcional)
+                </span>
+              </span>
             </div>
             <div className="flex flex-col items-center justify-center gap-5 mt-8">
               {selectedIntIn === undefined && (
@@ -707,11 +711,11 @@ const LeadEditForm = () => {
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <IoSpeedometerOutline size={20} />
-                                      <span> {car.kilometers} km</span>
+                                      <span> {car.kilometers.toLocaleString("es-AR")} km</span>
                                     </div>
                                   </CardDescription>
                                   <p className="text-lg font-semibold">
-                                    {car.currency} ${car.price}
+                                    {car.currency} ${car.price.toLocaleString("es-AR")}
                                   </p>
                                 </CardHeader>
                                 <CardFooter className="w-full">
@@ -756,11 +760,11 @@ const LeadEditForm = () => {
                               </div>
                               <div className="flex items-center gap-2">
                                 <IoSpeedometerOutline size={20} />
-                                <span> {selectedIntIn?.kilometers} km</span>
+                                <span> {selectedIntIn?.kilometers.toLocaleString("es-AR")} km</span>
                               </div>
                             </CardDescription>
                             <p className="text-lg font-semibold">
-                              {selectedIntIn?.currency} ${selectedIntIn?.price}
+                              {selectedIntIn?.currency} ${selectedIntIn?.price.toLocaleString("es-AR")}
                             </p>
                           </CardHeader>
                           <CardFooter className="w-full">

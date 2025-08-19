@@ -637,12 +637,12 @@ const LeadDetails = () => {
                             <div className="flex items-center gap-2">
                               <IoSpeedometerOutline size={20} />
                               {/* <span> {car.kilometers} km</span> */}
-                              <span> {intInVehicle?.kilometers} km</span>
+                              <span> {intInVehicle?.kilometers.toLocaleString("es-AR")} km</span>
                             </div>
                           </CardDescription>
                           <span className="text-lg font-semibold">
                             {/* {car.currency} ${car.price} */}
-                            {intInVehicle?.currency} ${intInVehicle?.price}
+                            {intInVehicle?.currency} ${intInVehicle?.price.toLocaleString("es-AR")}
                           </span>
                         </CardHeader>
                         <CardFooter className="w-full p-4">
@@ -719,12 +719,12 @@ const LeadDetails = () => {
                               <div className="flex items-center gap-2">
                                 <IoSpeedometerOutline size={20} />
                                 {/* <span> {car.kilometers} km</span> */}
-                                <span> {leadVehicles?.leadKilometers} km</span>
+                                <span> {Number(leadVehicles?.leadKilometers).toLocaleString("es-AR")} km</span>
                               </div>
                             </CardDescription>
                             <span className="text-lg font-semibold">
                               {leadVehicles?.leadCurrency} $
-                              {leadVehicles?.leadPrice}
+                              {Number(leadVehicles?.leadPrice).toLocaleString("es-AR")}
                             </span>
                           </CardHeader>
                           <CardFooter className="w-full p-4">

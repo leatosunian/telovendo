@@ -323,15 +323,9 @@ const Budget = ({
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Vehículo</span>
                       <span className="text-xs text-gray-400">
-                        {intInVehicle?.name}
+                        {intInVehicle?.name && intInVehicle?.name !== "" ? intInVehicle?.name : "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
 
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">
@@ -349,73 +343,25 @@ const Budget = ({
                         {intInVehicle?.type === "CONVERTIBLE" && "Convertible"}
                         {intInVehicle?.type === "QUAD" && "Cuatriciclo"}
                         {intInVehicle?.type === "UTV" && "UTV"}
+                        {(!intInVehicle?.type) && "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
 
                     <div className="flex flex-col w-1/2 text-black ">
                       <span className="text-xs font-semibold ">
                         Año de fabricación
                       </span>
                       <span className="text-xs text-gray-400">
-                        {intInVehicle?.year}
+                        {intInVehicle?.year ? intInVehicle?.year : "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
 
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Kilometraje</span>
                       <span className="text-xs text-gray-400">
-                        {intInVehicle?.kilometers.toLocaleString()} km
+                        {(intInVehicle?.kilometers !== undefined && intInVehicle?.kilometers !== null) ? intInVehicle?.kilometers.toLocaleString() + " km" : "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
-                    {/* 
-                    <div className="flex flex-col w-1/2 text-black">
-                      <span className="text-xs font-semibold ">Motorizacíon</span>
-                      <span className="text-xs text-gray-400">
-                        {intInVehicle?.motor}
-                      </span>
-                    </div> */}
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
-
-                    {/* <div className="flex flex-col w-1/2 text-black">
-                      <span className="text-xs font-semibold ">
-                        Cantidad de puertas
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        {intInVehicle?.doors === "2P" && "2 puertas"}
-                        {intInVehicle?.doors === "3P" && "3 puertas"}
-                        {intInVehicle?.doors === "4P" && "4 puertas"}
-                        {intInVehicle?.doors === "5P" && "5 puertas"}
-                      </span>
-                    </div> */}
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
 
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Combustible</span>
@@ -423,20 +369,16 @@ const Budget = ({
                         {intInVehicle?.gas === "DIESEL" && "Diésel"}
                         {intInVehicle?.gas === "GNC" && "GNC"}
                         {intInVehicle?.gas === "NAFTA" && "Nafta"}
+                        {(!intInVehicle?.gas) && "No especificado."}
                       </span>
                     </div>
-
-                    {/* <Separator
-                      className="px-5 mx-auto my-2 "
-                      style={{ backgroundColor: "rgb(228, 228, 231, 100%)" }}
-                      orientation="horizontal"
-                    /> */}
 
                     <div className="flex flex-col w-1/2 text-black">
                       <span className="text-xs font-semibold ">Transmisión</span>
                       <span className="text-xs text-gray-400">
                         {intInVehicle?.gearbox === "AUTOMATIC" && "Automática"}
                         {intInVehicle?.gearbox === "MANUAL" && "Manual"}
+                        {(!intInVehicle?.gearbox) && "No especificado."}
                       </span>
                     </div>
                   </div>
@@ -508,7 +450,9 @@ const Budget = ({
                         Motorizacíon
                       </span>
                       <span className="text-xs text-gray-400">
-                        {leadVehicles?.leadMotor}
+                        {leadVehicles?.leadMotor && leadVehicles?.leadMotor !== ""
+                          ? leadVehicles?.leadMotor
+                          : "No especificado."}
                       </span>
                     </div>
                   </div>

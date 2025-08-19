@@ -115,11 +115,11 @@ const CreateBudgetForm = () => {
     useState(false);
   const [initialIntInCurrency, setInitialIntInCurrency] = useState<{
     price: number;
-    currency: "USD" | "ARS";
+    currency: "USD" | "ARS" | undefined;
   }>();
   const [initialLeadVehicleCurrency, setInitialLeadVehicleCurrency] = useState<{
     price: number;
-    currency: "USD" | "ARS";
+    currency: "USD" | "ARS" | undefined;
   }>();
   const [transfer, setTransfer] = useState<number>(0);
   const [transferFixed, setTransferFixed] = useState<number>();
@@ -343,7 +343,8 @@ const CreateBudgetForm = () => {
     console.log('transfer', transfer);
 
     // cuando no hay vehiculo del lead
-    if ((leadVehicles?.leadPrice !== "" && intInVehicle)) {
+    if ((leadVehicles?.leadPrice === "" && intInVehicle)) {
+      console.log('cuando no hay vehiculo del lead');
       total =
         intInVehicle?.price! +
         intInVehicleBonifsSubtotal +
@@ -363,6 +364,8 @@ const CreateBudgetForm = () => {
         Number(leadVehicles?.leadPrice) +
         transfer;
     }
+
+    console.log('total', total);
 
     setTotal(total);
   }
@@ -408,8 +411,9 @@ const CreateBudgetForm = () => {
   }, [intInVehicle]);
 
   useEffect(() => {
-    console.log('initialLeadVehicleCurrency', initialLeadVehicleCurrency)
-  }, [initialLeadVehicleCurrency])
+    console.log('initialLeadVehicleCurrency', initialLeadVehicleCurrency);
+    console.log('initialIntInCurrency', initialIntInCurrency);
+  }, [initialLeadVehicleCurrency, initialIntInCurrency])
 
 
   // useEffects
@@ -491,6 +495,10 @@ const CreateBudgetForm = () => {
                     <Select
                       defaultValue={currency}
                       value={currency}
+                      disabled={
+                        initialLeadVehicleCurrency?.currency === 'ARS' ||
+                        initialIntInCurrency?.currency === "ARS"
+                      }
                       onValueChange={(value) => {
                         setCurrency(value);
                         setTransfer(0);
@@ -503,7 +511,7 @@ const CreateBudgetForm = () => {
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Seleccionar moneda" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent >
                         <SelectGroup>
                           <SelectItem value="USD">Dólar</SelectItem>
                           <SelectItem value="ARS">Peso argentino</SelectItem>
@@ -512,7 +520,7 @@ const CreateBudgetForm = () => {
                     </Select>
                   </div>
 
-                  {currency === "ARS" && (
+                  {(currency === "ARS" && initialLeadVehicleCurrency?.currency !== 'ARS' && initialIntInCurrency?.currency !== 'ARS') && (
                     <div className="grid mb-3 md:mb-0 w-full max-w-sm items-center gap-1.5">
                       <Label htmlFor="email">Cotización del dolar</Label>
                       <span className="text-xs font-light text-gray-400">
@@ -612,7 +620,7 @@ const CreateBudgetForm = () => {
 
                       <div className="flex flex-col w-full h-full mt-7 lg:mt-0 xl:flex-row">
                         {/* bonificaciones section */}
-                        <div className="flex flex-col w-full max-w-full md:max-w-[400px] ">
+                        {/* <div className="flex flex-col w-full max-w-full md:max-w-[400px] ">
                           <div className="flex flex-col w-full gap-2 h-fit">
                             <Label htmlFor="email" className="text-lg">
                               Bonificaciones
@@ -666,13 +674,13 @@ const CreateBudgetForm = () => {
                           >
                             Añadir bonificación
                           </Button>
-                        </div>
+                        </div> 
 
                         <Separator
                           className="mx-7 h-[300px] my-auto hidden xl:block"
                           orientation="vertical"
                         />
-
+*/}
                         <Separator
                           className="block w-full md:w-[400px]  my-10 xl:hidden"
                           orientation="horizontal"
@@ -898,8 +906,9 @@ const CreateBudgetForm = () => {
 
                           <Input
                             onWheel={(e) => e.currentTarget.blur()}
+
                             onChange={(value) => {
-                              setMLValue(
+                              setInfoAutosValue(
                                 parseInt(value.target.value)
                               );
                             }}
@@ -919,7 +928,7 @@ const CreateBudgetForm = () => {
                           <Input
                             onWheel={(e) => e.currentTarget.blur()}
                             onChange={(value) => {
-                              setInfoAutosValue(
+                              setMLValue(
                                 parseInt(value.target.value)
                               );
                             }}
@@ -1086,7 +1095,7 @@ const CreateBudgetForm = () => {
 
 
               {/* total a pagar */}
-              {(intInVehicle ) && (<>
+              {(intInVehicle) && (<>
                 <Separator className="my-5 " orientation="horizontal" />
                 <div className="flex items-start justify-between w-full">
                   <span className="text-sm font-semibold">Total a pagar</span>

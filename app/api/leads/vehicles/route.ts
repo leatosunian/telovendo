@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
 
 
   let leadVehicleImagePath = "";
-  console.log('leadVehicleImage', leadVehicleImage);
 
   // upload lead vehicle thumbnail in cloudinary
   if (

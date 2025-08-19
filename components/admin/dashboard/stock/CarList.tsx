@@ -342,7 +342,7 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
                             </div>
                             <div className="flex items-center gap-2">
                               <IoSpeedometerOutline size={20} />
-                              <span> {car.kilometers} km</span>
+                              <span> {car.kilometers.toLocaleString("es-AR")} km</span>
                             </div>
                           </CardDescription>
                           <div className="flex flex-col gap-5">
@@ -366,7 +366,7 @@ const CarList = ({ cars }: { cars: ICar[] }) => {
                               </p>
                             )}
                             <p className="text-lg font-semibold">
-                              {car.currency} ${car.price}
+                              {car.currency} ${car.price.toLocaleString("es-AR")}
                             </p>
                           </div>
                         </CardHeader>

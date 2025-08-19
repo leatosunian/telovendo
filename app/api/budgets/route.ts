@@ -17,10 +17,13 @@ export async function POST(request: NextRequest, response: NextResponse) {
     data.budgetData.clientVehiclePrice = Number(data.budgetData.clientVehiclePrice);
     data.budgetData.clientVehicleYear = Number(data.budgetData.clientVehicleYear);
     data.budgetData.clientVehicleKilometers = Number(data.budgetData.clientVehicleKilometers);
-    data.budgetData.MLValue = Number(data.budgetData.MLValue);
-    data.budgetData.infoAutosValue = Number(data.budgetData.infoAutosValue);
+    if (data.budgetData.MLValue) {
+      data.budgetData.MLValue = Number(data.budgetData.MLValue);
+    }
+    if (data.budgetData.infoAutosValue) {
+      data.budgetData.infoAutosValue = Number(data.budgetData.infoAutosValue);
+    }
 
-    
     const uploadedBudget = await BudgetModel.create(data.budgetData);
     console.log('uploadedBudget', uploadedBudget);
     const updateLeadStatus = await LeadModel.findOneAndUpdate(
