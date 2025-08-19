@@ -76,7 +76,7 @@ const NewLeadForm = ({ onChangeFormStep, createdLeadData }: props) => {
       leadKilometers: "",
       leadMotor: "",
       leadType: "",
-      leadCurrency: "USD",
+      leadCurrency: "ARS",
       leadPrice: "",
       leadObservations: "",
     },
@@ -137,6 +137,7 @@ const NewLeadForm = ({ onChangeFormStep, createdLeadData }: props) => {
     let formData = new FormData();
     formData.append("leadVehicleImage", intInImage!);
     formData.append("leadName", values.leadName);
+    formData.append("leadVehicleName", values.leadName);
     formData.append("leadYear", values.leadYear);
     formData.append("leadKilometers", values.leadKilometers);
     formData.append("leadMotor", values.leadMotor);
@@ -144,6 +145,7 @@ const NewLeadForm = ({ onChangeFormStep, createdLeadData }: props) => {
     formData.append("leadCurrency", values.leadCurrency);
     formData.append("leadPrice", values.leadPrice);
     formData.append("interestedIn", selectedIntIn?.name!);
+    formData.append("interestedInName", selectedIntIn?.name!);
     formData.append("leadID", createdLeadData?._id!);
     formData.append("leadPrefVehicleUUID", selectedIntIn?.uuid!);
     formData.append("leadObservations", values.leadObservations);

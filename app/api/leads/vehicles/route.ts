@@ -22,6 +22,8 @@ export async function POST(request: NextRequest) {
   const leadCurrency = data.get("leadCurrency") as string;
   const leadPrice = data.get("leadPrice") as string;
   const interestedIn = data.get("interestedIn") as string;
+  const interestedInName = data.get("interestedInName") as string;
+  const leadVehicleName = data.get("leadVehicleName") as string;
   const leadID = data.get("leadID") as string;
   const leadPrefVehicleUUID = data.get("leadPrefVehicleUUID") as string;
   const leadObservations = data.get("leadObservations") as string;
@@ -75,7 +77,7 @@ export async function POST(request: NextRequest) {
 
     const editLeadInterestedIn = await LeadModel.findByIdAndUpdate(
       { _id: leadID },
-      { interestedIn },
+      { interestedIn, interestedInName, leadVehicleName },
       { new: true }
     );
     console.log('editLeadInterestedIn', editLeadInterestedIn);
