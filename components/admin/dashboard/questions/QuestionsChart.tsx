@@ -161,6 +161,7 @@ const QuestionsChart = () => {
       contactType: "Consulta en la web",
       businessType: "Otro",
       observations: "",
+      leadVehicleName: questionToHandle?.vehicleInfo!,
       phone: questionToHandle?.phone!,
       //email: questionToHandle?.email!,
       employeeID: answerBody.employeeAsignedID,
