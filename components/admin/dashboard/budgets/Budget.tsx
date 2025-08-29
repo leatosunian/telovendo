@@ -332,17 +332,16 @@ const Budget = ({
                         Tipo de vehículo
                       </span>
                       <span className="text-xs text-gray-400">
-                        {intInVehicle?.type === "CAR" && "Automóvil"}
-                        {intInVehicle?.type === "BIKE" && "Motocicleta"}
+                        {intInVehicle?.type === "HATCHBACK" && "Hatchback"}
+                        {intInVehicle?.type === "SEDAN" && "Sedán"}
+                        {intInVehicle?.type === "CABRIO" && "Descapotable"}
+                        {intInVehicle?.type === "WAGON" && "Rural"}
+                        {intInVehicle?.type === "COUPE" && "Coupé"}
                         {intInVehicle?.type === "PICKUP" && "Pickup"}
                         {intInVehicle?.type === "UTILITARY" && "Utilitario"}
                         {intInVehicle?.type === "SUV" && "SUV"}
                         {intInVehicle?.type === "VAN" && "Van"}
-                        {intInVehicle?.type === "COUPE" && "Coupe"}
-                        {intInVehicle?.type === "HATCHBACK" && "Hatchback"}
                         {intInVehicle?.type === "CONVERTIBLE" && "Convertible"}
-                        {intInVehicle?.type === "QUAD" && "Cuatriciclo"}
-                        {intInVehicle?.type === "UTV" && "UTV"}
                         {(!intInVehicle?.type) && "No especificado."}
                       </span>
                     </div>

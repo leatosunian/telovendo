@@ -1,5 +1,6 @@
 "use client";
 import { MdLocalPhone, MdPendingActions } from "react-icons/md";
+import noimage from "@/public/noimage.jpg";
 import { useEffect, useRef, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { useParams, useRouter } from "next/navigation";
@@ -368,6 +369,8 @@ const LeadDetails = () => {
     }
   }
 
+
+
   useEffect(() => {
     getTasks();
   }, [lead]);
@@ -696,14 +699,31 @@ const LeadDetails = () => {
                   <div className="flex flex-col items-center justify-center gap-5 mt-8 sm:items-start">
                     <div className="h-full max-w-full sm:max-w-[300px] ">
                       <Card className="flex flex-col h-full shadow-lg">
-                        <Image
+                        {/* <Image
                           src={leadVehicles?.leadVehicleImage!}
                           alt=""
                           unoptimized
                           width={500}
                           height={500}
                           className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
-                        />
+                        /> */}
+                        {leadVehicles?.leadVehicleImage! !== '' ? (<Image
+                          src={leadVehicles?.leadVehicleImage!}
+                          alt=""
+                          unoptimized
+                          width={500}
+                          height={500}
+                          className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
+                        />) : (<>
+                          <Image
+                            src={noimage}
+                            alt=""
+                            unoptimized
+                            width={500}
+                            height={500}
+                            className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
+                          />
+                        </>)}
                         <div className="flex flex-col justify-between w-full h-fit md:h-1/2">
                           <CardHeader style={{ padding: "0 16px 10px 16px" }}>
                             <CardTitle className="text-base textCut">

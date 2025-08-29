@@ -340,8 +340,7 @@ const VehiclesCont = () => {
                   <SelectContent>
                     <SelectGroup>
                       <SelectItem value="HATCHBACK">Hatchback</SelectItem>
-                      <SelectItem value="SEDAN3P">Sedán 3 Puertas</SelectItem>
-                      <SelectItem value="SEDAN5P">Sedán 5 Puertas</SelectItem>
+                      <SelectItem value="SEDAN">Sedán</SelectItem>
                       <SelectItem value="CABRIO">Descapotable</SelectItem>
                       <SelectItem value="WAGON">Rural</SelectItem>
                       <SelectItem value="COUPE">Coupé</SelectItem>

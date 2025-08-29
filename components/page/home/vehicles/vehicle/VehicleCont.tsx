@@ -264,8 +264,7 @@ const VehicleCont = () => {
                     {vehicleData?.type
                       ? (
                         vehicleData?.type === "HATCHBACK" && "Hatchback" ||
-                        vehicleData?.type === "SEDAN3P" && "Sedán 3 Puertas" ||
-                        vehicleData?.type === "SEDAN5P" && "Sedán 5 Puertas" ||
+                        vehicleData?.type === "SEDAN" && "Sedán" ||
                         vehicleData?.type === "CABRIO" && "Descapotable" ||
                         vehicleData?.type === "WAGON" && "Rural" ||
                         vehicleData?.type === "COUPE" && "Coupé" ||
@@ -599,8 +598,7 @@ const VehicleCont = () => {
                       {vehicleData?.type
                         ? (
                           vehicleData?.type === "HATCHBACK" && "Hatchback" ||
-                          vehicleData?.type === "SEDAN3P" && "Sedán 3 Puertas" ||
-                          vehicleData?.type === "SEDAN5P" && "Sedán 5 Puertas" ||
+                          vehicleData?.type === "SEDAN" && "Sedán" ||
                           vehicleData?.type === "CABRIO" && "Descapotable" ||
                           vehicleData?.type === "WAGON" && "Rural" ||
                           vehicleData?.type === "COUPE" && "Coupé" ||
