@@ -12,15 +12,16 @@ export async function POST(request: NextRequest) {
     const data = await request.formData();
     const carID = data.get("carID") as string;
     const files = data.getAll("gallery_images") as File[];
+
     cloudinary.config({
       cloud_name: 'dn48eveti',
       api_key: '661585856545528',
       api_secret: process.env.CLOUDINARY_SECRET,
     });
+
     if (files.length === 0) {
       return NextResponse.json({ msg: "NO_FILES_PROVIDED" }, { status: 400 });
     }
-
 
     for (const file of files) {
       const bytes = await file.arrayBuffer()
@@ -35,7 +36,9 @@ export async function POST(request: NextRequest) {
           })
           .end(buffer);
       });
-      console.log(cloudinaryResponse);
+
+      console.log('cloudinaryResponse', cloudinaryResponse);
+
       await CarImageModel.create({
         carID,
         path: cloudinaryResponse.secure_url,
@@ -46,6 +49,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ msg: "FILES_UPLOADED" });
   } catch (error) {
-    return NextResponse.json({ msg: "NO_FILE_PROVIDED" }, { status: 400 });
+    return NextResponse.json({ msg: "ERORR_UPLOAD_FILES" }, { status: 400 });
   }
 }

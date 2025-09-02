@@ -76,18 +76,19 @@ const ImageGallery = () => {
         method: "POST",
         body: formData,
       }).then((response) => response.json());
-      console.log(uploadResponse);
+      console.log('uploadResponse', uploadResponse);
+      setLoading(false);
+
       if (uploadResponse.msg === "FILES_UPLOADED") {
         toast({ description: "¡Imágenes añadidas!", variant: "default" });
         setFilesToUpload([]);
         getGallery();
-        setLoading(false);
       }
     } catch (error) {
       // error alert
       setLoading(false);
       toast({
-        description: "Error al añadir imágenes",
+        description: "Error al añadir imágenes.",
         variant: "destructive",
       });
     }
@@ -100,14 +101,14 @@ const ImageGallery = () => {
         method: "GET",
         cache: "no-store",
       }).then((response) => response.json());
-      if (galleryResponse) {
+      setFetchLoading(false)
+      if (galleryResponse.length > 0) {
         setGalleryImages(galleryResponse);
-        setFetchLoading(false)
       }
     } catch (error) {
       // error alert
       toast({
-        description: "Error al eliminar imagen",
+        description: "Error al obtener imagenes",
         variant: "destructive",
       });
     }
@@ -119,6 +120,7 @@ const ImageGallery = () => {
 
   async function handleDeleteImage() {
     console.log(imageToDelete);
+    window.scrollTo(0, 0);
     setFetchLoading(true)
     if (imageToDelete) {
       try {
@@ -409,7 +411,7 @@ const ImageGallery = () => {
             <AlertDialogCancel onClick={() => setImageToDelete("")}>
               Cancelar
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteImage}>
+            <AlertDialogAction type="button" onClick={handleDeleteImage}>
               Eliminar
             </AlertDialogAction>
           </AlertDialogFooter>
