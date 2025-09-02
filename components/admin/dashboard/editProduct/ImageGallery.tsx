@@ -104,6 +104,8 @@ const ImageGallery = () => {
       setFetchLoading(false)
       if (galleryResponse.length > 0) {
         setGalleryImages(galleryResponse);
+      }  else {
+        setGalleryImages([]);
       }
     } catch (error) {
       // error alert
@@ -117,6 +119,11 @@ const ImageGallery = () => {
   useEffect(() => {
     getGallery();
   }, []);
+
+  // useEffect(() => {
+  //   console.log('galleryImages', galleryImages);
+  // }, [galleryImages])
+  
 
   async function handleDeleteImage() {
     console.log(imageToDelete);
@@ -136,8 +143,8 @@ const ImageGallery = () => {
             description: "Imagen eliminada",
             variant: "default",
           });
-          getGallery();
         }
+        getGallery();
       } catch (error) {
         // error alert
         setFetchLoading(false)
