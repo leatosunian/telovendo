@@ -1,6 +1,7 @@
 "use client";
 import { carBrands } from "@/app/utils/carBrands";
 import { carYears } from "@/app/utils/carYears";
+import noimage from "@/public/noimage.jpg";
 import React, { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/page/home/vehicles/Breadcrumbs";
 import {
@@ -185,10 +186,7 @@ const VehiclesCont = () => {
       paginationPages.push(i);
     }
     setNumberOfPages(paginationPages);
-    console.log("vehiclelist", vehicleList);
 
-    console.log("numberOfPages", currentPage);
-    console.log("numberOfPages", numberOfPages);
   }, [vehicleList, currentPage]);
 
   useEffect(() => {
@@ -224,7 +222,6 @@ const VehiclesCont = () => {
             <div className="hidden ml-auto w-fit h-fit md:block">
               <Select
                 onValueChange={(type) => {
-                  console.log(type);
                   if (type === "price-desc") {
                     sortVehiclesByPriceDesc();
                   }
@@ -266,7 +263,6 @@ const VehiclesCont = () => {
           <div className="block md:hidden ">
             <Select
               onValueChange={(type) => {
-                console.log(type);
                 if (type === "price-desc") {
                   sortVehiclesByPriceDesc();
                 }
@@ -330,7 +326,6 @@ const VehiclesCont = () => {
                 <span className="text-xs font-semibold 2xl:text-sm">Tipo de vehículo</span>
                 <Select
                   onValueChange={(type) => {
-                    console.log(type);
                     handleFilterByType(type);
                   }}
                 >
@@ -384,7 +379,6 @@ const VehiclesCont = () => {
                               key={brand}
                               value={brand}
                               onSelect={() => {
-                                console.log(brand);
                                 setBrandFilter(brand);
                                 handleFilterByBrand(brand);
                                 setOpen(false);
@@ -475,7 +469,6 @@ const VehiclesCont = () => {
                 style={{ backgroundColor: '#ea580c' }}
                 className="mt-2 text-xs 2xl:text-sm "
                 onClick={() => {
-                  console.log(searchFilter);
 
                   if (searchFilter === "") {
                     setVehicleList(vehicleFetch);
@@ -532,14 +525,27 @@ const VehiclesCont = () => {
                                 Vendido
                               </Badge>
                             )}
-                            <Image
-                              src={car?.imagePath!}
-                              alt="auto"
-                              width={500}
-                              height={500}
-                              unoptimized
-                              className="object-cover h-full mb-4 overflow-hidden rounded-t-md md:h-1/2 "
-                            />
+
+
+                            {car?.imagePath === '' ? (
+                              <Image
+                                src={noimage}
+                                alt=""
+                                unoptimized
+                                width={500}
+                                height={500}
+                                className="object-cover h-full mb-4 overflow-hidden md:h-1/2 rounded-t-md "
+                              />) :
+                              (<Image
+                                src={car?.imagePath!}
+                                alt="auto"
+                                width={500}
+                                height={500}
+                                unoptimized
+                                className="object-cover h-full mb-4 overflow-hidden rounded-t-md md:h-1/2 "
+                              />)}
+
+
                             <div className="flex flex-col justify-between w-full h-full md:h-1/2">
                               <CardHeader
                                 style={{ padding: "0 16px 0px 16px" }}
@@ -596,7 +602,6 @@ const VehiclesCont = () => {
                         <>
                           <PaginationItem
                             onClick={() => {
-                              console.log("setcurrentpage to ", page);
                               setCurrentPage(page);
                             }}
                           >

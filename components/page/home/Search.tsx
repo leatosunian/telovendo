@@ -9,10 +9,8 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const searchParams = useSearchParams();
   const { push } = useRouter();
-  console.log(searchParams.get("search"));
 
   const handleSearch = () => {
-    console.log(searchValue);
     const params = new URLSearchParams(searchParams);
     if (searchValue !== "") {
       params.set("search", searchValue);
@@ -20,12 +18,7 @@ const Search = () => {
       params.delete("search");
     }
     push(`/vehicles/?${params.toString()}`);
-    console.log(params.toString());
   };
-
-  useEffect(() => {
-    console.log(searchValue);
-  }, [searchValue]);
 
   return (
     <>

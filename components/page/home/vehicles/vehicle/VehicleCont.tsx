@@ -1,5 +1,6 @@
 "use client";
 import 'react-medium-image-zoom/dist/styles.css';
+import noimage from "@/public/noimage.jpg";
 
 import Breadcrumbs from "@/components/page/home/vehicles/vehicle/Breadcrumbs";
 import React, { useEffect, useState } from "react";
@@ -91,7 +92,6 @@ const VehicleCont = () => {
 
     if (cars.length !== 0) {
       setLatestVehicles(cars);
-      console.log(cars);
     }
     return latestVehicles;
   }
@@ -103,7 +103,6 @@ const VehicleCont = () => {
         cache: "no-store",
       });
       const confortData = await confortFetch.json();
-      console.log('confortData', confortData);
       setConfortData(confortData);
     }
     catch (error) {
@@ -117,9 +116,6 @@ const VehicleCont = () => {
     //fetch 10 lastest vehicles
   }, []);
 
-  useEffect(() => {
-    console.log(current);
-  }, [current]);
 
   async function getCarData(uuid: string) {
     try {
@@ -137,8 +133,6 @@ const VehicleCont = () => {
         cache: "no-store",
       });
       const gallery = await galleryFetch.json();
-      console.log(gallery)
-      console.log(cars.image)
       setGallery(gallery);
       setLoading(false);
     } catch (error) {
@@ -174,8 +168,7 @@ const VehicleCont = () => {
             {/* <Image src={car} alt="" className="w-full" width={500} height={500} /> */}
             <div className="relative">
               {/* Carousel */}
-
-              <Carousel
+              {gallery.length > 0 ? (<>    <Carousel
                 setApi={setApi}
                 className="relative w-full h-full overflow-hidden rounded-lg aspect-square "
                 //onMouseEnter={plugin.current.stop}
@@ -227,7 +220,16 @@ const VehicleCont = () => {
                   ))}
                 </CarouselContent>
 
-              </Carousel>
+              </Carousel></>) : (<Image
+                src={noimage}
+                alt=""
+                unoptimized
+                width={500}
+                height={500}
+                className="object-cover w-full h-full my-auto rounded-lg "
+              />)}
+
+
 
               {/* Custom Indicators */}
               <div className="absolute left-0 right-0 flex justify-center space-x-2 bottom-4">

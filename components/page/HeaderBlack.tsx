@@ -38,8 +38,6 @@ export default function Header() {
       return setNavbarBg("bg-black");
     }
     const handleScroll = () => {
-
-      console.log(pathname);
       if(pathname !== '/'){
         return setNavbarBg("bg-black");
       }

@@ -1,4 +1,5 @@
 "use client";
+import noimage from "@/public/noimage.jpg";
 import Autoplay from "embla-carousel-autoplay";
 import React, { useEffect, useState } from "react";
 import {
@@ -46,10 +47,6 @@ const NewProducts = ({ vehicles }: Props) => {
   useEffect(() => {
     setLatestVehicles(vehicles);
   }, [vehicles]);
-
-  useEffect(() => {
-    console.log(latestVehicles);
-  }, [latestVehicles]);
 
   const plugin = React.useRef(
     Autoplay({ delay: 3500, stopOnInteraction: false })
@@ -124,29 +121,38 @@ const NewProducts = ({ vehicles }: Props) => {
                   >
                     <div className="p-1 md:h-full h-fit">
                       <Card className="flex unselectable flex-col md:max-h-[400px] max-h-full 2xl:max-h-full  h-full shadow-lg">
-                        <Image
-                          src={car?.imagePath!}
-                          alt="auto"
-                          width={500}
-                          height={500}
-                          unoptimized
-                          className="object-cover h-full mb-4 overflow-hidden rounded-t-md md:h-1/2 "
-                        />
+                        {car?.imagePath === '' ? (<>
+                          <Image
+                            src={noimage}
+                            alt=""
+                            unoptimized
+                            width={500}
+                            height={500}
+                            className="object-cover h-full mb-4 overflow-hidden select-none md:h-1/2 rounded-t-md "
+                          /></>) : (<Image
+                            src={car?.imagePath!}
+                            alt="auto"
+                            width={500}
+                            height={500}
+                            unoptimized
+                            className="object-cover h-full mb-4 overflow-hidden select-none rounded-t-md md:h-1/2 "
+                          />)}
+
                         <div className="flex flex-col justify-between w-full h-full md:h-1/2">
                           <CardHeader style={{ padding: "0 16px 0px 16px" }}>
-                            <CardTitle className="text-lg md:text-base 2xl:text-lg textCut ">
+                            <CardTitle className="text-lg select-none md:text-base 2xl:text-lg textCut ">
                               {car.name}
                             </CardTitle>
                             <CardDescription className="flex items-center justify-between w-full pt-1 pb-2 ">
                               <div className="flex items-center gap-2">
-                                <FaRegCalendar /> <span>{car.year}</span>
+                                <FaRegCalendar /> <span className="select-none">{car.year}</span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <IoSpeedometerOutline size={20} />
-                                <span> {car.kilometers} km</span>
+                                <span className="select-none"> {car.kilometers} km</span>
                               </div>
                             </CardDescription>
-                            <p className="text-lg font-semibold md:text-base 2xl:text-lg">
+                            <p className="text-lg font-semibold select-none md:text-base 2xl:text-lg">
                               {car.currency === "USD"
                                 ? `USD ${Number(car.price).toLocaleString()}`
                                 : `$${Number(car.price).toLocaleString()}`}
@@ -159,7 +165,7 @@ const NewProducts = ({ vehicles }: Props) => {
                             >
                               <Button
                                 variant={"default"}
-                                className="w-full text-sm"
+                                className="w-full text-sm select-none"
                                 style={{ backgroundColor: '#ea580c' }}
                               >
                                 Ver más

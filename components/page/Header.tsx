@@ -24,7 +24,6 @@ export default function Header() {
   };
 
   const handleSearch = () => {
-    console.log(searchValue);
     const params = new URLSearchParams(searchParams);
     if (searchValue !== "") {
       params.set("search", searchValue);
@@ -32,7 +31,6 @@ export default function Header() {
       params.delete("search");
     }
     push(`/vehicles/?${params.toString()}`);
-    console.log(params.toString());
   };
 
   useEffect(() => {
@@ -69,10 +67,6 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    console.log(searchValue);
-  }, [searchValue]);
 
   return (
     <nav
